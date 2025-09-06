@@ -873,6 +873,10 @@ export class HomeComponent {
     this.router.navigate(['/enterprise']);
   }
 
+  talkToSales() {
+    this.router.navigate(['/contact']);
+  }
+
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
