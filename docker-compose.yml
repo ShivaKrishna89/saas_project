@@ -1,0 +1,163 @@
+version: '3.8'
+
+services:
+  # MySQL Database (using your local database)
+  mysql:
+    image: mysql:8.0
+    container_name: slack_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: local
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - slack_network
+
+  # MongoDB Database (using your cloud MongoDB)
+  # Note: Using your MongoDB Atlas cluster instead of local MongoDB
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: slack_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - slack_network
+
+  # Elasticsearch for search functionality
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: slack_elasticsearch
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - slack_network
+
+  # Backend API (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: slack_backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:secret@mysql:3306/local
+      - MONGODB_URL=mongodb+srv://pallewarshiva:krishkrish@cluster0.cjlomlw.mongodb.net/
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - SECRET_KEY=your-secret-key-here-change-in-production
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+    networks:
+      - slack_network
+
+  # Celery Worker for async tasks
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: slack_celery_worker
+    restart: unless-stopped
+    command: celery -A app.celery_app worker --loglevel=info
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:secret@mysql:3306/local
+      - MONGODB_URL=mongodb+srv://pallewarshiva:krishkrish@cluster0.cjlomlw.mongodb.net/
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - SECRET_KEY=your-secret-key-here-change-in-production
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+    networks:
+      - slack_network
+
+  # Celery Beat for scheduled tasks
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: slack_celery_beat
+    restart: unless-stopped
+    command: celery -A app.celery_app beat --loglevel=info
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:secret@mysql:3306/local
+      - MONGODB_URL=mongodb+srv://pallewarshiva:krishkrish@cluster0.cjlomlw.mongodb.net/
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - SECRET_KEY=your-secret-key-here-change-in-production
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+    networks:
+      - slack_network
+
+  # Frontend (Angular)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: slack_frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - slack_network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: slack_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - slack_network
+
+volumes:
+  mysql_data:
+  redis_data:
+  elasticsearch_data:
+
+networks:
+  slack_network:
+    driver: bridge
