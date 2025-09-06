@@ -10,14 +10,11 @@ from app.api.v1.api import api_router
 from app.core.database import engine
 from app.models import Base
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create database tables (only when app starts)
 Base.metadata.create_all(bind=engine)
 
-# Create FastAPI app
 app = FastAPI(
     title="Slack-like SaaS API",
     description="A modern Slack-like messaging platform API",
@@ -27,10 +24,9 @@ app = FastAPI(
     openapi_url="/openapi.json"
 )
 
-# Add CORS middleware with specific origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins in development
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,10 +34,9 @@ app.add_middleware(
 
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=["*"]  # Allow all hosts in development
+    allowed_hosts=["*"]
 )
 
-# Request timing middleware
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.time()
@@ -50,7 +45,6 @@ async def add_process_time_header(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response
 
-# Exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"Global exception: {exc}")
@@ -59,12 +53,10 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "Internal server error"}
     )
 
-# Health check endpoint
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": time.time()}
 
-# Include API routes
 app.include_router(api_router, prefix="/api/v1")
 
 if __name__ == "__main__":

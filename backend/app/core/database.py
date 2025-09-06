@@ -9,7 +9,6 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-# Database - Support both MySQL and SQLite
 if settings.DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
         settings.DATABASE_URL,
@@ -27,17 +26,15 @@ else:
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# MongoDB Database
 try:
     mongo_client = MongoClient(settings.MONGODB_URL)
-    mongo_db = mongo_client.fastAPI  # Use the database name from URL
+    mongo_db = mongo_client.fastAPI
     logger.info("MongoDB connection established")
 except Exception as e:
     logger.error(f"MongoDB connection failed: {e}")
     mongo_client = None
     mongo_db = None
 
-# Redis Database - Make it optional
 try:
     redis_client = Redis.from_url(settings.REDIS_URL, decode_responses=True)
     redis_client.ping()
@@ -47,7 +44,6 @@ except Exception as e:
     redis_client = None
 
 def get_db():
-    """Dependency to get database session"""
     db = SessionLocal()
     try:
         yield db
@@ -55,9 +51,7 @@ def get_db():
         db.close()
 
 def get_mongo_db():
-    """Dependency to get MongoDB database"""
     return mongo_db
 
 def get_redis_client():
-    """Dependency to get Redis client"""
     return redis_client
