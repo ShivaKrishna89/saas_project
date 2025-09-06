@@ -1,0 +1,67 @@
+<div class="login-page">
+  <div class="header">
+    <div class="brand" (click)="goHome()">
+      <mat-icon class="brand-mark">auto_awesome</mat-icon>
+      <span class="brand-text">CollabX</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-head">
+      <h1>Sign in to CollabX</h1>
+      <p>Welcome back! Access your workspaces.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required>
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Required</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+        <mat-icon matSuffix class="toggle" (click)="hidePassword = !hidePassword">{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Required</mat-error>
+      </mat-form-field>
+
+      <div class="row-between">
+        <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
+        <a class="link" href="#">Forgot password?</a>
+      </div>
+
+      <button mat-raised-button color="primary" class="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
+        <mat-spinner *ngIf="isLoading" diameter="20" class="spinner"></mat-spinner>
+        <span *ngIf="!isLoading">Sign in</span>
+      </button>
+    </form>
+
+    <div class="foot">
+      <div class="divider">
+        <span>or</span>
+      </div>
+      <button mat-stroked-button class="google-btn" (click)="signInWithGoogle()">
+        <mat-icon>login</mat-icon>
+        Continue with Google
+      </button>
+      <p class="signup-link">
+        Don't have an account? <a (click)="goToRegister()">Sign up</a>
+      </p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <mat-icon>check_circle</mat-icon>
+      <span>{{ successMessage }}</span>
+    </div>
+  </div>
+</div>

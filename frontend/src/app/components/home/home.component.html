@@ -1,0 +1,152 @@
+<div class="home-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <div class="logo">
+          <mat-icon class="logo-icon">chat</mat-icon>
+          <span class="logo-text brand">CollabX</span>
+        </div>
+      </div>
+      
+      <div class="nav-center">
+        <a [routerLink]="['/']" class="nav-link">Home</a>
+        <a [routerLink]="['/solutions']" class="nav-link">Solutions</a>
+        <a [routerLink]="['/enterprise']" class="nav-link">Enterprise</a>
+        <a [routerLink]="['/resources']" class="nav-link">Resources</a>
+        <a [routerLink]="['/pricing']" class="nav-link">Pricing</a>
+      </div>
+      
+      <div class="nav-right">
+        <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
+          Create a New Workspace
+        </button>
+        <button mat-stroked-button class="nav-button" (click)="navigateToLogin()">
+          Sign In
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Where work happens
+          </h1>
+          <p class="hero-subtitle">
+            When your team needs to kick off a project, hire a new employee, deploy some code, review a sales contract, finalize next year's budget, measure an A/B test, plan your next office opening, and more, CollabX has you covered.
+          </p>
+          <div class="hero-actions">
+            <button mat-raised-button color="primary" class="hero-btn primary" (click)="navigateToRegister()">
+              Get Started
+            </button>
+            <button mat-stroked-button class="hero-btn secondary" (click)="talkToSales()">
+              Talk to Sales
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="chat-mockup">
+            <div class="chat-header">
+              <div class="chat-title"># general</div>
+              <div class="chat-actions">
+                <mat-icon>search</mat-icon>
+                <mat-icon>more_vert</mat-icon>
+              </div>
+            </div>
+            <div class="chat-messages">
+              <div class="message">
+                <div class="message-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="message-content">
+                  <div class="message-header">
+                    <span class="message-author">Sarah Chen</span>
+                    <span class="message-time">2:30 PM</span>
+                  </div>
+                  <div class="message-text">Hey team! Just wanted to share the latest updates on our Q4 roadmap.</div>
+                </div>
+              </div>
+              <div class="message">
+                <div class="message-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="message-content">
+                  <div class="message-header">
+                    <span class="message-author">Mike Johnson</span>
+                    <span class="message-time">2:32 PM</span>
+                  </div>
+                  <div class="message-text">Thanks for sharing, Sarah! The timeline looks great.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Built for teams of all sizes</h2>
+      <div class="features-grid">
+        <div class="feature-card" *ngFor="let feature of features">
+          <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to get started?</h2>
+        <p class="cta-subtitle">Join thousands of teams who trust CollabX to keep their work organized and connected.</p>
+        <div class="cta-actions">
+          <button mat-raised-button color="primary" class="cta-btn" (click)="navigateToRegister()">
+            Create Your Workspace
+          </button>
+          <button mat-stroked-button class="cta-btn" (click)="talkToSales()">
+            Talk to Sales
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section" *ngFor="let section of footerSections">
+          <h4>{{ section.title }}</h4>
+          <a *ngFor="let link of section.links" [routerLink]="['/' + link.route]" class="footer-link">
+            {{ link.name }}
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <mat-icon class="logo-icon">chat</mat-icon>
+            <span class="logo-text">CollabX</span>
+          </div>
+          <p>&copy; 2024 CollabX. All rights reserved.</p>
+        </div>
+        <div class="footer-right">
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Terms</a>
+          <a href="#" class="footer-link">Cookies</a>
+          <a href="#" class="footer-link">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,99 @@
+<div class="register-page">
+  <div class="header">
+    <div class="brand" (click)="goHome()">
+      <mat-icon class="brand-mark">auto_awesome</mat-icon>
+      <span class="brand-text">CollabX</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-head">
+      <h1>Create your account</h1>
+      <p>Use your work email to get started. No credit card required.</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="row-2">
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstName" required>
+          <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">Required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastName" required>
+          <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">Required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="registerForm.get('username')?.hasError('required')">Required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Work email</mat-label>
+        <input matInput type="email" formControlName="email" required>
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Required</mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+        <mat-icon matSuffix class="toggle" (click)="hidePassword = !hidePassword">{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Required</mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Confirm password</mat-label>
+        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required>
+        <mat-icon matSuffix class="toggle" (click)="hideConfirmPassword = !hideConfirmPassword">{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Required</mat-error>
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch')">Passwords do not match</mat-error>
+      </mat-form-field>
+
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="agreeToTerms" required>
+          I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+        </mat-checkbox>
+        <mat-error *ngIf="registerForm.get('agreeToTerms')?.hasError('required')" class="checkbox-error">You must agree to the terms</mat-error>
+      </div>
+
+      <button mat-raised-button color="primary" class="primary" type="submit" [disabled]="registerForm.invalid || isLoading">
+        <mat-spinner *ngIf="isLoading" diameter="20" class="spinner"></mat-spinner>
+        <span *ngIf="!isLoading">Create account</span>
+      </button>
+    </form>
+
+    <div class="foot">
+      <div class="divider">
+        <span>or</span>
+      </div>
+      <button mat-stroked-button class="google-btn" (click)="signUpWithGoogle()">
+        <mat-icon>login</mat-icon>
+        Continue with Google
+      </button>
+      <p class="signin-link">
+        Already have an account? <a (click)="goToLogin()">Sign in</a>
+      </p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <mat-icon>check_circle</mat-icon>
+      <span>{{ successMessage }}</span>
+    </div>
+  </div>
+</div>
