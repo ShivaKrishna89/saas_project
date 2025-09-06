@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
   selector: 'app-root',
   template: `
     <div class="app-container">
+      <app-scroll-to-top></app-scroll-to-top>
       <router-outlet></router-outlet>
     </div>
   `,

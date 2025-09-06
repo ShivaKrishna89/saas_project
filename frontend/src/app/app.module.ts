@@ -59,6 +59,25 @@ import { MessageInputComponent } from './components/message-input/message-input.
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
 
+// Company Pages
+import { AboutComponent } from './components/about/about.component';
+import { CareersComponent } from './components/careers/careers.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { BlogComponent } from './components/blog/blog.component';
+
+// Resource Pages
+import { HelpCenterComponent } from './components/help-center/help-center.component';
+import { DevelopersComponent } from './components/developers/developers.component';
+import { ApiComponent } from './components/api/api.component';
+import { CommunityComponent } from './components/community/community.component';
+
+// Legal Pages
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { SecurityComponent } from './components/security/security.component';
+import { CookiesComponent } from './components/cookies/cookies.component';
+import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+
 // Services
 import { AuthInterceptor } from './services/auth.interceptor';
 import { WebSocketService } from './services/websocket.service';
@@ -77,7 +96,20 @@ import { WebSocketService } from './services/websocket.service';
     ChatHeaderComponent,
     MessageInputComponent,
     UserProfileComponent,
-    PlaceholderComponent
+    PlaceholderComponent,
+    AboutComponent,
+    CareersComponent,
+    ContactComponent,
+    BlogComponent,
+    HelpCenterComponent,
+    DevelopersComponent,
+    ApiComponent,
+    CommunityComponent,
+    PrivacyComponent,
+    TermsComponent,
+    SecurityComponent,
+    CookiesComponent,
+    ScrollToTopComponent
   ],
       imports: [
       BrowserModule,
