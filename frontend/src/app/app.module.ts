@@ -77,6 +77,10 @@ import { TermsComponent } from './components/terms/terms.component';
 import { SecurityComponent } from './components/security/security.component';
 import { CookiesComponent } from './components/cookies/cookies.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { PricingComponent } from './components/pricing/pricing.component';
+import { TaskManagementComponent } from './components/task-management/task-management.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { TeamComponent } from './components/team/team.component';
 
 // Services
 import { AuthInterceptor } from './services/auth.interceptor';
@@ -109,7 +113,11 @@ import { WebSocketService } from './services/websocket.service';
     TermsComponent,
     SecurityComponent,
     CookiesComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    PricingComponent,
+    TaskManagementComponent,
+    ProjectsComponent,
+    TeamComponent
   ],
       imports: [
       BrowserModule,

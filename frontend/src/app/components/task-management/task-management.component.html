@@ -1,0 +1,230 @@
+<div class="task-management">
+  <!-- Header -->
+  <div class="task-header">
+    <div class="header-left">
+      <h1 class="page-title">Task Management</h1>
+      <p class="page-subtitle">Organize, track, and manage your team's work</p>
+    </div>
+    <div class="header-right">
+      <button mat-raised-button color="primary" (click)="createNewTask()">
+        <mat-icon>add</mat-icon>
+        Create Task
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters and Views -->
+  <div class="task-controls">
+    <div class="controls-left">
+      <mat-button-toggle-group [(value)]="currentView" (change)="onViewChange($event)">
+        <mat-button-toggle value="board">Board View</mat-button-toggle>
+        <mat-button-toggle value="list">List View</mat-button-toggle>
+        <mat-button-toggle value="calendar">Calendar</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="controls-right">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by</mat-label>
+        <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange($event)">
+          <mat-option value="all">All Tasks</mat-option>
+          <mat-option value="assigned">Assigned to Me</mat-option>
+          <mat-option value="created">Created by Me</mat-option>
+          <mat-option value="high">High Priority</mat-option>
+          <mat-option value="overdue">Overdue</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button (click)="refreshTasks()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Board View -->
+  <div class="board-view" *ngIf="currentView === 'board'">
+    <div class="board-columns">
+      <div class="board-column" *ngFor="let column of boardColumns">
+        <div class="column-header">
+          <h3 class="column-title">{{ column.title }}</h3>
+          <span class="task-count">{{ getTasksByStatus(column.status).length }}</span>
+        </div>
+        <div class="column-content">
+          <div class="task-card" *ngFor="let task of getTasksByStatus(column.status)" (click)="openTaskDetail(task)">
+            <div class="task-priority" [class]="'priority-' + task.priority"></div>
+            <div class="task-content">
+              <h4 class="task-title">{{ task.title }}</h4>
+              <p class="task-description">{{ task.description }}</p>
+              <div class="task-meta">
+                <div class="task-assignee" *ngIf="task.assignee">
+                  <mat-icon>person</mat-icon>
+                  <span>{{ task.assignee.name }}</span>
+                </div>
+                <div class="task-due-date" *ngIf="task.dueDate">
+                  <mat-icon>schedule</mat-icon>
+                  <span [class.overdue]="isOverdue(task.dueDate)">{{ formatDate(task.dueDate) }}</span>
+                </div>
+              </div>
+              <div class="task-tags">
+                <span class="task-tag" *ngFor="let tag of task.tags">{{ tag }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- List View -->
+  <div class="list-view" *ngIf="currentView === 'list'">
+    <div class="list-header">
+      <div class="list-column">Task</div>
+      <div class="list-column">Assignee</div>
+      <div class="list-column">Status</div>
+      <div class="list-column">Priority</div>
+      <div class="list-column">Due Date</div>
+      <div class="list-column">Actions</div>
+    </div>
+    <div class="list-content">
+      <div class="list-row" *ngFor="let task of filteredTasks" (click)="openTaskDetail(task)">
+        <div class="list-cell task-cell">
+          <div class="task-info">
+            <h4 class="task-title">{{ task.title }}</h4>
+            <p class="task-description">{{ task.description }}</p>
+          </div>
+        </div>
+        <div class="list-cell assignee-cell">
+          <div class="assignee-info" *ngIf="task.assignee">
+            <div class="assignee-avatar">
+              <span>{{ task.assignee.name.charAt(0) }}</span>
+            </div>
+            <span>{{ task.assignee.name }}</span>
+          </div>
+        </div>
+        <div class="list-cell status-cell">
+          <span class="status-badge" [class]="'status-' + task.status">{{ getStatusLabel(task.status) }}</span>
+        </div>
+        <div class="list-cell priority-cell">
+          <span class="priority-badge" [class]="'priority-' + task.priority">{{ task.priority }}</span>
+        </div>
+        <div class="list-cell date-cell">
+          <span [class.overdue]="isOverdue(task.dueDate)">{{ formatDate(task.dueDate) }}</span>
+        </div>
+        <div class="list-cell actions-cell">
+          <button mat-icon-button (click)="editTask(task, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteTask(task, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calendar View -->
+  <div class="calendar-view" *ngIf="currentView === 'calendar'">
+    <div class="calendar-header">
+      <button mat-icon-button (click)="previousMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h2 class="calendar-title">{{ currentMonthYear }}</h2>
+      <button mat-icon-button (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <div class="calendar-grid">
+      <div class="calendar-day" *ngFor="let day of calendarDays" [class.other-month]="!day.isCurrentMonth">
+        <div class="day-number">{{ day.date }}</div>
+        <div class="day-tasks">
+          <div class="calendar-task" *ngFor="let task of day.tasks" (click)="openTaskDetail(task)">
+            <span class="task-title">{{ task.title }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Detail Modal -->
+  <div class="task-detail-overlay" *ngIf="selectedTask" (click)="closeTaskDetail()">
+    <div class="task-detail-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ selectedTask.title }}</h2>
+        <button mat-icon-button (click)="closeTaskDetail()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="task-detail-section">
+          <h3>Description</h3>
+          <p>{{ selectedTask.description }}</p>
+        </div>
+        <div class="task-detail-section">
+          <h3>Details</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label>Status:</label>
+              <mat-select [(value)]="selectedTask.status" (selectionChange)="updateTask()">
+                <mat-option value="todo">To Do</mat-option>
+                <mat-option value="in-progress">In Progress</mat-option>
+                <mat-option value="review">In Review</mat-option>
+                <mat-option value="done">Done</mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Priority:</label>
+              <mat-select [(value)]="selectedTask.priority" (selectionChange)="updateTask()">
+                <mat-option value="low">Low</mat-option>
+                <mat-option value="medium">Medium</mat-option>
+                <mat-option value="high">High</mat-option>
+                <mat-option value="urgent">Urgent</mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Assignee:</label>
+              <mat-select [value]="selectedTask.assignee?.id" (selectionChange)="assignTask($event)">
+                <mat-option [value]="null">Unassigned</mat-option>
+                <mat-option *ngFor="let user of teamMembers" [value]="user.id">
+                  {{ user.name }}
+                </mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Due Date:</label>
+              <input matInput [matDatepicker]="picker" [ngModel]="selectedTask.dueDate" (ngModelChange)="selectedTask.dueDate = $event; updateTask()">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="task-detail-section">
+          <h3>Comments</h3>
+          <div class="comments-list">
+            <div class="comment" *ngFor="let comment of selectedTask.comments">
+              <div class="comment-avatar">
+                <span>{{ comment.author.name.charAt(0) }}</span>
+              </div>
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-author">{{ comment.author.name }}</span>
+                  <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+                </div>
+                <p class="comment-text">{{ comment.text }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="add-comment">
+            <mat-form-field appearance="outline" class="comment-field">
+              <textarea matInput placeholder="Add a comment..." [(ngModel)]="newComment" rows="3"></textarea>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" *ngIf="showNotification" [@slideInOut]>
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ notificationMessage }}</span>
+  </div>
+</div>

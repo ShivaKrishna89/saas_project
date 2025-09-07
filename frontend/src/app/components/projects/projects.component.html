@@ -1,0 +1,264 @@
+<div class="projects-container">
+  <!-- Header -->
+  <div class="projects-header">
+    <div class="header-left">
+      <h1 class="page-title">Projects</h1>
+      <p class="page-subtitle">Manage and track your team's projects</p>
+    </div>
+    <div class="header-right">
+      <button mat-raised-button color="primary" (click)="createNewProject()">
+        <mat-icon>add</mat-icon>
+        Create Project
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters and Views -->
+  <div class="projects-controls">
+    <div class="controls-left">
+      <mat-button-toggle-group [(value)]="currentView" (change)="onViewChange($event)">
+        <mat-button-toggle value="grid">Grid View</mat-button-toggle>
+        <mat-button-toggle value="list">List View</mat-button-toggle>
+        <mat-button-toggle value="timeline">Timeline</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="controls-right">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by</mat-label>
+        <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange($event)">
+          <mat-option value="all">All Projects</mat-option>
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="completed">Completed</mat-option>
+          <mat-option value="on-hold">On Hold</mat-option>
+          <mat-option value="my-projects">My Projects</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button (click)="refreshProjects()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid View -->
+  <div class="grid-view" *ngIf="currentView === 'grid'">
+    <div class="projects-grid">
+      <div class="project-card" *ngFor="let project of filteredProjects" (click)="openProjectDetail(project)">
+        <div class="project-header">
+          <div class="project-icon">
+            <mat-icon>{{ project.icon }}</mat-icon>
+          </div>
+          <div class="project-status" [class]="'status-' + project.status">
+            {{ project.status }}
+          </div>
+        </div>
+        <div class="project-content">
+          <h3 class="project-title">{{ project.name }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+          <div class="project-meta">
+            <div class="project-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="project.progress"></div>
+              </div>
+              <span class="progress-text">{{ project.progress }}%</span>
+            </div>
+            <div class="project-dates">
+              <span class="start-date">Start: {{ formatDate(project.startDate) }}</span>
+              <span class="end-date">Due: {{ formatDate(project.endDate) }}</span>
+            </div>
+          </div>
+          <div class="project-team">
+            <div class="team-avatars">
+              <div class="team-avatar" *ngFor="let member of project.team.slice(0, 3)">
+                <span>{{ member.name.charAt(0) }}</span>
+              </div>
+              <div class="more-members" *ngIf="project.team.length > 3">
+                +{{ project.team.length - 3 }}
+              </div>
+            </div>
+            <span class="team-count">{{ project.team.length }} members</span>
+          </div>
+        </div>
+        <div class="project-actions">
+          <button mat-icon-button (click)="editProject(project, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteProject(project, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- List View -->
+  <div class="list-view" *ngIf="currentView === 'list'">
+    <div class="list-header">
+      <div class="list-column">Project</div>
+      <div class="list-column">Status</div>
+      <div class="list-column">Progress</div>
+      <div class="list-column">Team</div>
+      <div class="list-column">Due Date</div>
+      <div class="list-column">Actions</div>
+    </div>
+    <div class="list-content">
+      <div class="list-row" *ngFor="let project of filteredProjects" (click)="openProjectDetail(project)">
+        <div class="list-cell project-cell">
+          <div class="project-info">
+            <div class="project-icon-small">
+              <mat-icon>{{ project.icon }}</mat-icon>
+            </div>
+            <div class="project-details">
+              <h4 class="project-title">{{ project.name }}</h4>
+              <p class="project-description">{{ project.description }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="list-cell status-cell">
+          <span class="status-badge" [class]="'status-' + project.status">{{ project.status }}</span>
+        </div>
+        <div class="list-cell progress-cell">
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="project.progress"></div>
+            </div>
+            <span class="progress-text">{{ project.progress }}%</span>
+          </div>
+        </div>
+        <div class="list-cell team-cell">
+          <div class="team-avatars-small">
+            <div class="team-avatar-small" *ngFor="let member of project.team.slice(0, 2)">
+              <span>{{ member.name.charAt(0) }}</span>
+            </div>
+            <span class="more-members-small" *ngIf="project.team.length > 2">+{{ project.team.length - 2 }}</span>
+          </div>
+        </div>
+        <div class="list-cell date-cell">
+          <span [class.overdue]="isOverdue(project.endDate)">{{ formatDate(project.endDate) }}</span>
+        </div>
+        <div class="list-cell actions-cell">
+          <button mat-icon-button (click)="editProject(project, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteProject(project, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline View -->
+  <div class="timeline-view" *ngIf="currentView === 'timeline'">
+    <div class="timeline-container">
+      <div class="timeline-item" *ngFor="let project of filteredProjects">
+        <div class="timeline-marker" [class]="'status-' + project.status">
+          <mat-icon>{{ project.icon }}</mat-icon>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <h3 class="project-title">{{ project.name }}</h3>
+            <span class="project-status" [class]="'status-' + project.status">{{ project.status }}</span>
+          </div>
+          <p class="project-description">{{ project.description }}</p>
+          <div class="timeline-meta">
+            <div class="project-dates">
+              <span>{{ formatDate(project.startDate) }} - {{ formatDate(project.endDate) }}</span>
+            </div>
+            <div class="project-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="project.progress"></div>
+              </div>
+              <span class="progress-text">{{ project.progress }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div class="project-detail-overlay" *ngIf="selectedProject" (click)="closeProjectDetail()">
+    <div class="project-detail-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="project-header-info">
+          <div class="project-icon-large">
+            <mat-icon>{{ selectedProject.icon }}</mat-icon>
+          </div>
+          <div class="project-info">
+            <h2>{{ selectedProject.name }}</h2>
+            <p>{{ selectedProject.description }}</p>
+          </div>
+        </div>
+        <button mat-icon-button (click)="closeProjectDetail()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="project-detail-section">
+          <h3>Project Details</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label>Status:</label>
+              <mat-select [(value)]="selectedProject.status" (selectionChange)="updateProject()">
+                <mat-option value="active">Active</mat-option>
+                <mat-option value="completed">Completed</mat-option>
+                <mat-option value="on-hold">On Hold</mat-option>
+                <mat-option value="cancelled">Cancelled</mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Progress:</label>
+              <input matInput type="number" [(ngModel)]="selectedProject.progress" (ngModelChange)="updateProject()" min="0" max="100">
+              <span class="progress-value">%</span>
+            </div>
+            <div class="detail-item">
+              <label>Start Date:</label>
+              <input matInput [matDatepicker]="startPicker" [(ngModel)]="selectedProject.startDate" (dateChange)="updateProject()">
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </div>
+            <div class="detail-item">
+              <label>End Date:</label>
+              <input matInput [matDatepicker]="endPicker" [(ngModel)]="selectedProject.endDate" (dateChange)="updateProject()">
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="project-detail-section">
+          <h3>Team Members</h3>
+          <div class="team-members">
+            <div class="team-member" *ngFor="let member of selectedProject.team">
+              <div class="member-avatar">
+                <span>{{ member.name.charAt(0) }}</span>
+              </div>
+              <div class="member-info">
+                <span class="member-name">{{ member.name }}</span>
+                <span class="member-role">{{ member.role }}</span>
+              </div>
+              <button mat-icon-button (click)="removeTeamMember(member)">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="add-member">
+            <mat-form-field appearance="outline">
+              <mat-label>Add team member</mat-label>
+              <mat-select [(value)]="newMemberId" (selectionChange)="addTeamMember($event)">
+                <mat-option *ngFor="let user of availableUsers" [value]="user.id">
+                  {{ user.name }} ({{ user.role }})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" *ngIf="showNotification" [@slideInOut]>
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ notificationMessage }}</span>
+  </div>
+</div>

@@ -4,13 +4,13 @@
     <div class="nav-container">
       <div class="nav-left">
         <div class="logo">
-          <mat-icon class="logo-icon">chat</mat-icon>
+          <mat-icon class="logo-icon">rocket_launch</mat-icon>
           <span class="logo-text brand">CollabX</span>
         </div>
       </div>
       
       <div class="nav-center">
-        <a [routerLink]="['/']" class="nav-link">Home</a>
+        <a [routerLink]="['/']" class="nav-link">Product</a>
         <a [routerLink]="['/solutions']" class="nav-link">Solutions</a>
         <a [routerLink]="['/enterprise']" class="nav-link">Enterprise</a>
         <a [routerLink]="['/resources']" class="nav-link">Resources</a>
@@ -18,11 +18,11 @@
       </div>
       
       <div class="nav-right">
-        <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
-          Create a New Workspace
-        </button>
         <button mat-stroked-button class="nav-button" (click)="navigateToLogin()">
           Sign In
+        </button>
+        <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
+          Get Started Free
         </button>
       </div>
     </div>
@@ -30,56 +30,110 @@
 
   <!-- Hero Section -->
   <section class="hero">
+    <div class="hero-background">
+      <div class="floating-elements">
+        <div class="floating-card card-1"></div>
+        <div class="floating-card card-2"></div>
+        <div class="floating-card card-3"></div>
+      </div>
+    </div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
+          <div class="hero-badge">
+            <mat-icon>star</mat-icon>
+            <span>Trusted by 10M+ users worldwide</span>
+          </div>
           <h1 class="hero-title">
-            Where work happens
+            The future of <span class="gradient-text">team collaboration</span> is here
           </h1>
           <p class="hero-subtitle">
-            When your team needs to kick off a project, hire a new employee, deploy some code, review a sales contract, finalize next year's budget, measure an A/B test, plan your next office opening, and more, CollabX has you covered.
+            Transform how your team works together with AI-powered productivity tools, seamless integrations, and real-time collaboration that actually makes work fun.
           </p>
           <div class="hero-actions">
             <button mat-raised-button color="primary" class="hero-btn primary" (click)="navigateToRegister()">
-              Get Started
+              <mat-icon>rocket_launch</mat-icon>
+              Start Free Trial
             </button>
             <button mat-stroked-button class="hero-btn secondary" (click)="talkToSales()">
-              Talk to Sales
+              <mat-icon>play_circle</mat-icon>
+              Watch Demo
             </button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">99.9%</span>
+              <span class="stat-label">Uptime</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Integrations</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Support</span>
+            </div>
           </div>
         </div>
         <div class="hero-visual">
-          <div class="chat-mockup">
-            <div class="chat-header">
-              <div class="chat-title"># general</div>
-              <div class="chat-actions">
+          <div class="dashboard-mockup">
+            <div class="mockup-header">
+              <div class="mockup-nav">
+                <div class="nav-item active">Dashboard</div>
+                <div class="nav-item">Projects</div>
+                <div class="nav-item">Team</div>
+                <div class="nav-item">Analytics</div>
+              </div>
+              <div class="mockup-actions">
+                <mat-icon>notifications</mat-icon>
                 <mat-icon>search</mat-icon>
-                <mat-icon>more_vert</mat-icon>
+                <div class="user-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
               </div>
             </div>
-            <div class="chat-messages">
-              <div class="message">
-                <div class="message-avatar">
-                  <mat-icon>person</mat-icon>
-                </div>
-                <div class="message-content">
-                  <div class="message-header">
-                    <span class="message-author">Sarah Chen</span>
-                    <span class="message-time">2:30 PM</span>
+            <div class="mockup-content">
+              <div class="content-grid">
+                <div class="content-card">
+                  <div class="card-header">
+                    <mat-icon>trending_up</mat-icon>
+                    <span>Project Progress</span>
                   </div>
-                  <div class="message-text">Hey team! Just wanted to share the latest updates on our Q4 roadmap.</div>
-                </div>
-              </div>
-              <div class="message">
-                <div class="message-avatar">
-                  <mat-icon>person</mat-icon>
-                </div>
-                <div class="message-content">
-                  <div class="message-header">
-                    <span class="message-author">Mike Johnson</span>
-                    <span class="message-time">2:32 PM</span>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
                   </div>
-                  <div class="message-text">Thanks for sharing, Sarah! The timeline looks great.</div>
+                  <span class="progress-text">75% Complete</span>
+                </div>
+                <div class="content-card">
+                  <div class="card-header">
+                    <mat-icon>group</mat-icon>
+                    <span>Team Activity</span>
+                  </div>
+                  <div class="activity-list">
+                    <div class="activity-item">
+                      <div class="activity-avatar"></div>
+                      <span>Sarah completed task</span>
+                    </div>
+                    <div class="activity-item">
+                      <div class="activity-avatar"></div>
+                      <span>Mike shared document</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="content-card">
+                  <div class="card-header">
+                    <mat-icon>chat</mat-icon>
+                    <span>Recent Messages</span>
+                  </div>
+                  <div class="message-preview">
+                    <div class="message-item">
+                      <div class="message-avatar"></div>
+                      <div class="message-content">
+                        <span class="message-author">Alex</span>
+                        <span class="message-text">Great work on the presentation!</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,12 +146,41 @@
   <!-- Features Section -->
   <section class="features">
     <div class="container">
-      <h2 class="section-title">Built for teams of all sizes</h2>
+      <div class="section-header">
+        <h2 class="section-title">Everything you need to succeed</h2>
+        <p class="section-subtitle">Powerful features designed to boost productivity and streamline collaboration</p>
+      </div>
       <div class="features-grid">
         <div class="feature-card" *ngFor="let feature of features">
-          <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+          <div class="feature-icon-wrapper">
+            <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+          </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
           <p class="feature-description">{{ feature.description }}</p>
+          <a href="#" class="feature-link">Learn more <mat-icon>arrow_forward</mat-icon></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title">Loved by teams everywhere</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+          <div class="testimonial-content">
+            <p>"{{ testimonial.quote }}"</p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="author-info">
+              <span class="author-name">{{ testimonial.name }}</span>
+              <span class="author-role">{{ testimonial.role }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -107,16 +190,19 @@
   <section class="cta">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">Ready to get started?</h2>
-        <p class="cta-subtitle">Join thousands of teams who trust CollabX to keep their work organized and connected.</p>
+        <h2 class="cta-title">Ready to transform your workflow?</h2>
+        <p class="cta-subtitle">Join thousands of teams who've already made the switch to CollabX</p>
         <div class="cta-actions">
           <button mat-raised-button color="primary" class="cta-btn" (click)="navigateToRegister()">
-            Create Your Workspace
+            <mat-icon>rocket_launch</mat-icon>
+            Start Your Free Trial
           </button>
           <button mat-stroked-button class="cta-btn" (click)="talkToSales()">
+            <mat-icon>phone</mat-icon>
             Talk to Sales
           </button>
         </div>
+        <p class="cta-note">No credit card required • 14-day free trial • Cancel anytime</p>
       </div>
     </div>
   </section>
@@ -135,7 +221,7 @@
       <div class="footer-bottom">
         <div class="footer-left">
           <div class="footer-logo">
-            <mat-icon class="logo-icon">chat</mat-icon>
+            <mat-icon class="logo-icon">rocket_launch</mat-icon>
             <span class="logo-text">CollabX</span>
           </div>
           <p>&copy; 2024 CollabX. All rights reserved.</p>

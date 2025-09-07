@@ -7,6 +7,7 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { HomeComponent } from './components/home/home.component';
 import { WorkspaceSelectorComponent } from './components/workspace-selector/workspace-selector.component';
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
+import { PricingComponent } from './components/pricing/pricing.component';
 
 // Company Pages
 import { AboutComponent } from './components/about/about.component';
@@ -61,7 +62,7 @@ const routes: Routes = [
   { path: 'solutions', component: PlaceholderComponent, data: { pageType: 'solutions' } },
   { path: 'enterprise', component: PlaceholderComponent, data: { pageType: 'enterprise' } },
   { path: 'resources', component: PlaceholderComponent, data: { pageType: 'resources' } },
-  { path: 'pricing', component: PlaceholderComponent, data: { pageType: 'pricing' } },
+  { path: 'pricing', component: PricingComponent },
 
   // Company pages
   { path: 'about', component: AboutComponent },

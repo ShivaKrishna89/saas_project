@@ -9,34 +9,52 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   features = [
     {
-      icon: 'chat',
-      title: 'Real-time messaging',
-      description: 'Stay connected with instant messaging and file sharing'
+      icon: 'smart_toy',
+      title: 'AI-Powered Productivity',
+      description: 'Leverage artificial intelligence to automate tasks, generate insights, and boost team efficiency by 40%'
     },
     {
-      icon: 'group',
-      title: 'Team collaboration',
-      description: 'Work together seamlessly with channels and direct messages'
+      icon: 'real_time_sync',
+      title: 'Real-time Collaboration',
+      description: 'Work together seamlessly with live editing, instant messaging, and synchronized updates across all devices'
     },
     {
-      icon: 'search',
-      title: 'Powerful search',
-      description: 'Find anything instantly with our advanced search capabilities'
+      icon: 'analytics',
+      title: 'Advanced Analytics',
+      description: 'Get deep insights into team performance, project progress, and productivity metrics with beautiful dashboards'
     },
     {
       icon: 'security',
-      title: 'Enterprise security',
-      description: 'Bank-grade security with SSO and compliance features'
+      title: 'Enterprise Security',
+      description: 'Bank-grade security with end-to-end encryption, SSO, and compliance with SOC2, GDPR, and HIPAA'
     },
     {
-      icon: 'integration',
-      title: 'Integrations',
-      description: 'Connect with 2000+ apps and services you already use'
+      icon: 'extension',
+      title: '500+ Integrations',
+      description: 'Connect with your favorite tools including Slack, Microsoft Teams, Google Workspace, and more'
     },
     {
-      icon: 'mobile',
-      title: 'Mobile apps',
-      description: 'Stay productive on the go with our mobile applications'
+      icon: 'devices',
+      title: 'Cross-Platform',
+      description: 'Access your workspace anywhere with native apps for iOS, Android, Windows, Mac, and web browsers'
+    }
+  ];
+
+  testimonials = [
+    {
+      quote: "CollabX has completely transformed how our remote team works together. The AI features are game-changing!",
+      name: "Sarah Johnson",
+      role: "CEO, TechStart Inc."
+    },
+    {
+      quote: "The real-time collaboration features saved us hours every week. Our productivity has increased by 60%.",
+      name: "Michael Chen",
+      role: "Product Manager, InnovateCorp"
+    },
+    {
+      quote: "Finally, a platform that actually makes team communication fun and efficient. Highly recommended!",
+      name: "Emily Rodriguez",
+      role: "Team Lead, Creative Agency"
     }
   ];
 

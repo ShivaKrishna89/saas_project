@@ -1,0 +1,256 @@
+<div class="team-container">
+  <!-- Header -->
+  <div class="team-header">
+    <div class="header-left">
+      <h1 class="page-title">Team</h1>
+      <p class="page-subtitle">Manage your team members and their roles</p>
+    </div>
+    <div class="header-right">
+      <button mat-raised-button color="primary" (click)="inviteTeamMember()">
+        <mat-icon>person_add</mat-icon>
+        Invite Member
+      </button>
+    </div>
+  </div>
+
+  <!-- Team Stats -->
+  <div class="team-stats">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>group</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number">{{ teamMembers.length }}</div>
+        <div class="stat-label">Total Members</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>work</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number">{{ getActiveMembers().length }}</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>schedule</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number">{{ getOnlineMembers().length }}</div>
+        <div class="stat-label">Online Now</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="stat-number">{{ getAdmins().length }}</div>
+        <div class="stat-label">Administrators</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters and Search -->
+  <div class="team-controls">
+    <div class="controls-left">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search team members</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Search by name, role, or email">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="controls-right">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by role</mat-label>
+        <mat-select [(value)]="selectedRole" (selectionChange)="onRoleFilterChange($event)">
+          <mat-option value="all">All Roles</mat-option>
+          <mat-option value="admin">Administrator</mat-option>
+          <mat-option value="manager">Manager</mat-option>
+          <mat-option value="developer">Developer</mat-option>
+          <mat-option value="designer">Designer</mat-option>
+          <mat-option value="qa">QA Engineer</mat-option>
+          <mat-option value="marketing">Marketing</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button (click)="refreshTeam()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Team Members Grid -->
+  <div class="team-grid">
+    <div class="member-card" *ngFor="let member of filteredMembers" (click)="openMemberDetail(member)">
+      <div class="member-header">
+        <div class="member-avatar" [class]="'status-' + member.status">
+          <span>{{ member.name.charAt(0) }}</span>
+          <div class="status-indicator" [class]="'status-' + member.status"></div>
+        </div>
+        <div class="member-actions">
+          <button mat-icon-button (click)="editMember(member, $event)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="removeMember(member, $event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="member-content">
+        <h3 class="member-name">{{ member.name }}</h3>
+        <p class="member-role">{{ member.role }}</p>
+        <p class="member-email">{{ member.email }}</p>
+        <div class="member-meta">
+          <div class="member-status">
+            <span class="status-dot" [class]="'status-' + member.status"></span>
+            <span class="status-text">{{ getStatusText(member.status) }}</span>
+          </div>
+          <div class="member-joined">
+            Joined {{ formatDate(member.joinedDate) }}
+          </div>
+        </div>
+        <div class="member-stats">
+          <div class="stat">
+            <span class="stat-number">{{ member.projectsCount }}</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">{{ member.tasksCount }}</span>
+            <span class="stat-label">Tasks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Member Detail Modal -->
+  <div class="member-detail-overlay" *ngIf="selectedMember" (click)="closeMemberDetail()">
+    <div class="member-detail-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="member-header-info">
+          <div class="member-avatar-large" [class]="'status-' + selectedMember.status">
+            <span>{{ selectedMember.name.charAt(0) }}</span>
+            <div class="status-indicator-large" [class]="'status-' + selectedMember.status"></div>
+          </div>
+          <div class="member-info">
+            <h2>{{ selectedMember.name }}</h2>
+            <p>{{ selectedMember.role }} • {{ selectedMember.email }}</p>
+            <div class="member-status-info">
+              <span class="status-dot" [class]="'status-' + selectedMember.status"></span>
+              <span class="status-text">{{ getStatusText(selectedMember.status) }}</span>
+            </div>
+          </div>
+        </div>
+        <button mat-icon-button (click)="closeMemberDetail()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="member-detail-section">
+          <h3>Profile Information</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label>Full Name:</label>
+              <input matInput [(ngModel)]="selectedMember.name" (blur)="updateMember()">
+            </div>
+            <div class="detail-item">
+              <label>Email:</label>
+              <input matInput type="email" [(ngModel)]="selectedMember.email" (blur)="updateMember()">
+            </div>
+            <div class="detail-item">
+              <label>Role:</label>
+              <mat-select [(value)]="selectedMember.role" (selectionChange)="updateMember()">
+                <mat-option value="admin">Administrator</mat-option>
+                <mat-option value="manager">Manager</mat-option>
+                <mat-option value="developer">Developer</mat-option>
+                <mat-option value="designer">Designer</mat-option>
+                <mat-option value="qa">QA Engineer</mat-option>
+                <mat-option value="marketing">Marketing</mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Status:</label>
+              <mat-select [(value)]="selectedMember.status" (selectionChange)="updateMember()">
+                <mat-option value="online">Online</mat-option>
+                <mat-option value="away">Away</mat-option>
+                <mat-option value="busy">Busy</mat-option>
+                <mat-option value="offline">Offline</mat-option>
+              </mat-select>
+            </div>
+            <div class="detail-item">
+              <label>Phone:</label>
+              <input matInput [(ngModel)]="selectedMember.phone" (blur)="updateMember()">
+            </div>
+            <div class="detail-item">
+              <label>Department:</label>
+              <input matInput [(ngModel)]="selectedMember.department" (blur)="updateMember()">
+            </div>
+          </div>
+        </div>
+        <div class="member-detail-section">
+          <h3>Activity Summary</h3>
+          <div class="activity-stats">
+            <div class="activity-stat">
+              <div class="stat-icon">
+                <mat-icon>folder</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ selectedMember.projectsCount }}</div>
+                <div class="stat-label">Active Projects</div>
+              </div>
+            </div>
+            <div class="activity-stat">
+              <div class="stat-icon">
+                <mat-icon>task_alt</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ selectedMember.tasksCount }}</div>
+                <div class="stat-label">Assigned Tasks</div>
+              </div>
+            </div>
+            <div class="activity-stat">
+              <div class="stat-icon">
+                <mat-icon>check_circle</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ selectedMember.completedTasks }}</div>
+                <div class="stat-label">Completed Tasks</div>
+              </div>
+            </div>
+            <div class="activity-stat">
+              <div class="stat-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ selectedMember.workingHours }}</div>
+                <div class="stat-label">Hours This Week</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="member-detail-section">
+          <h3>Recent Activity</h3>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let activity of selectedMember.recentActivity">
+              <div class="activity-icon">
+                <mat-icon>{{ activity.icon }}</mat-icon>
+              </div>
+              <div class="activity-content">
+                <p class="activity-text">{{ activity.text }}</p>
+                <span class="activity-time">{{ formatTime(activity.timestamp) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" *ngIf="showNotification" [@slideInOut]>
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ notificationMessage }}</span>
+  </div>
+</div>
