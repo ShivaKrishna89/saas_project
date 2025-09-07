@@ -48,7 +48,7 @@ export class DevExPageComponent {}
 export class ServiceDeskPageComponent {}
 
 const routes: Routes = [
-  { path: '', component: PlaceholderComponent, data: { pageType: 'features' } },
+  { path: '', component: HomeComponent },
   { path: 'auth/callback', component: AuthCallbackComponent },
 
   // App pages
