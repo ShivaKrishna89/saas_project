@@ -30,8 +30,8 @@ class Issue(Base):
 	
 	# Relationships
 	project = relationship("Project", back_populates="issues")
-	assignee = relationship("User", foreign_keys=[assignee_id])
-	reporter = relationship("User", foreign_keys=[reporter_id])
+	assignee = relationship("User", foreign_keys=[assignee_id], back_populates="assigned_issues")
+	reporter = relationship("User", foreign_keys=[reporter_id], back_populates="created_issues")
 	
 	def __repr__(self):
 		return f"<Issue(id={self.id}, title='{self.title}', status='{self.status}', priority='{self.priority}')>"

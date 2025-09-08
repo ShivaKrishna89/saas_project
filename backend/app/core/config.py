@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
-    DATABASE_URL: str = "sqlite:///./slack_saas.db"
-    MONGODB_URL: str = "mongodb+srv://pallewarshiva:krishkrish@cluster0.cjlomlw.mongodb.net/fastAPI?retryWrites=true&w=majority"
+    DATABASE_URL: str = "mysql+pymysql://collabx:password@localhost:3306/collabx"
+    MONGODB_URL: str = "mongodb+srv://pallewarshiva:krishkrish@cluster0.cjlomlw.mongodb.net/collabx?retryWrites=true&w=majority"
     
     REDIS_URL: str = "redis://localhost:6379"
     

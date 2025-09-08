@@ -9,11 +9,18 @@ from app.core.config import settings
 from app.api.v1.api import api_router
 from app.core.database import engine
 from app.models import Base
+from app.middleware.activity_logger import ActivityLoggingMiddleware
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-Base.metadata.create_all(bind=engine)
+# Create tables only if database is available
+try:
+    Base.metadata.create_all(bind=engine)
+    logger.info("Database tables created successfully")
+except Exception as e:
+    logger.error(f"Failed to create database tables: {e}")
+    logger.info("Continuing without database table creation...")
 
 app = FastAPI(
     title="Slack-like SaaS API",
@@ -36,6 +43,9 @@ app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=["*"]
 )
+
+# Add activity logging middleware
+app.add_middleware(ActivityLoggingMiddleware)
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):

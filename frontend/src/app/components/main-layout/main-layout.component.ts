@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { WebSocketService } from '../../services/websocket.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -19,7 +20,8 @@ export class MainLayoutComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
@@ -73,21 +75,41 @@ export class MainLayoutComponent implements OnInit {
   navigateToTasks() {
     this.currentView = 'tasks';
     console.log('Navigate to tasks');
+    // Log the click event
+    this.apiService.getIssues().subscribe({
+      next: () => console.log('Tasks clicked - event logged'),
+      error: (error) => console.error('Failed to log tasks click:', error)
+    });
   }
 
   navigateToProjects() {
     this.currentView = 'projects';
     console.log('Navigate to projects');
+    // Log the click event
+    this.apiService.getProjects(1).subscribe({
+      next: () => console.log('Projects clicked - event logged'),
+      error: (error) => console.error('Failed to log projects click:', error)
+    });
   }
 
   navigateToTeam() {
     this.currentView = 'team';
     console.log('Navigate to team');
+    // Log the click event
+    this.apiService.getCurrentUser().subscribe({
+      next: () => console.log('Team clicked - event logged'),
+      error: (error) => console.error('Failed to log team click:', error)
+    });
   }
 
   navigateToCalendar() {
     this.currentView = 'calendar';
     console.log('Navigate to calendar');
+    // Log the click event
+    this.apiService.getWorkspaces().subscribe({
+      next: () => console.log('Calendar clicked - event logged'),
+      error: (error) => console.error('Failed to log calendar click:', error)
+    });
   }
 
   navigateToReports() {

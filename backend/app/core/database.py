@@ -28,7 +28,7 @@ Base = declarative_base()
 
 try:
     mongo_client = MongoClient(settings.MONGODB_URL)
-    mongo_db = mongo_client.fastAPI
+    mongo_db = mongo_client["user-events"]  # Database name: user-events
     logger.info("MongoDB connection established")
 except Exception as e:
     logger.error(f"MongoDB connection failed: {e}")

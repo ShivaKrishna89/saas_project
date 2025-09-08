@@ -37,7 +37,9 @@ export class AuthService {
     formData.append('username', credentials.email);
     formData.append('password', credentials.password);
 
-    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, formData)
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, formData, {
+      headers: { 'X-Event-Type': 'SIGNIN' }
+    })
       .pipe(
         tap(response => {
           this.storeAuthData(response);
@@ -61,6 +63,18 @@ export class AuthService {
   }
 
   logout(): void {
+    // Send logout event to backend before clearing local storage
+    this.http.post(`${environment.apiUrl}/auth/logout`, {}, {
+      headers: { 'X-Event-Type': 'SIGNOUT' }
+    }).subscribe({
+      next: () => {
+        console.log('Logout event logged');
+      },
+      error: (error) => {
+        console.error('Failed to log logout event:', error);
+      }
+    });
+
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
     this.currentUserSubject.next(null);

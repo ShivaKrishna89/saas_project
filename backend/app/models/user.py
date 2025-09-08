@@ -28,9 +28,12 @@ class User(Base):
 	
 	# Relationships
 	workspace_memberships = relationship("WorkspaceMember", back_populates="user")
+	organizations = relationship("Member", back_populates="user")
 	created_issues = relationship("Issue", back_populates="reporter", foreign_keys="Issue.reporter_id")
 	assigned_issues = relationship("Issue", back_populates="assignee", foreign_keys="Issue.assignee_id")
 	created_projects = relationship("Project", back_populates="creator")
+	created_channels = relationship("Channel", back_populates="creator")
+	messages = relationship("Message", back_populates="user")
 	
 	def __repr__(self):
 		return f"<User(id={self.id}, email='{self.email}', username='{self.username}')>"

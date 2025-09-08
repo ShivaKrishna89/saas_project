@@ -9,8 +9,64 @@ from app.models.message import Message
 from app.models.channel import Channel
 from app.schemas.message import MessageCreate, MessageUpdate, MessageResponse, ReactionUpdate
 from app.services.websocket_manager import websocket_manager
+from app.services.mongodb_logger import mongodb_logger
 
 router = APIRouter()
+
+# MongoDB Chat History Endpoints
+@router.get("/history/{channel_id}")
+async def get_chat_history(
+    channel_id: int,
+    limit: int = Query(50, ge=1, le=100),
+    skip: int = Query(0, ge=0),
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get chat history from MongoDB"""
+    # Verify user has access to channel
+    channel = db.query(Channel).filter(Channel.id == channel_id).first()
+    if not channel:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Channel not found"
+        )
+    
+    # Get chat history from MongoDB
+    chat_history = await mongodb_logger.get_chat_history(
+        channel_id=channel_id,
+        limit=limit,
+        skip=skip
+    )
+    
+    return chat_history
+
+@router.get("/search")
+async def search_chat_messages(
+    search_term: str = Query(..., description="Search term"),
+    channel_id: Optional[int] = Query(None, description="Filter by channel"),
+    limit: int = Query(50, ge=1, le=100),
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Search chat messages in MongoDB"""
+    # If channel_id provided, verify access
+    if channel_id:
+        channel = db.query(Channel).filter(Channel.id == channel_id).first()
+        if not channel:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Channel not found"
+            )
+    
+    # Search messages in MongoDB
+    results = await mongodb_logger.search_chat_messages(
+        search_term=search_term,
+        channel_id=channel_id,
+        user_id=current_user.id,
+        limit=limit
+    )
+    
+    return results
 
 @router.post("/", response_model=MessageResponse)
 async def create_message(
@@ -41,6 +97,33 @@ async def create_message(
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
+    
+    # Store message in MongoDB for real-time chat history
+    await mongodb_logger.store_chat_message(
+        message_id=db_message.id,
+        user_id=current_user.id,
+        user_name=current_user.full_name,
+        user_email=current_user.email,
+        channel_id=message_data.channel_id,
+        content=message_data.content,
+        message_type=message_data.message_type,
+        attachments=message_data.attachments,
+        reactions={}
+    )
+    
+    # Log user activity
+    await mongodb_logger.log_user_activity(
+        user_id=current_user.id,
+        user_name=current_user.full_name,
+        user_email=current_user.email,
+        action="SEND_MESSAGE",
+        details={
+            "message_id": db_message.id,
+            "channel_id": message_data.channel_id,
+            "content_length": len(message_data.content),
+            "message_type": message_data.message_type
+        }
+    )
     
     # Notify WebSocket clients
     await websocket_manager.broadcast_to_channel(
