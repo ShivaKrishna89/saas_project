@@ -34,116 +34,7 @@ import { Router, ActivatedRoute } from '@angular/router';
         </div>
       </nav>
 
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-background">
-          <div class="floating-elements">
-            <div class="floating-card card-1"></div>
-            <div class="floating-card card-2"></div>
-            <div class="floating-card card-3"></div>
-            </div>
-            </div>
-        <div class="container">
-          <div class="hero-content">
-            <div class="hero-text">
-              <div class="hero-badge">
-                <mat-icon>star</mat-icon>
-                <span>Trusted by 10M+ users worldwide</span>
-          </div>
-              <h1 class="hero-title" [innerHTML]="getHeroTitle()"></h1>
-              <p class="hero-subtitle">{{ getHeroSubtitle() }}</p>
-              <div class="hero-actions">
-                <button mat-raised-button color="primary" class="hero-btn primary" (click)="navigateToRegister()">
-                  <mat-icon>rocket_launch</mat-icon>
-                  {{ getPrimaryButtonText() }}
-                </button>
-                <button *ngIf="getSecondaryButtonText()" mat-stroked-button class="hero-btn secondary" (click)="navigateToContact()">
-                  <mat-icon>play_circle</mat-icon>
-                  {{ getSecondaryButtonText() }}
-                </button>
-                </div>
-              <div class="hero-stats">
-                <div class="stat">
-                  <span class="stat-number">99.9%</span>
-                  <span class="stat-label">Uptime</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-number">50+</span>
-                  <span class="stat-label">Integrations</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-number">24/7</span>
-                  <span class="stat-label">Support</span>
-          </div>
-        </div>
-            </div>
-            <div class="hero-visual">
-              <div class="dashboard-mockup">
-                <div class="mockup-header">
-                  <div class="mockup-nav">
-                    <div class="nav-item active">Dashboard</div>
-                    <div class="nav-item">Projects</div>
-                    <div class="nav-item">Team</div>
-                    <div class="nav-item">Analytics</div>
-          </div>
-                  <div class="mockup-actions">
-                    <mat-icon>notifications</mat-icon>
-                    <mat-icon>search</mat-icon>
-                    <div class="user-avatar">
-                      <mat-icon>person</mat-icon>
-          </div>
-        </div>
-            </div>
-                <div class="mockup-content">
-                  <div class="content-grid">
-                    <div class="content-card">
-                      <div class="card-header">
-                        <mat-icon>trending_up</mat-icon>
-                        <span>Project Progress</span>
-                      </div>
-                      <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
-                      </div>
-                      <span class="progress-text">75% Complete</span>
-                    </div>
-                    <div class="content-card">
-                      <div class="card-header">
-                        <mat-icon>group</mat-icon>
-                        <span>Team Activity</span>
-                      </div>
-                      <div class="activity-list">
-                        <div class="activity-item">
-                          <div class="activity-avatar"></div>
-                          <span>Sarah completed task</span>
-                        </div>
-                        <div class="activity-item">
-                          <div class="activity-avatar"></div>
-                          <span>Mike shared document</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="content-card">
-                      <div class="card-header">
-                        <mat-icon>chat</mat-icon>
-                        <span>Recent Messages</span>
-                      </div>
-                      <div class="message-preview">
-                        <div class="message-item">
-                          <div class="message-avatar"></div>
-                          <div class="message-content">
-                            <span class="message-author">Alex</span>
-                            <span class="message-text">Great work on the presentation!</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       <!-- Solutions Content -->
       <section *ngIf="pageType === 'solutions'" class="solutions-page">
@@ -151,89 +42,234 @@ import { Router, ActivatedRoute } from '@angular/router';
         <section class="solutions-hero">
           <div class="container">
             <div class="solutions-hero-content">
-              <div class="hero-badges">
-                <span class="badge" *ngFor="let badge of getHeroBadges()">{{ badge }}</span>
+              <div class="solutions-hero-left">
+                <h1 class="hero-title">Solutions for every team and industry</h1>
+                <p class="hero-subtitle">From engineering teams building software to marketing teams launching campaigns, CollabX provides tailored workflows and features designed for your specific industry needs. Choose your team type to see how we can transform your workflow.</p>
+                
+                <!-- Solution Navigation Tabs -->
+                <div class="solution-tabs">
+                  <div class="solution-tab" (click)="scrollToSection('engineering')">
+                    <mat-icon>engineering</mat-icon>
+                    <span>Engineering</span>
+                  </div>
+                  <div class="solution-tab" (click)="scrollToSection('marketing')">
+                    <mat-icon>campaign</mat-icon>
+                    <span>Marketing</span>
+                  </div>
+                  <div class="solution-tab" (click)="scrollToSection('it')">
+                    <mat-icon>support_agent</mat-icon>
+                    <span>IT & Operations</span>
+                  </div>
+                </div>
+
+                <div class="hero-actions">
+                  <button mat-raised-button color="primary" class="hero-primary-btn">
+                    <mat-icon>rocket_launch</mat-icon>
+                    Start Free Trial
+                  </button>
+                  <button mat-stroked-button class="hero-secondary-btn">
+                    <mat-icon>play_circle</mat-icon>
+                    Watch Demo
+                  </button>
+                </div>
               </div>
-              <h1 class="hero-title" [innerHTML]="getHeroTitle()"></h1>
-              <p class="hero-subtitle">{{ getHeroSubtitle() }}</p>
-              <div class="hero-actions">
-                <button mat-raised-button color="primary" class="hero-primary-btn">{{ getPrimaryButtonText() }}</button>
-                <button mat-button class="hero-secondary-btn">{{ getSecondaryButtonText() }} <mat-icon>arrow_forward</mat-icon></button>
+              
+              <div class="solutions-hero-right">
+                <div class="solutions-illustration">
+                  <div class="solution-card engineering-card">
+                    <div class="card-icon">
+                      <mat-icon>engineering</mat-icon>
+                    </div>
+                    <h3>Engineering</h3>
+                    <p>Scrum boards, Kanban, CI/CD integration</p>
+                    <div class="card-features">
+                      <span class="feature-tag">Agile</span>
+                      <span class="feature-tag">DevOps</span>
+                    </div>
+                  </div>
+                  
+                  <div class="solution-card marketing-card">
+                    <div class="card-icon">
+                      <mat-icon>campaign</mat-icon>
+                    </div>
+                    <h3>Marketing</h3>
+                    <p>Campaign management, analytics dashboards</p>
+                    <div class="card-features">
+                      <span class="feature-tag">Analytics</span>
+                      <span class="feature-tag">ROI</span>
+                    </div>
+                  </div>
+                  
+                  <div class="solution-card it-card">
+                    <div class="card-icon">
+                      <mat-icon>support_agent</mat-icon>
+                    </div>
+                    <h3>IT & Operations</h3>
+                    <p>Service desk, change requests, integrations</p>
+                    <div class="card-features">
+                      <span class="feature-tag">ITIL</span>
+                      <span class="feature-tag">SLA</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Industry Solutions Section -->
-        <section class="industry-solutions">
+        <!-- Engineering Solutions Section -->
+        <section id="engineering" class="solution-section engineering-section">
           <div class="container">
             <div class="section-header">
-              <h2 class="section-title">Solutions for every industry</h2>
-              <p class="section-subtitle">Tailored workflows and features designed for your specific industry needs</p>
+              <div class="section-icon">
+                <mat-icon>engineering</mat-icon>
+              </div>
+              <h2 class="section-title">Engineering Teams</h2>
+              <p class="section-subtitle">Streamline development workflows with integrated project management, code collaboration, and automated testing pipelines</p>
             </div>
-            <div class="industry-grid">
-              <div class="industry-card" *ngFor="let industry of getIndustrySolutions()">
-                <div class="industry-icon">
-                  <mat-icon>{{ industry.icon }}</mat-icon>
+            <div class="solution-features">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>view_kanban</mat-icon>
                 </div>
-                <h3 class="industry-name">{{ industry.name }}</h3>
-                <p class="industry-description">{{ industry.description }}</p>
-                <div class="industry-features">
-                  <div class="feature-item" *ngFor="let feature of industry.features">
-                    <mat-icon>check_circle</mat-icon>
-                    <span>{{ feature }}</span>
-                  </div>
+                <h3>Scrum & Kanban Boards</h3>
+                <p>Visualize your development process with customizable boards that adapt to your team's workflow</p>
+                <ul class="feature-list">
+                  <li>Sprint planning and backlog management</li>
+                  <li>Burndown charts and velocity tracking</li>
+                  <li>Custom workflows and automation</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>integration_instructions</mat-icon>
                 </div>
-                <div class="industry-stats">
-                  <div class="stat">
-                    <span class="stat-number">{{ industry.users }}</span>
-                    <span class="stat-label">Teams</span>
-                  </div>
-                  <div class="stat">
-                    <span class="stat-number">{{ industry.projects }}</span>
-                    <span class="stat-label">Projects</span>
-                  </div>
+                <h3>CI/CD Integration</h3>
+                <p>Connect with your favorite development tools and automate your deployment pipeline</p>
+                <ul class="feature-list">
+                  <li>GitHub, GitLab, and Bitbucket integration</li>
+                  <li>Automated testing and deployment</li>
+                  <li>Code review workflows</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>bug_report</mat-icon>
                 </div>
-                <button class="industry-btn">Explore Solutions</button>
+                <h3>Bug Tracking & Testing</h3>
+                <p>Comprehensive issue management and testing tools to ensure code quality</p>
+                <ul class="feature-list">
+                  <li>Automated bug reporting</li>
+                  <li>Test case management</li>
+                  <li>Performance monitoring</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Use Cases Section -->
-        <section class="use-cases">
+        <!-- Marketing Solutions Section -->
+        <section id="marketing" class="solution-section marketing-section">
           <div class="container">
             <div class="section-header">
-              <h2 class="section-title">Real-world use cases</h2>
-              <p class="section-subtitle">See how teams across industries are using CollabX to achieve their goals</p>
+              <div class="section-icon">
+                <mat-icon>campaign</mat-icon>
+              </div>
+              <h2 class="section-title">Marketing Teams</h2>
+              <p class="section-subtitle">Launch campaigns faster with collaborative content creation, campaign management, and performance analytics</p>
             </div>
-            <div class="use-cases-grid">
-              <div class="use-case-card" *ngFor="let useCase of getUseCases()">
-                <div class="use-case-header">
-                  <div class="use-case-icon">
-                    <mat-icon>{{ useCase.icon }}</mat-icon>
-                  </div>
-                  <div class="use-case-meta">
-                    <span class="use-case-category">{{ useCase.category }}</span>
-                    <span class="use-case-time">{{ useCase.time }}</span>
-                  </div>
+            <div class="solution-features">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>campaign</mat-icon>
                 </div>
-                <h3 class="use-case-title">{{ useCase.title }}</h3>
-                <p class="use-case-description">{{ useCase.description }}</p>
-                <div class="use-case-features">
-                  <span *ngFor="let feature of useCase.features" class="use-case-feature">{{ feature }}</span>
+                <h3>Campaign Management</h3>
+                <p>Plan, execute, and track marketing campaigns from ideation to completion</p>
+                <ul class="feature-list">
+                  <li>Campaign planning and timeline management</li>
+                  <li>Content calendar and approval workflows</li>
+                  <li>Multi-channel campaign coordination</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>analytics</mat-icon>
                 </div>
-                <div class="use-case-footer">
-                  <div class="use-case-company">
-                    <div class="company-avatar">{{ useCase.company.charAt(0) }}</div>
-                    <span class="company-name">{{ useCase.company }}</span>
-                  </div>
-                  <a href="#" class="use-case-link">Read case study <mat-icon>arrow_forward</mat-icon></a>
+                <h3>Analytics Dashboards</h3>
+                <p>Real-time insights and performance tracking for all your marketing activities</p>
+                <ul class="feature-list">
+                  <li>ROI tracking and attribution</li>
+                  <li>Custom reporting and dashboards</li>
+                  <li>A/B testing and optimization</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>content_copy</mat-icon>
                 </div>
+                <h3>Content Collaboration</h3>
+                <p>Streamline content creation with collaborative tools and approval workflows</p>
+                <ul class="feature-list">
+                  <li>Content planning and ideation</li>
+                  <li>Review and approval processes</li>
+                  <li>Asset management and version control</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
+
+        <!-- IT & Operations Solutions Section -->
+        <section id="it" class="solution-section it-section">
+          <div class="container">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>support_agent</mat-icon>
+              </div>
+              <h2 class="section-title">IT & Operations</h2>
+              <p class="section-subtitle">Deliver exceptional service with integrated ticketing, incident management, and automation tools</p>
+            </div>
+            <div class="solution-features">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>support_agent</mat-icon>
+                </div>
+                <h3>Service Desk</h3>
+                <p>Comprehensive IT service management with ticketing, knowledge base, and SLA tracking</p>
+                <ul class="feature-list">
+                  <li>Incident and problem management</li>
+                  <li>Self-service portal and knowledge base</li>
+                  <li>SLA monitoring and escalation</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>build</mat-icon>
+                </div>
+                <h3>Change Management</h3>
+                <p>Streamline change requests and ensure compliance with ITIL best practices</p>
+                <ul class="feature-list">
+                  <li>Change request workflows</li>
+                  <li>Risk assessment and approval</li>
+                  <li>Change calendar and scheduling</li>
+                </ul>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <mat-icon>settings</mat-icon>
+                </div>
+                <h3>Automation & Integrations</h3>
+                <p>Connect with your existing IT tools and automate routine tasks</p>
+                <ul class="feature-list">
+                  <li>Third-party tool integrations</li>
+                  <li>Automated workflows and notifications</li>
+                  <li>API access and custom connectors</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </section>
 
 
@@ -243,14 +279,115 @@ import { Router, ActivatedRoute } from '@angular/router';
         <section class="enterprise-hero">
           <div class="container">
             <div class="enterprise-hero-content">
-              <div class="hero-badges">
-                <span class="badge" *ngFor="let badge of getHeroBadges()">{{ badge }}</span>
+              <div class="enterprise-hero-left">
+                <div class="compliance-badges">
+                  <div class="badge">
+                    <mat-icon>security</mat-icon>
+                    <span>SOC2</span>
+                  </div>
+                  <div class="badge">
+                    <mat-icon>verified_user</mat-icon>
+                    <span>GDPR</span>
+                  </div>
+                  <div class="badge">
+                    <mat-icon>health_and_safety</mat-icon>
+                    <span>HIPAA</span>
+                  </div>
+                  <div class="badge">
+                    <mat-icon>lock</mat-icon>
+                    <span>ISO 27001</span>
+                  </div>
+                </div>
+                
+                <h1 class="hero-title">Enterprise-grade collaboration platform</h1>
+                <p class="hero-subtitle">Built for organizations that demand the highest standards of security, scalability, and compliance. Advanced integrations, enterprise SSO, and 24/7 dedicated support to power your mission-critical workflows.</p>
+                
+                <div class="hero-actions">
+                  <button mat-raised-button color="primary" class="hero-primary-btn">
+                    <mat-icon>phone</mat-icon>
+                    Contact Sales
+                  </button>
+                  <button mat-stroked-button class="hero-secondary-btn">
+                    <mat-icon>rocket_launch</mat-icon>
+                    Get Started Free
+                  </button>
+                </div>
               </div>
-              <h1 class="hero-title" [innerHTML]="getHeroTitle()"></h1>
-              <p class="hero-subtitle">{{ getHeroSubtitle() }}</p>
-              <div class="hero-actions">
-                <button mat-raised-button color="primary" class="hero-primary-btn">{{ getPrimaryButtonText() }}</button>
-                <button mat-button class="hero-secondary-btn">{{ getSecondaryButtonText() }} <mat-icon>arrow_forward</mat-icon></button>
+              
+              <div class="enterprise-hero-right">
+                <div class="enterprise-dashboard">
+                  <div class="dashboard-header">
+                    <div class="dashboard-title">Enterprise Dashboard</div>
+                    <div class="security-indicators">
+                      <div class="security-badge">
+                        <mat-icon>security</mat-icon>
+                        <span>Secure</span>
+                      </div>
+                      <div class="security-badge">
+                        <mat-icon>cloud_done</mat-icon>
+                        <span>Compliant</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dashboard-content">
+                    <div class="dashboard-card">
+                      <div class="card-icon">
+                        <mat-icon>trending_up</mat-icon>
+                      </div>
+                      <div class="card-content">
+                        <h4>Enterprise Analytics</h4>
+                        <p>Advanced reporting and insights</p>
+                      </div>
+                    </div>
+                    <div class="dashboard-card">
+                      <div class="card-icon">
+                        <mat-icon>admin_panel_settings</mat-icon>
+                      </div>
+                      <div class="card-content">
+                        <h4>Admin Controls</h4>
+                        <p>Granular permissions & policies</p>
+                      </div>
+                    </div>
+                    <div class="dashboard-card">
+                      <div class="card-icon">
+                        <mat-icon>integration_instructions</mat-icon>
+                      </div>
+                      <div class="card-content">
+                        <h4>500+ Integrations</h4>
+                        <p>Connect with enterprise tools</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Enterprise Highlights Section -->
+        <section class="enterprise-highlights">
+          <div class="container">
+            <div class="highlights-grid">
+              <div class="highlight-card">
+                <div class="highlight-icon">
+                  <mat-icon>scale</mat-icon>
+                </div>
+                <h3>Scalability</h3>
+                <p>Unlimited users, projects, and storage. Built to grow with your organization from startup to enterprise.</p>
+              </div>
+              <div class="highlight-card">
+                <div class="highlight-icon">
+                  <mat-icon>security</mat-icon>
+                </div>
+                <h3>Security</h3>
+                <p>SSO, MFA, end-to-end encryption, and compliance with SOC2, GDPR, HIPAA, and ISO 27001 standards.</p>
+              </div>
+              <div class="highlight-card">
+                <div class="highlight-icon">
+                  <mat-icon>hub</mat-icon>
+                </div>
+                <h3>Integrations</h3>
+                <p>Connect with 500+ enterprise apps including Salesforce, Microsoft 365, Google Workspace, and more.</p>
               </div>
             </div>
           </div>
@@ -328,112 +465,200 @@ import { Router, ActivatedRoute } from '@angular/router';
         <section class="resources-hero">
           <div class="container">
             <div class="resources-hero-content">
-              <div class="hero-badges">
-                <span class="badge" *ngFor="let badge of getHeroBadges()">{{ badge }}</span>
-              </div>
-              <h1 class="hero-title" [innerHTML]="getHeroTitle()"></h1>
-              <p class="hero-subtitle">{{ getHeroSubtitle() }}</p>
-              <div class="hero-actions">
-                <button mat-raised-button color="primary" class="hero-primary-btn">{{ getPrimaryButtonText() }}</button>
-                <button mat-button class="hero-secondary-btn">{{ getSecondaryButtonText() }} <mat-icon>arrow_forward</mat-icon></button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Documentation Section -->
-        <section class="documentation-section">
-          <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Comprehensive guides and documentation</h2>
-              <p class="section-subtitle">Everything you need to get started and master CollabX</p>
-            </div>
-            <div class="docs-grid">
-              <div class="doc-card" *ngFor="let doc of getDocumentationContent()">
-                <div class="doc-icon">
-                  <mat-icon>{{ doc.icon }}</mat-icon>
+              <div class="resources-hero-left">
+                <h1 class="hero-title">Everything you need to succeed with CollabX</h1>
+                <p class="hero-subtitle">Discover comprehensive learning resources, best practices, and community support to maximize your team's productivity and collaboration success.</p>
+                
+                <div class="hero-actions">
+                  <button mat-raised-button color="primary" class="hero-primary-btn">
+                    <mat-icon>menu_book</mat-icon>
+                    Browse Guides
+                  </button>
+                  <button mat-stroked-button class="hero-secondary-btn">
+                    <mat-icon>group</mat-icon>
+                    Join Community
+                  </button>
                 </div>
-                <h3 class="doc-title">{{ doc.title }}</h3>
-                <p class="doc-description">{{ doc.description }}</p>
-                <div class="doc-meta">
-                  <span class="doc-type">{{ doc.type }}</span>
-                  <span class="doc-time">{{ doc.time }}</span>
-                </div>
-                <a href="#" class="doc-link">Read more <mat-icon>arrow_forward</mat-icon></a>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Blog & Articles Section -->
-        <section class="blog-articles-section">
-          <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Latest insights and best practices</h2>
-              <p class="section-subtitle">Stay up-to-date with our blog and expert articles</p>
-            </div>
-            <div class="articles-grid">
-              <div class="article-card" *ngFor="let article of getBlogContent()">
-                <div class="article-image">
-                  <div class="article-category">{{ article.category }}</div>
-                </div>
-                <div class="article-content">
-                  <h3 class="article-title">{{ article.title }}</h3>
-                  <p class="article-description">{{ article.description }}</p>
-                  <div class="article-meta">
-                    <span class="article-author">{{ article.author }}</span>
-                    <span class="article-date">{{ article.date }}</span>
+              
+              <div class="resources-hero-right">
+                <div class="learning-illustration">
+                  <div class="book-stack">
+                    <div class="book book-1">
+                      <div class="book-cover">
+                        <mat-icon>school</mat-icon>
+                      </div>
+                    </div>
+                    <div class="book book-2">
+                      <div class="book-cover">
+                        <mat-icon>article</mat-icon>
+                      </div>
+                    </div>
+                    <div class="book book-3">
+                      <div class="book-cover">
+                        <mat-icon>support</mat-icon>
+                      </div>
+                    </div>
                   </div>
-                  <a href="#" class="article-link">Read article <mat-icon>arrow_forward</mat-icon></a>
+                  <div class="floating-icons">
+                    <div class="floating-icon icon-1">
+                      <mat-icon>lightbulb</mat-icon>
+                    </div>
+                    <div class="floating-icon icon-2">
+                      <mat-icon>trending_up</mat-icon>
+                    </div>
+                    <div class="floating-icon icon-3">
+                      <mat-icon>star</mat-icon>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Learning Center Section -->
-        <section class="learning-center-section">
+        <!-- Key Sections -->
+        <section class="key-sections">
           <div class="container">
-            <div class="section-header">
-              <h2 class="section-title">Learning center</h2>
-              <p class="section-subtitle">Master CollabX with our comprehensive tutorials and guides</p>
-            </div>
-            <div class="learning-grid">
-              <div class="learning-card" *ngFor="let tutorial of getLearningContent()">
-                <div class="learning-icon">
-                  <mat-icon>{{ tutorial.icon }}</mat-icon>
+            <div class="sections-grid">
+              <div class="section-card">
+                <div class="section-icon">
+                  <mat-icon>school</mat-icon>
                 </div>
-                <div class="learning-level">{{ tutorial.level }}</div>
-                <h3 class="learning-title">{{ tutorial.title }}</h3>
-                <p class="learning-description">{{ tutorial.description }}</p>
-                <div class="learning-meta">
-                  <span class="learning-duration">{{ tutorial.duration }}</span>
-                  <span class="learning-lessons">{{ tutorial.lessons }} lessons</span>
+                <h3>Learning Center</h3>
+                <p>Tutorials, step-by-step guides, and onboarding resources to help you master CollabX from day one.</p>
+                <ul class="section-features">
+                  <li>Getting Started Tutorials</li>
+                  <li>Advanced Feature Guides</li>
+                  <li>Video Walkthroughs</li>
+                  <li>Onboarding Resources</li>
+                </ul>
+                <button class="section-btn">Explore Learning</button>
+              </div>
+              
+              <div class="section-card">
+                <div class="section-icon">
+                  <mat-icon>article</mat-icon>
                 </div>
-                <button class="learning-btn">Start Learning</button>
+                <h3>Best Practices & Blogs</h3>
+                <p>Articles on team collaboration, project management, and productivity insights from industry experts.</p>
+                <ul class="section-features">
+                  <li>Collaboration Best Practices</li>
+                  <li>Project Management Tips</li>
+                  <li>Productivity Insights</li>
+                  <li>Industry Case Studies</li>
+                </ul>
+                <button class="section-btn">Read Articles</button>
+              </div>
+              
+              <div class="section-card">
+                <div class="section-icon">
+                  <mat-icon>support</mat-icon>
+                </div>
+                <h3>Community & Support</h3>
+                <p>Join discussions, access our help center, and connect with experts and fellow users.</p>
+                <ul class="section-features">
+                  <li>Community Forums</li>
+                  <li>Help Center</li>
+                  <li>Expert Q&A</li>
+                  <li>User Groups</li>
+                </ul>
+                <button class="section-btn">Join Community</button>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Community & Support Section -->
-        <section class="community-support-section">
+        <!-- Featured Resources Section -->
+        <section class="featured-resources">
           <div class="container">
             <div class="section-header">
-              <h2 class="section-title">Join our community and get support</h2>
-              <p class="section-subtitle">Connect with other users and get help from our support team</p>
+              <h2 class="section-title">Featured Resources</h2>
+              <p class="section-subtitle">Handpicked guides, articles, and case studies to help you succeed</p>
             </div>
-            <div class="community-grid">
-              <div class="community-card" *ngFor="let item of getCommunityContent()">
-                <div class="community-icon">
-                  <mat-icon>{{ item.icon }}</mat-icon>
+            <div class="resources-grid">
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>rocket_launch</mat-icon>
                 </div>
-                <h3 class="community-title">{{ item.title }}</h3>
-                <p class="community-description">{{ item.description }}</p>
-                <div class="community-stats">
-                  <span class="community-stat">{{ item.stat }}</span>
+                <div class="resource-tag">Guide</div>
+                <h3>Getting Started Guide</h3>
+                <p>Complete walkthrough to set up your workspace, invite team members, and create your first project.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">15 min read</span>
+                  <span class="resource-level">Beginner</span>
                 </div>
-                <button class="community-btn">{{ item.buttonText }}</button>
+                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+              </div>
+
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>group_work</mat-icon>
+                </div>
+                <div class="resource-tag">Article</div>
+                <h3>Collaboration Best Practices</h3>
+                <p>Learn proven strategies for effective team collaboration and communication in remote and hybrid environments.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">8 min read</span>
+                  <span class="resource-level">Intermediate</span>
+                </div>
+                <a href="#" class="resource-link">Read Article <mat-icon>arrow_forward</mat-icon></a>
+              </div>
+
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>assignment</mat-icon>
+                </div>
+                <div class="resource-tag">Guide</div>
+                <h3>Project Management Fundamentals</h3>
+                <p>Master the essentials of project management with CollabX: planning, tracking, and delivering successful projects.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">12 min read</span>
+                  <span class="resource-level">Beginner</span>
+                </div>
+                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+              </div>
+
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <div class="resource-tag">Case Study</div>
+                <h3>Customer Success Story</h3>
+                <p>How TechCorp increased team productivity by 40% and reduced project delivery time using CollabX.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">6 min read</span>
+                  <span class="resource-level">All Levels</span>
+                </div>
+                <a href="#" class="resource-link">Read Case Study <mat-icon>arrow_forward</mat-icon></a>
+              </div>
+
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>settings</mat-icon>
+                </div>
+                <div class="resource-tag">Guide</div>
+                <h3>Advanced Integrations</h3>
+                <p>Connect CollabX with your favorite tools: Slack, Microsoft Teams, Google Workspace, and more.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">10 min read</span>
+                  <span class="resource-level">Advanced</span>
+                </div>
+                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+              </div>
+
+              <div class="resource-card">
+                <div class="resource-icon">
+                  <mat-icon>analytics</mat-icon>
+                </div>
+                <div class="resource-tag">Article</div>
+                <h3>Team Analytics & Insights</h3>
+                <p>Leverage data-driven insights to optimize team performance and identify collaboration opportunities.</p>
+                <div class="resource-meta">
+                  <span class="resource-time">7 min read</span>
+                  <span class="resource-level">Intermediate</span>
+                </div>
+                <a href="#" class="resource-link">Read Article <mat-icon>arrow_forward</mat-icon></a>
               </div>
             </div>
           </div>
@@ -1689,12 +1914,387 @@ import { Router, ActivatedRoute } from '@angular/router';
     .solutions-hero {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       padding: 6rem 0;
-      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .solutions-hero-content {
-      max-width: 800px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .solutions-hero-left {
+      max-width: 600px;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin: 0 0 2rem 0;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .solution-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .solution-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+    }
+
+    .solution-tab:hover {
+      border-color: #4f46e5;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.15);
+    }
+
+    .solution-tab mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      color: #4f46e5;
+    }
+
+    .solution-tab span {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .hero-primary-btn {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .hero-primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .hero-secondary-btn {
+      background: white;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .hero-secondary-btn:hover {
+      background: #4f46e5;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .solutions-hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .solutions-illustration {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 500px;
+    }
+
+    .solution-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .solution-card.engineering-card {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .solution-card.marketing-card {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .solution-card.it-card {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .card-icon {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+
+    .solution-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .solution-card p {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin: 0 0 1rem 0;
+      line-height: 1.5;
+    }
+
+    .card-features {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .feature-tag {
+      background: rgba(79, 70, 229, 0.1);
+      color: #4f46e5;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Solution Sections */
+    .solution-section {
+      padding: 6rem 0;
+    }
+
+    .engineering-section {
+      background: white;
+    }
+
+    .marketing-section {
+      background: #f8fafc;
+    }
+
+    .it-section {
+      background: white;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-icon {
+      width: 4rem;
+      height: 4rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .section-icon mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      color: white;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0 0 1rem 0;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .solution-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border-color: #4f46e5;
+    }
+
+    .feature-icon {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-icon mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      color: #475569;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      color: #10b981;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .solutions-hero {
+        padding: 4rem 0;
+      }
+
+      .solutions-hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .solution-tabs {
+        justify-content: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .solution-tabs {
+        justify-content: center;
+      }
+
+      .solutions-illustration {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .solution-card.engineering-card,
+      .solution-card.marketing-card,
+      .solution-card.it-card {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .solution-features {
+        grid-template-columns: 1fr;
+      }
     }
 
     .industry-solutions {
@@ -1815,24 +2415,681 @@ import { Router, ActivatedRoute } from '@angular/router';
     .enterprise-hero {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       padding: 6rem 0;
-      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .enterprise-hero-content {
-      max-width: 800px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .enterprise-hero-left {
+      max-width: 600px;
+    }
+
+    .compliance-badges {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .compliance-badges .badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(79, 70, 229, 0.1);
+      color: #4f46e5;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+
+    .compliance-badges .badge mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .enterprise-hero .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .enterprise-hero .hero-subtitle {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin: 0 0 2.5rem 0;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .enterprise-hero .hero-actions {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .enterprise-hero .hero-primary-btn {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .enterprise-hero .hero-primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .enterprise-hero .hero-secondary-btn {
+      background: white;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .enterprise-hero .hero-secondary-btn:hover {
+      background: #4f46e5;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .enterprise-hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .enterprise-dashboard {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 100%;
+      max-width: 500px;
+      transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .enterprise-dashboard:hover {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    }
+
+    .dashboard-header {
+      background: #f8fafc;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dashboard-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    .security-indicators {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .security-badge mat-icon {
+      font-size: 0.875rem;
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    .dashboard-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .dashboard-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .dashboard-card .card-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dashboard-card .card-icon mat-icon {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      color: white;
+    }
+
+    .dashboard-card .card-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a202c;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .dashboard-card .card-content p {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* Enterprise Highlights Section */
+    .enterprise-highlights {
+      padding: 4rem 0;
+      background: white;
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .highlight-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .highlight-icon {
+      width: 4rem;
+      height: 4rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .highlight-icon mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      color: white;
+    }
+
+    .highlight-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 1rem 0;
+    }
+
+    .highlight-card p {
+      font-size: 1rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0;
     }
 
     /* Resources Page Specific Styles */
     .resources-hero {
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
       padding: 6rem 0;
-      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     .resources-hero-content {
-      max-width: 800px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .resources-hero-left {
+      max-width: 600px;
+    }
+
+    .resources-hero .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .resources-hero .hero-subtitle {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin: 0 0 2.5rem 0;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .resources-hero .hero-actions {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .resources-hero .hero-primary-btn {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .resources-hero .hero-primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+    }
+
+    .resources-hero .hero-secondary-btn {
+      background: white;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .resources-hero .hero-secondary-btn:hover {
+      background: #4f46e5;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .resources-hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .learning-illustration {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
+    }
+
+    .book-stack {
+      position: relative;
+      width: 200px;
+      height: 200px;
       margin: 0 auto;
+    }
+
+    .book {
+      position: absolute;
+      width: 80px;
+      height: 100px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .book-1 {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      top: 0;
+      left: 0;
+      z-index: 3;
+    }
+
+    .book-2 {
+      background: linear-gradient(135deg, #10b981, #059669);
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+    }
+
+    .book-3 {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      top: 40px;
+      left: 40px;
+      z-index: 1;
+    }
+
+    .book-cover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: white;
+    }
+
+    .book-cover mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .floating-icons {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .floating-icon {
+      position: absolute;
+      width: 3rem;
+      height: 3rem;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .icon-1 {
+      top: 20px;
+      right: 20px;
+      animation-delay: 0s;
+    }
+
+    .icon-2 {
+      bottom: 40px;
+      left: 20px;
+      animation-delay: 1s;
+    }
+
+    .icon-3 {
+      top: 50%;
+      right: 0;
+      animation-delay: 2s;
+    }
+
+    .floating-icon mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #4f46e5;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Key Sections */
+    .key-sections {
+      padding: 4rem 0;
+      background: white;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .section-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-icon {
+      width: 4rem;
+      height: 4rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .section-icon mat-icon {
+      font-size: 2rem;
+      width: 2rem;
+      height: 2rem;
+      color: white;
+    }
+
+    .section-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 1rem 0;
+    }
+
+    .section-card p {
+      font-size: 1rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .section-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem 0;
+      text-align: left;
+    }
+
+    .section-features li {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .section-features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    .section-btn {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .section-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Featured Resources */
+    .featured-resources {
+      padding: 4rem 0;
+      background: #f8fafc;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-icon {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .resource-icon mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+
+    .resource-tag {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(79, 70, 229, 0.1);
+      color: #4f46e5;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .resource-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .resource-card p {
+      font-size: 0.875rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0 0 1rem 0;
+    }
+
+    .resource-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .resource-time,
+    .resource-level {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .resource-level {
+      background: rgba(79, 70, 229, 0.1);
+      color: #4f46e5;
+      padding: 0.125rem 0.5rem;
+      border-radius: 8px;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+    }
+
+    .resource-link:hover {
+      color: #a855f7;
+      transform: translateX(2px);
+    }
+
+    .resource-link mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
     }
 
     .documentation-section {
@@ -2203,6 +3460,61 @@ import { Router, ActivatedRoute } from '@angular/router';
       .enterprise-hero,
       .resources-hero {
         padding: 4rem 0;
+      }
+
+      .enterprise-hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .enterprise-hero .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .compliance-badges {
+        justify-content: center;
+      }
+
+      .enterprise-hero .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .enterprise-dashboard {
+        transform: none;
+      }
+
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resources-hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .resources-hero .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .resources-hero .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .learning-illustration {
+        max-width: 300px;
+        height: 250px;
+      }
+
+      .sections-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resources-grid {
+        grid-template-columns: 1fr;
       }
 
       .industry-grid,
@@ -3501,6 +4813,13 @@ export class PlaceholderComponent implements OnInit {
         buttonText: 'Get Support'
       }
     ];
+  }
+
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
 

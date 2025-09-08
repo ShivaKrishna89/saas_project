@@ -32,18 +32,57 @@
   <section class="hero">
     <div class="container">
       <div class="hero-content">
-        <h1 class="hero-title">Simple, transparent pricing</h1>
-        <p class="hero-subtitle">Choose the perfect plan for your team. Start free, upgrade when you're ready.</p>
+        <div class="hero-left">
+          <h1 class="hero-title">Simple, transparent pricing for every team</h1>
+          <p class="hero-subtitle">Whether you're a startup or an enterprise, CollabX has a plan to fit your needs. No hidden fees, no surprises.</p>
+          
+          <div class="hero-actions">
+            <button mat-raised-button color="primary" class="hero-primary-btn" (click)="navigateToRegister()">
+              <mat-icon>rocket_launch</mat-icon>
+              Get Started Free
+            </button>
+            <button mat-stroked-button class="hero-secondary-btn" (click)="talkToSales()">
+              <mat-icon>phone</mat-icon>
+              Contact Sales
+            </button>
+          </div>
+          
+          <p class="hero-reassurance">14-day free trial · No credit card required</p>
+        </div>
         
-        <!-- Billing Toggle -->
-        <div class="billing-toggle">
-          <span class="toggle-label" [class.active]="!isAnnual">Monthly</span>
-          <mat-slide-toggle [(ngModel)]="isAnnual" class="toggle-switch">
-          </mat-slide-toggle>
-          <span class="toggle-label" [class.active]="isAnnual">
-            Annual 
-            <span class="discount-badge">Save 20%</span>
-          </span>
+        <div class="hero-right">
+          <div class="pricing-illustration">
+            <div class="team-graphic">
+              <div class="team-member member-1">
+                <div class="member-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="member-label">Startup</div>
+              </div>
+              <div class="team-member member-2">
+                <div class="member-avatar">
+                  <mat-icon>group</mat-icon>
+                </div>
+                <div class="member-label">Team</div>
+              </div>
+              <div class="team-member member-3">
+                <div class="member-avatar">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <div class="member-label">Enterprise</div>
+              </div>
+            </div>
+            <div class="connection-lines">
+              <div class="line line-1"></div>
+              <div class="line line-2"></div>
+            </div>
+            <div class="collaboration-center">
+              <div class="center-icon">
+                <mat-icon>rocket_launch</mat-icon>
+              </div>
+              <div class="center-label">CollabX</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
