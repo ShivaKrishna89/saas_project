@@ -83,7 +83,7 @@
   position: relative;
   padding: 8px 0;
 
-  &:hover, &.active {
+  &:hover {
     color: #667eea;
   }
 
@@ -98,8 +98,17 @@
     transition: width 0.3s ease;
   }
 
-  &:hover::after, &.active::after {
+  &:hover::after {
     width: 100%;
+  }
+
+  &.active {
+    color: #4f46e5;
+    font-weight: 600;
+
+    &::after {
+      width: 100%;
+    }
   }
 }
 

@@ -10,7 +10,7 @@
       </div>
       
       <div class="nav-center">
-        <a [routerLink]="['/']" class="nav-link">Product</a>
+        <a [routerLink]="['/home']" class="nav-link active">Home</a>
         <a [routerLink]="['/solutions']" class="nav-link">Solutions</a>
         <a [routerLink]="['/enterprise']" class="nav-link">Enterprise</a>
         <a [routerLink]="['/resources']" class="nav-link">Resources</a>
@@ -30,13 +30,6 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-background">
-      <div class="floating-elements">
-        <div class="floating-card card-1"></div>
-        <div class="floating-card card-2"></div>
-        <div class="floating-card card-3"></div>
-      </div>
-    </div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
@@ -143,11 +136,11 @@
     </div>
   </section>
 
-  <!-- Features Section -->
+  <!-- Core Features Section -->
   <section class="features">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Everything you need to succeed</h2>
+        <h2 class="section-title">Made for complex projects or everyday tasks</h2>
         <p class="section-subtitle">Powerful features designed to boost productivity and streamline collaboration</p>
       </div>
       <div class="features-grid">
@@ -159,6 +152,109 @@
           <p class="feature-description">{{ feature.description }}</p>
           <a href="#" class="feature-link">Learn more <mat-icon>arrow_forward</mat-icon></a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI-Powered Section -->
+  <section class="ai-section">
+    <div class="container">
+      <div class="ai-content">
+        <div class="ai-text">
+          <h2 class="section-title">Where your team + AI come together</h2>
+          <h3 class="ai-subtitle">Plan, Track, and Collaborate</h3>
+          <p class="ai-description">CollabX's AI helps teams drive better outcomes, faster.</p>
+          
+          <div class="ai-features">
+            <div class="ai-feature">
+              <div class="ai-feature-icon">
+                <mat-icon>auto_awesome</mat-icon>
+              </div>
+              <div class="ai-feature-content">
+                <h4>Jumpstart planning</h4>
+                <p>Create work items from your favorite tools, then use AI to break down big ideas, polish descriptions, and link relevant resources in a snap.</p>
+              </div>
+            </div>
+            
+            <div class="ai-feature">
+              <div class="ai-feature-icon">
+                <mat-icon>trending_up</mat-icon>
+              </div>
+              <div class="ai-feature-content">
+                <h4>Focus on impact</h4>
+                <p>Cut down on admin with AI agents that make it easier to create project plans, identify trends, and flag potential risks.</p>
+              </div>
+            </div>
+            
+            <div class="ai-feature">
+              <div class="ai-feature-icon">
+                <mat-icon>sync</mat-icon>
+              </div>
+              <div class="ai-feature-content">
+                <h4>Stay in sync</h4>
+                <p>Surface related work, summarize lengthy comments, and connect work to company goals to give your team the details they need to work faster and make better decisions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ai-visual">
+          <div class="ai-dashboard">
+            <div class="ai-header">
+              <div class="ai-tabs">
+                <span class="ai-tab active">AI Assistant</span>
+                <span class="ai-tab">Smart Insights</span>
+                <span class="ai-tab">Auto Planning</span>
+              </div>
+            </div>
+            <div class="ai-content-area">
+              <div class="ai-suggestion">
+                <div class="suggestion-header">
+                  <mat-icon>lightbulb</mat-icon>
+                  <span>AI Suggestion</span>
+                </div>
+                <p>Based on your team's velocity, consider breaking this epic into 3 smaller stories for better tracking.</p>
+                <div class="suggestion-actions">
+                  <button class="suggestion-btn primary">Apply</button>
+                  <button class="suggestion-btn secondary">Dismiss</button>
+                </div>
+              </div>
+              <div class="ai-insights">
+                <div class="insight-item">
+                  <mat-icon>warning</mat-icon>
+                  <span>Risk detected: Timeline at risk</span>
+                </div>
+                <div class="insight-item">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Team velocity increased 15%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integration Section -->
+  <section class="integration-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Meet teams where they work</h2>
+        <p class="section-subtitle">If your team uses it, we integrate with it. Easily add your favorite tools from our marketplace, keeping CollabX as your central source of truth.</p>
+      </div>
+      <div class="integrations-grid">
+        <div class="integration-item" *ngFor="let integration of integrations">
+          <div class="integration-icon">
+            <mat-icon>{{ integration.icon }}</mat-icon>
+          </div>
+          <span class="integration-name">{{ integration.name }}</span>
+        </div>
+      </div>
+      <div class="integration-cta">
+        <button mat-raised-button color="primary" class="marketplace-btn">
+          <mat-icon>store</mat-icon>
+          Go to Marketplace
+        </button>
       </div>
     </div>
   </section>

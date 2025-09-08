@@ -81,11 +81,26 @@ export class HomeComponent {
     }
   ];
 
+  integrations = [
+    { name: 'Microsoft Teams', icon: 'video_call' },
+    { name: 'Google Drive', icon: 'cloud' },
+    { name: 'Google Docs', icon: 'description' },
+    { name: 'Figma', icon: 'design_services' },
+    { name: 'Miro', icon: 'gesture' },
+    { name: 'Slack', icon: 'chat' },
+    { name: 'Zoom', icon: 'videocam' },
+    { name: 'GitHub', icon: 'code' },
+    { name: 'Jira', icon: 'bug_report' },
+    { name: 'Trello', icon: 'view_kanban' },
+    { name: 'Notion', icon: 'note' },
+    { name: 'Asana', icon: 'task' }
+  ];
+
   footerSections = [
     {
       title: 'Product',
       links: [
-        { name: 'Home', route: '' },
+        { name: 'Home', route: 'home' },
         { name: 'Solutions', route: 'solutions' },
         { name: 'Pricing', route: 'pricing' },
         { name: 'Enterprise', route: 'enterprise' }
