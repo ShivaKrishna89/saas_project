@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-community',
@@ -39,28 +40,28 @@ import { Component } from '@angular/core';
                 <mat-icon>forum</mat-icon>
                 <h3>Community Forum</h3>
                 <p>Ask questions, share tips, and connect with other users in our official forum.</p>
-                <button mat-raised-button color="primary">Join Forum</button>
+                <button mat-raised-button color="primary" (click)="joinForum()">Join Forum</button>
               </div>
               
               <div class="platform-card">
                 <mat-icon>chat</mat-icon>
                 <h3>Discord Server</h3>
                 <p>Real-time chat with the community. Get instant help and share your experiences.</p>
-                <button mat-raised-button color="primary">Join Discord</button>
+                <button mat-raised-button color="primary" (click)="joinDiscord()">Join Discord</button>
               </div>
               
               <div class="platform-card">
                 <mat-icon>code</mat-icon>
                 <h3>GitHub</h3>
                 <p>Contribute to open source projects, report issues, and collaborate on integrations.</p>
-                <button mat-raised-button color="primary">View on GitHub</button>
+                <button mat-raised-button color="primary" (click)="viewGitHub()">View on GitHub</button>
               </div>
               
               <div class="platform-card">
                 <mat-icon>groups</mat-icon>
                 <h3>User Groups</h3>
                 <p>Join local user groups and attend meetups in your area.</p>
-                <button mat-raised-button color="primary">Find Groups</button>
+                <button mat-raised-button color="primary" (click)="findGroups()">Find Groups</button>
               </div>
             </div>
           </div>
@@ -154,14 +155,14 @@ import { Component } from '@angular/core';
                 <mat-icon>edit</mat-icon>
                 <h3>Write a Tutorial</h3>
                 <p>Share your knowledge by writing tutorials and guides for other users.</p>
-                <button mat-stroked-button>Submit Tutorial</button>
+                <button mat-stroked-button (click)="submitTutorial()">Submit Tutorial</button>
               </div>
               
               <div class="contribute-option">
                 <mat-icon>bug_report</mat-icon>
                 <h3>Report Issues</h3>
                 <p>Help improve CollabX by reporting bugs and suggesting new features.</p>
-                <button mat-stroked-button>Report Issue</button>
+                <button mat-stroked-button (click)="reportIssue()">Report Issue</button>
               </div>
               
               <div class="contribute-option">
@@ -451,4 +452,41 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class CommunityComponent {}
+export class CommunityComponent {
+  constructor(private router: Router) {}
+
+  joinForum() {
+    // In a real implementation, this would redirect to the forum
+    alert('Forum coming soon! This would redirect to our community forum.');
+  }
+
+  joinDiscord() {
+    // In a real implementation, this would redirect to Discord
+    alert('Discord server coming soon! This would redirect to our Discord server.');
+  }
+
+  viewGitHub() {
+    // In a real implementation, this would redirect to GitHub
+    alert('GitHub repository coming soon! This would redirect to our GitHub repository.');
+  }
+
+  findGroups() {
+    // In a real implementation, this would redirect to user groups
+    alert('User groups coming soon! This would redirect to our user groups page.');
+  }
+
+  submitTutorial() {
+    // In a real implementation, this would redirect to tutorial submission
+    alert('Tutorial submission coming soon! This would redirect to our tutorial submission form.');
+  }
+
+  reportIssue() {
+    // In a real implementation, this would redirect to issue reporting
+    alert('Issue reporting coming soon! This would redirect to our issue reporting form.');
+  }
+
+  shareIntegration() {
+    // In a real implementation, this would redirect to integration sharing
+    alert('Integration sharing coming soon! This would redirect to our integration sharing form.');
+  }
+}

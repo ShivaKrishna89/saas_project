@@ -37,7 +37,7 @@
           <p class="hero-subtitle">Whether you're a startup or an enterprise, CollabX has a plan to fit your needs. No hidden fees, no surprises.</p>
           
           <div class="hero-actions">
-            <button mat-raised-button color="primary" class="hero-primary-btn" (click)="navigateToRegister()">
+            <button mat-raised-button color="primary" class="hero-primary-btn" (click)="navigateToRegister('free')">
               <mat-icon>rocket_launch</mat-icon>
               Get Started Free
             </button>
@@ -113,7 +113,7 @@
           </div>
           
           <div class="plan-actions">
-            <button mat-raised-button color="primary" class="plan-button" (click)="navigateToRegister()" *ngIf="!isLoggedIn">
+            <button mat-raised-button color="primary" class="plan-button" (click)="navigateToRegister('free')" *ngIf="!isLoggedIn">
               Get Started Free
             </button>
             <button mat-stroked-button class="plan-button active-plan" *ngIf="isLoggedIn" disabled>
@@ -239,13 +239,7 @@
             <mat-icon class="logo-icon">rocket_launch</mat-icon>
             <span class="logo-text">CollabX</span>
           </div>
-          <p>&copy; 2024 CollabX. All rights reserved.</p>
-        </div>
-        <div class="footer-right">
-          <a href="#" class="footer-link">Privacy</a>
-          <a href="#" class="footer-link">Terms</a>
-          <a href="#" class="footer-link">Cookies</a>
-          <a href="#" class="footer-link">Contact</a>
+          <p>&copy; 2025 CollabX. All rights reserved.</p>
         </div>
       </div>
     </div>

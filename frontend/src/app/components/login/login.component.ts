@@ -66,9 +66,6 @@ export class LoginComponent {
     }
   }
 
-  signInWithGoogle() {
-    console.log('Google sign-in clicked');
-  }
 
   goToRegister() {
     this.router.navigate(['/auth/register']);

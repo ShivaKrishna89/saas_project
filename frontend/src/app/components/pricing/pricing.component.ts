@@ -137,12 +137,16 @@ export class PricingComponent implements OnInit {
     this.router.navigate(['/auth/login']);
   }
 
-  navigateToRegister() {
-    this.router.navigate(['/auth/register']);
+  navigateToRegister(plan?: string) {
+    if (plan) {
+      this.router.navigate(['/auth/register'], { queryParams: { plan: plan } });
+    } else {
+      this.router.navigate(['/auth/register']);
+    }
   }
 
   talkToSales() {
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/contact-sales']);
   }
 
   goHome() {

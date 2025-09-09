@@ -44,7 +44,7 @@ export class MainLayoutComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/workspace-selector']);
   }
 
   onSearchFocus() {

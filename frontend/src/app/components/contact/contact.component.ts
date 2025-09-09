@@ -104,18 +104,18 @@ import { Component } from '@angular/core';
               <div class="social-links">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                  <a href="#" class="social-link">
+                  <div class="social-icon facebook">
                     <mat-icon>facebook</mat-icon>
-                  </a>
-                  <a href="#" class="social-link">
-                    <mat-icon>twitter</mat-icon>
-                  </a>
-                  <a href="#" class="social-link">
+                  </div>
+                  <div class="social-icon twitter">
+                    <mat-icon>alternate_email</mat-icon>
+                  </div>
+                  <div class="social-icon linkedin">
                     <mat-icon>linkedin</mat-icon>
-                  </a>
-                  <a href="#" class="social-link">
-                    <mat-icon>youtube</mat-icon>
-                  </a>
+                  </div>
+                  <div class="social-icon youtube">
+                    <mat-icon>play_circle</mat-icon>
+                  </div>
                 </div>
               </div>
             </div>
@@ -285,23 +285,38 @@ import { Component } from '@angular/core';
       gap: 16px;
     }
 
-    .social-link {
+    .social-icon {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 48px;
       height: 48px;
-      background: #f0f0f0;
       border-radius: 50%;
-      color: #4a154b;
-      text-decoration: none;
-      transition: all 0.2s;
+      cursor: default;
+      opacity: 0.7;
     }
 
-    .social-link:hover {
-      background: #4a154b;
+    .social-icon mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
       color: white;
-      transform: translateY(-2px);
+    }
+
+    .social-icon.facebook {
+      background: #1877f2;
+    }
+
+    .social-icon.twitter {
+      background: #1da1f2;
+    }
+
+    .social-icon.linkedin {
+      background: #0077b5;
+    }
+
+    .social-icon.youtube {
+      background: #ff0000;
     }
 
     .faq-section h2 {

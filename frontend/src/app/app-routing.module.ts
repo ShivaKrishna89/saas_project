@@ -9,6 +9,14 @@ import { WorkspaceSelectorComponent } from './components/workspace-selector/work
 import { PlaceholderComponent } from './components/placeholder/placeholder.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 
+// New Components
+import { SolutionsEngineeringComponent } from './components/solutions-engineering/solutions-engineering.component';
+import { SolutionsMarketingComponent } from './components/solutions-marketing/solutions-marketing.component';
+import { SolutionsItComponent } from './components/solutions-it/solutions-it.component';
+import { ResourcesGuidesComponent } from './components/resources-guides/resources-guides.component';
+import { DemoComponent } from './components/demo/demo.component';
+import { ContactSalesComponent } from './components/contact-sales/contact-sales.component';
+
 // Company Pages
 import { AboutComponent } from './components/about/about.component';
 import { CareersComponent } from './components/careers/careers.component';
@@ -61,9 +69,15 @@ const routes: Routes = [
   // Marketing pages
   { path: 'features', component: PlaceholderComponent, data: { pageType: 'features' } },
   { path: 'solutions', component: PlaceholderComponent, data: { pageType: 'solutions' } },
+  { path: 'solutions/engineering', component: SolutionsEngineeringComponent },
+  { path: 'solutions/marketing', component: SolutionsMarketingComponent },
+  { path: 'solutions/it', component: SolutionsItComponent },
   { path: 'enterprise', component: PlaceholderComponent, data: { pageType: 'enterprise' } },
   { path: 'resources', component: PlaceholderComponent, data: { pageType: 'resources' } },
+  { path: 'resources/guides', component: ResourcesGuidesComponent },
   { path: 'pricing', component: PricingComponent },
+  { path: 'demo', component: DemoComponent },
+  { path: 'contact-sales', component: ContactSalesComponent },
 
   // Company pages
   { path: 'about', component: AboutComponent },

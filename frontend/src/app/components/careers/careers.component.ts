@@ -63,7 +63,7 @@ import { Component } from '@angular/core';
                   <span class="tag">TypeScript</span>
                   <span class="tag">Material UI</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
 
               <div class="position-card">
@@ -77,7 +77,7 @@ import { Component } from '@angular/core';
                   <span class="tag">FastAPI</span>
                   <span class="tag">PostgreSQL</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
 
               <div class="position-card">
@@ -91,7 +91,7 @@ import { Component } from '@angular/core';
                   <span class="tag">Docker</span>
                   <span class="tag">Kubernetes</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
 
               <div class="position-card">
@@ -105,7 +105,7 @@ import { Component } from '@angular/core';
                   <span class="tag">User Research</span>
                   <span class="tag">Agile</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
 
               <div class="position-card">
@@ -119,7 +119,7 @@ import { Component } from '@angular/core';
                   <span class="tag">User Research</span>
                   <span class="tag">Prototyping</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
 
               <div class="position-card">
@@ -133,7 +133,7 @@ import { Component } from '@angular/core';
                   <span class="tag">SaaS</span>
                   <span class="tag">Communication</span>
                 </div>
-                <button mat-raised-button color="primary" class="apply-btn">Apply Now</button>
+                <button mat-raised-button color="primary" class="apply-btn" (click)="applyForPosition()">Apply Now</button>
               </div>
             </div>
           </div>
@@ -163,11 +163,6 @@ import { Component } from '@angular/core';
             </div>
           </div>
 
-          <div class="application-section">
-            <h2>Ready to Apply?</h2>
-            <p>Don't see a position that matches your skills? We're always looking for talented individuals to join our team.</p>
-            <button mat-raised-button color="accent" class="general-apply-btn">Send Us Your Resume</button>
-          </div>
         </div>
       </div>
     </div>
@@ -209,11 +204,11 @@ import { Component } from '@angular/core';
       padding: 80px 0;
     }
 
-    .why-join-section, .open-positions-section, .culture-section, .application-section {
+    .why-join-section, .open-positions-section, .culture-section {
       margin-bottom: 80px;
     }
 
-    .why-join-section h2, .open-positions-section h2, .culture-section h2, .application-section h2 {
+    .why-join-section h2, .open-positions-section h2, .culture-section h2 {
       font-size: 36px;
       font-weight: 700;
       margin-bottom: 40px;
@@ -352,24 +347,6 @@ import { Component } from '@angular/core';
       opacity: 0.9;
     }
 
-    .application-section {
-      text-align: center;
-      padding: 60px 0;
-      background: #f8f9fa;
-      border-radius: 8px;
-    }
-
-    .application-section p {
-      font-size: 18px;
-      color: rgba(0, 0, 0, 0.7);
-      margin-bottom: 24px;
-    }
-
-    .general-apply-btn {
-      font-size: 18px;
-      font-weight: 600;
-      padding: 16px 32px;
-    }
 
     @media (max-width: 768px) {
       .hero-section h1 {
@@ -396,4 +373,8 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class CareersComponent {}
+export class CareersComponent {
+  applyForPosition() {
+    alert('Thank you for applying. The role is no longer available');
+  }
+}

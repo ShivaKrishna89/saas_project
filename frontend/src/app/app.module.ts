@@ -82,6 +82,14 @@ import { TaskManagementComponent } from './components/task-management/task-manag
 import { ProjectsComponent } from './components/projects/projects.component';
 import { TeamComponent } from './components/team/team.component';
 
+// New Components
+import { SolutionsEngineeringComponent } from './components/solutions-engineering/solutions-engineering.component';
+import { SolutionsMarketingComponent } from './components/solutions-marketing/solutions-marketing.component';
+import { SolutionsItComponent } from './components/solutions-it/solutions-it.component';
+import { ResourcesGuidesComponent } from './components/resources-guides/resources-guides.component';
+import { DemoComponent } from './components/demo/demo.component';
+import { ContactSalesComponent } from './components/contact-sales/contact-sales.component';
+
 // Services
 import { AuthInterceptor } from './services/auth.interceptor';
 import { WebSocketService } from './services/websocket.service';
@@ -117,7 +125,13 @@ import { WebSocketService } from './services/websocket.service';
     PricingComponent,
     TaskManagementComponent,
     ProjectsComponent,
-    TeamComponent
+    TeamComponent,
+    SolutionsEngineeringComponent,
+    SolutionsMarketingComponent,
+    SolutionsItComponent,
+    ResourcesGuidesComponent,
+    DemoComponent,
+    ContactSalesComponent
   ],
       imports: [
       BrowserModule,

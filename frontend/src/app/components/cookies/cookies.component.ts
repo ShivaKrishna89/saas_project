@@ -100,11 +100,6 @@ import { Component } from '@angular/core';
                   </ul>
                 </div>
                 
-                <div class="control-method">
-                  <h3>Our Cookie Settings</h3>
-                  <p>You can manage your cookie preferences through our website settings:</p>
-                  <button mat-raised-button color="primary" class="cookie-settings-btn">Manage Cookie Settings</button>
-                </div>
               </div>
             </section>
 
@@ -245,7 +240,7 @@ import { Component } from '@angular/core';
 
     .cookie-controls {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 40px;
       margin-top: 24px;
     }
@@ -261,9 +256,6 @@ import { Component } from '@angular/core';
       margin-bottom: 12px;
     }
 
-    .cookie-settings-btn {
-      margin-top: 16px;
-    }
 
     .contact-info {
       background: #f8f9fa;

@@ -79,35 +79,6 @@ import { Component } from '@angular/core';
             </div>
           </div>
 
-          <div class="sdks-section">
-            <h2>Official SDKs</h2>
-            <div class="sdks-grid">
-              <div class="sdk-card">
-                <div class="sdk-icon">🐍</div>
-                <h3>Python</h3>
-                <p>pip install collabx-python</p>
-                <button mat-stroked-button>View Docs</button>
-              </div>
-              <div class="sdk-card">
-                <div class="sdk-icon">🟢</div>
-                <h3>Node.js</h3>
-                <p>npm install &#64;collabx/node-sdk</p>
-                <button mat-stroked-button>View Docs</button>
-              </div>
-              <div class="sdk-card">
-                <div class="sdk-icon">☕</div>
-                <h3>Java</h3>
-                <p>Maven: com.collabx:java-sdk</p>
-                <button mat-stroked-button>View Docs</button>
-              </div>
-              <div class="sdk-card">
-                <div class="sdk-icon">🔷</div>
-                <h3>C#</h3>
-                <p>NuGet: CollabX.DotNet</p>
-                <button mat-stroked-button>View Docs</button>
-              </div>
-            </div>
-          </div>
 
           <div class="webhooks-section">
             <h2>Webhooks</h2>
@@ -148,48 +119,25 @@ import { Component } from '@angular/core';
             </div>
           </div>
 
-          <div class="documentation-section">
-            <h2>Documentation</h2>
-            <div class="docs-grid">
-              <div class="doc-card">
-                <mat-icon>api</mat-icon>
-                <h3>API Reference</h3>
-                <p>Complete reference for all API endpoints, parameters, and responses</p>
-                <button mat-raised-button color="primary">View API Docs</button>
-              </div>
-              <div class="doc-card">
-                <mat-icon>code</mat-icon>
-                <h3>Code Examples</h3>
-                <p>Ready-to-use code samples in multiple programming languages</p>
-                <button mat-raised-button color="primary">View Examples</button>
-              </div>
-              <div class="doc-card">
-                <mat-icon>school</mat-icon>
-                <h3>Tutorials</h3>
-                <p>Step-by-step guides to help you build your first integration</p>
-                <button mat-raised-button color="primary">Start Learning</button>
-              </div>
-            </div>
-          </div>
 
           <div class="community-section">
             <h2>Developer Community</h2>
             <div class="community-content">
               <div class="community-text">
                 <p>Join our developer community to get help, share ideas, and stay updated on the latest API changes.</p>
-                <div class="community-links">
-                  <a href="#" class="community-link">
+                <div class="community-buttons">
+                  <button mat-raised-button color="primary" class="community-btn" (click)="joinDeveloperForum()">
                     <mat-icon>forum</mat-icon>
-                    <span>Developer Forum</span>
-                  </a>
-                  <a href="#" class="community-link">
+                    <span>Join Developer Forum</span>
+                  </button>
+                  <button mat-raised-button color="primary" class="community-btn" (click)="viewGitHub()">
                     <mat-icon>code</mat-icon>
-                    <span>GitHub</span>
-                  </a>
-                  <a href="#" class="community-link">
+                    <span>View on GitHub</span>
+                  </button>
+                  <button mat-raised-button color="primary" class="community-btn" (click)="joinDiscord()">
                     <mat-icon>chat</mat-icon>
-                    <span>Discord</span>
-                  </a>
+                    <span>Join Discord</span>
+                  </button>
                 </div>
               </div>
               <div class="community-stats">
@@ -249,11 +197,11 @@ import { Component } from '@angular/core';
       padding: 80px 0;
     }
 
-    .api-overview, .quick-start, .sdks-section, .webhooks-section, .documentation-section, .community-section {
+    .api-overview, .quick-start, .webhooks-section, .community-section {
       margin-bottom: 80px;
     }
 
-    .api-overview h2, .quick-start h2, .sdks-section h2, .webhooks-section h2, .documentation-section h2, .community-section h2 {
+    .api-overview h2, .quick-start h2, .webhooks-section h2, .community-section h2 {
       font-size: 36px;
       font-weight: 700;
       margin-bottom: 24px;
@@ -366,43 +314,6 @@ import { Component } from '@angular/core';
       font-size: 14px;
     }
 
-    .sdks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
-    }
-
-    .sdk-card {
-      background: white;
-      padding: 32px 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
-    .sdk-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .sdk-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    .sdk-card h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #1a1a1a;
-    }
-
-    .sdk-card p {
-      color: rgba(0, 0, 0, 0.7);
-      margin-bottom: 16px;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-    }
 
     .webhook-events h3 {
       font-size: 24px;
@@ -444,42 +355,6 @@ import { Component } from '@angular/core';
       font-size: 14px;
     }
 
-    .docs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-    }
-
-    .doc-card {
-      background: white;
-      padding: 32px 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
-    .doc-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .doc-card mat-icon {
-      font-size: 48px;
-      color: #4a154b;
-      margin-bottom: 16px;
-    }
-
-    .doc-card h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: #1a1a1a;
-    }
-
-    .doc-card p {
-      color: rgba(0, 0, 0, 0.7);
-      margin-bottom: 20px;
-    }
 
     .community-content {
       display: grid;
@@ -494,23 +369,18 @@ import { Component } from '@angular/core';
       margin-bottom: 24px;
     }
 
-    .community-links {
+    .community-buttons {
       display: flex;
-      gap: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    .community-link {
+    .community-btn {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #4a154b;
-      text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .community-link:hover {
-      color: #611f69;
+      padding: 12px 24px;
     }
 
     .community-stats {
@@ -557,11 +427,23 @@ import { Component } from '@angular/core';
         gap: 40px;
       }
       
-      .community-links {
+      .community-buttons {
         flex-direction: column;
         gap: 16px;
       }
     }
   `]
 })
-export class DevelopersComponent {}
+export class DevelopersComponent {
+  joinDeveloperForum() {
+    alert('Developer Forum coming soon! This would redirect to our developer community forum.');
+  }
+
+  viewGitHub() {
+    alert('GitHub repository coming soon! This would redirect to our GitHub repository.');
+  }
+
+  joinDiscord() {
+    alert('Discord server coming soon! This would redirect to our Discord server.');
+  }
+}

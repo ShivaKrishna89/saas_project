@@ -88,6 +88,6 @@ export class WorkspaceSelectorComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/workspace-selector']);
   }
 }

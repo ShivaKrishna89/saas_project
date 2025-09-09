@@ -49,8 +49,8 @@
               Start Free Trial
             </button>
             <button mat-stroked-button class="hero-btn secondary" (click)="talkToSales()">
-              <mat-icon>play_circle</mat-icon>
-              Watch Demo
+              <mat-icon>phone</mat-icon>
+              Contact Sales
             </button>
           </div>
           <div class="hero-stats">
@@ -150,7 +150,6 @@
           </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
           <p class="feature-description">{{ feature.description }}</p>
-          <a href="#" class="feature-link">Learn more <mat-icon>arrow_forward</mat-icon></a>
         </div>
       </div>
     </div>
@@ -201,33 +200,86 @@
           <div class="ai-dashboard">
             <div class="ai-header">
               <div class="ai-tabs">
-                <span class="ai-tab active">AI Assistant</span>
-                <span class="ai-tab">Smart Insights</span>
-                <span class="ai-tab">Auto Planning</span>
+                <span class="ai-tab" [class.active]="activeAiTab === 'ai-assistant'" (click)="switchAiTab('ai-assistant')">AI Assistant</span>
+                <span class="ai-tab" [class.active]="activeAiTab === 'smart-insights'" (click)="switchAiTab('smart-insights')">Smart Insights</span>
               </div>
             </div>
             <div class="ai-content-area">
-              <div class="ai-suggestion">
-                <div class="suggestion-header">
-                  <mat-icon>lightbulb</mat-icon>
-                  <span>AI Suggestion</span>
+              <!-- AI Assistant Tab Content -->
+              <div *ngIf="activeAiTab === 'ai-assistant'">
+                <div class="ai-suggestion">
+                  <div class="suggestion-header">
+                    <mat-icon>lightbulb</mat-icon>
+                    <span>AI Suggestion</span>
+                  </div>
+                  <p>Based on your team's velocity, consider breaking this epic into 3 smaller stories for better tracking.</p>
+                  <div class="suggestion-actions" *ngIf="!aiSuggestionApplied && !aiSuggestionDismissed">
+                    <button class="suggestion-btn primary" (click)="applyAiSuggestion()">Apply</button>
+                    <button class="suggestion-btn secondary" (click)="dismissAiSuggestion()">Dismiss</button>
+                  </div>
+                  <div class="suggestion-feedback" *ngIf="aiSuggestionApplied">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Suggestion applied successfully!</span>
+                  </div>
+                  <div class="suggestion-feedback dismissed" *ngIf="aiSuggestionDismissed">
+                    <mat-icon>cancel</mat-icon>
+                    <span>Suggestion dismissed</span>
+                  </div>
                 </div>
-                <p>Based on your team's velocity, consider breaking this epic into 3 smaller stories for better tracking.</p>
-                <div class="suggestion-actions">
-                  <button class="suggestion-btn primary">Apply</button>
-                  <button class="suggestion-btn secondary">Dismiss</button>
+                <div class="ai-insights">
+                  <div class="insight-item">
+                    <mat-icon>warning</mat-icon>
+                    <span>Risk detected: Timeline at risk</span>
+                  </div>
+                  <div class="insight-item">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Team velocity increased 15%</span>
+                  </div>
                 </div>
               </div>
-              <div class="ai-insights">
-                <div class="insight-item">
-                  <mat-icon>warning</mat-icon>
-                  <span>Risk detected: Timeline at risk</span>
-                </div>
-                <div class="insight-item">
-                  <mat-icon>check_circle</mat-icon>
-                  <span>Team velocity increased 15%</span>
+
+              <!-- Smart Insights Tab Content -->
+              <div *ngIf="activeAiTab === 'smart-insights'">
+                <div class="insights-dashboard">
+                  <div class="insights-header">
+                    <mat-icon>analytics</mat-icon>
+                    <span>Smart Insights</span>
+                  </div>
+                  <div class="insights-grid">
+                    <div class="insight-card">
+                      <div class="insight-icon">
+                        <mat-icon>trending_up</mat-icon>
+                      </div>
+                      <div class="insight-content">
+                        <h4>Productivity Trend</h4>
+                        <p>Team productivity increased by 23% this sprint</p>
+                        <span class="insight-value positive">+23%</span>
+                      </div>
+                    </div>
+                    <div class="insight-card">
+                      <div class="insight-icon">
+                        <mat-icon>schedule</mat-icon>
+                      </div>
+                      <div class="insight-content">
+                        <h4>Time Tracking</h4>
+                        <p>Average task completion time reduced by 2.5 hours</p>
+                        <span class="insight-value positive">-2.5h</span>
+                      </div>
+                    </div>
+                    <div class="insight-card">
+                      <div class="insight-icon">
+                        <mat-icon>group</mat-icon>
+                      </div>
+                      <div class="insight-content">
+                        <h4>Team Collaboration</h4>
+                        <p>Cross-team communication increased by 40%</p>
+                        <span class="insight-value positive">+40%</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -251,7 +303,7 @@
         </div>
       </div>
       <div class="integration-cta">
-        <button mat-raised-button color="primary" class="marketplace-btn">
+        <button mat-raised-button color="primary" class="marketplace-btn" (click)="navigateToLogin()">
           <mat-icon>store</mat-icon>
           Go to Marketplace
         </button>
@@ -314,19 +366,33 @@
           </a>
         </div>
       </div>
+      
+      <!-- Follow Us Section -->
+      <div class="follow-us-section">
+        <h4 class="follow-us-title">Follow Us</h4>
+        <div class="social-icons">
+          <div class="social-icon facebook">
+            <mat-icon>facebook</mat-icon>
+          </div>
+          <div class="social-icon twitter">
+            <mat-icon>alternate_email</mat-icon>
+          </div>
+          <div class="social-icon linkedin">
+            <mat-icon>linkedin</mat-icon>
+          </div>
+          <div class="social-icon youtube">
+            <mat-icon>play_circle</mat-icon>
+          </div>
+        </div>
+      </div>
+      
       <div class="footer-bottom">
         <div class="footer-left">
           <div class="footer-logo">
             <mat-icon class="logo-icon">rocket_launch</mat-icon>
             <span class="logo-text">CollabX</span>
           </div>
-          <p>&copy; 2024 CollabX. All rights reserved.</p>
-        </div>
-        <div class="footer-right">
-          <a href="#" class="footer-link">Privacy</a>
-          <a href="#" class="footer-link">Terms</a>
-          <a href="#" class="footer-link">Cookies</a>
-          <a href="#" class="footer-link">Contact</a>
+          <p>&copy; 2025 CollabX. All rights reserved.</p>
         </div>
       </div>
     </div>

@@ -24,22 +24,18 @@ import { Component } from '@angular/core';
                   <span class="date">March 15, 2024</span>
                   <span class="read-time">5 min read</span>
                 </div>
-                <button mat-raised-button color="primary" class="read-more-btn">Read More</button>
+                <button mat-raised-button color="primary" class="read-more-btn" (click)="readMore()">Read More</button>
               </div>
               <div class="featured-image">
-                <div class="image-placeholder">
-                  <mat-icon>article</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Remote work collaboration" class="featured-img">
               </div>
             </div>
           </div>
 
           <div class="blog-grid">
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('10 Tips for Better Team Communication')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>group</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team communication" class="post-img">
               </div>
               <div class="post-content">
                 <h3>10 Tips for Better Team Communication</h3>
@@ -51,11 +47,9 @@ import { Component } from '@angular/core';
               </div>
             </div>
 
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('Scaling Your Team: Lessons from Growing Startups')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>trending_up</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Startup team scaling" class="post-img">
               </div>
               <div class="post-content">
                 <h3>Scaling Your Team: Lessons from Growing Startups</h3>
@@ -67,11 +61,9 @@ import { Component } from '@angular/core';
               </div>
             </div>
 
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('Data Security Best Practices for Remote Teams')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>security</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Data security" class="post-img">
               </div>
               <div class="post-content">
                 <h3>Data Security Best Practices for Remote Teams</h3>
@@ -83,11 +75,9 @@ import { Component } from '@angular/core';
               </div>
             </div>
 
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('The Psychology of Effective Collaboration')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>psychology</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team collaboration psychology" class="post-img">
               </div>
               <div class="post-content">
                 <h3>The Psychology of Effective Collaboration</h3>
@@ -99,11 +89,9 @@ import { Component } from '@angular/core';
               </div>
             </div>
 
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('Measuring Team Productivity: Key Metrics to Track')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>analytics</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Analytics dashboard" class="post-img">
               </div>
               <div class="post-content">
                 <h3>Measuring Team Productivity: Key Metrics to Track</h3>
@@ -115,11 +103,9 @@ import { Component } from '@angular/core';
               </div>
             </div>
 
-            <div class="blog-post">
+            <div class="blog-post" (click)="readBlogPost('Building Inclusive Remote Teams')">
               <div class="post-image">
-                <div class="image-placeholder">
-                  <mat-icon>diversity_3</mat-icon>
-                </div>
+                <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diverse team" class="post-img">
               </div>
               <div class="post-content">
                 <h3>Building Inclusive Remote Teams</h3>
@@ -141,7 +127,7 @@ import { Component } from '@angular/core';
                   <mat-label>Email Address</mat-label>
                   <input matInput type="email" placeholder="Enter your email">
                 </mat-form-field>
-                <button mat-raised-button color="primary" class="subscribe-btn">Subscribe</button>
+                <button mat-raised-button color="primary" class="subscribe-btn" (click)="subscribeToNewsletter()">Subscribe</button>
               </div>
               <p class="newsletter-note">No spam, unsubscribe at any time.</p>
             </div>
@@ -286,21 +272,29 @@ import { Component } from '@angular/core';
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .featured-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .image-placeholder {
       width: 200px;
       height: 200px;
-      background: #e0e0e0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 2px solid #dee2e6;
     }
 
     .image-placeholder mat-icon {
       font-size: 64px;
-      color: #999;
+      color: #6c757d;
     }
 
     .blog-grid {
@@ -315,11 +309,13 @@ import { Component } from '@angular/core';
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      transition: transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
     }
 
     .blog-post:hover {
       transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
 
     .post-image {
@@ -328,6 +324,13 @@ import { Component } from '@angular/core';
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .post-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .post-content {
@@ -471,4 +474,16 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class BlogComponent {}
+export class BlogComponent {
+  readMore() {
+    alert('Article content coming soon! This would open the full article.');
+  }
+
+  readBlogPost(postTitle: string) {
+    alert(`Opening article: "${postTitle}". Article content coming soon!`);
+  }
+
+  subscribeToNewsletter() {
+    alert('Thanks for subscribing!');
+  }
+}

@@ -62,21 +62,21 @@ import { Router, ActivatedRoute } from '@angular/router';
                   </div>
                 </div>
 
-                <div class="hero-actions">
-                  <button mat-raised-button color="primary" class="hero-primary-btn">
-                    <mat-icon>rocket_launch</mat-icon>
-                    Start Free Trial
-                  </button>
-                  <button mat-stroked-button class="hero-secondary-btn">
-                    <mat-icon>play_circle</mat-icon>
-                    Watch Demo
-                  </button>
-                </div>
+                      <div class="hero-actions">
+                        <button mat-raised-button color="primary" class="hero-primary-btn" (click)="navigateToRegister()">
+                          <mat-icon>rocket_launch</mat-icon>
+                          Start Free Trial
+                        </button>
+                        <button mat-stroked-button class="hero-secondary-btn" (click)="talkToSales()">
+                          <mat-icon>phone</mat-icon>
+                          Contact Sales
+                        </button>
+                      </div>
               </div>
               
               <div class="solutions-hero-right">
                 <div class="solutions-illustration">
-                  <div class="solution-card engineering-card">
+                  <div class="solution-card engineering-card" (click)="navigateToEngineering()">
                     <div class="card-icon">
                       <mat-icon>engineering</mat-icon>
                     </div>
@@ -88,7 +88,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                     </div>
                   </div>
                   
-                  <div class="solution-card marketing-card">
+                  <div class="solution-card marketing-card" (click)="navigateToMarketing()">
                     <div class="card-icon">
                       <mat-icon>campaign</mat-icon>
                     </div>
@@ -100,7 +100,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                     </div>
                   </div>
                   
-                  <div class="solution-card it-card">
+                  <div class="solution-card it-card" (click)="navigateToIt()">
                     <div class="card-icon">
                       <mat-icon>support_agent</mat-icon>
                     </div>
@@ -303,11 +303,11 @@ import { Router, ActivatedRoute } from '@angular/router';
                 <p class="hero-subtitle">Built for organizations that demand the highest standards of security, scalability, and compliance. Advanced integrations, enterprise SSO, and 24/7 dedicated support to power your mission-critical workflows.</p>
                 
                 <div class="hero-actions">
-                  <button mat-raised-button color="primary" class="hero-primary-btn">
+                  <button mat-raised-button color="primary" class="hero-primary-btn" (click)="talkToSales()">
                     <mat-icon>phone</mat-icon>
                     Contact Sales
                   </button>
-                  <button mat-stroked-button class="hero-secondary-btn">
+                  <button mat-stroked-button class="hero-secondary-btn" (click)="navigateToRegister()">
                     <mat-icon>rocket_launch</mat-icon>
                     Get Started Free
                   </button>
@@ -368,26 +368,35 @@ import { Router, ActivatedRoute } from '@angular/router';
         <section class="enterprise-highlights">
           <div class="container">
             <div class="highlights-grid">
-              <div class="highlight-card">
+              <div class="highlight-card" (click)="scrollToSection('scalability')">
                 <div class="highlight-icon">
                   <mat-icon>scale</mat-icon>
                 </div>
                 <h3>Scalability</h3>
                 <p>Unlimited users, projects, and storage. Built to grow with your organization from startup to enterprise.</p>
+                <a href="#" class="learn-more-link" (click)="scrollToSection('scalability'); $event.preventDefault()">
+                  Learn more <mat-icon>arrow_forward</mat-icon>
+                </a>
               </div>
-              <div class="highlight-card">
+              <div class="highlight-card" (click)="scrollToSection('security')">
                 <div class="highlight-icon">
                   <mat-icon>security</mat-icon>
                 </div>
                 <h3>Security</h3>
                 <p>SSO, MFA, end-to-end encryption, and compliance with SOC2, GDPR, HIPAA, and ISO 27001 standards.</p>
+                <a href="#" class="learn-more-link" (click)="scrollToSection('security'); $event.preventDefault()">
+                  Learn more <mat-icon>arrow_forward</mat-icon>
+                </a>
               </div>
-              <div class="highlight-card">
+              <div class="highlight-card" (click)="scrollToSection('integrations')">
                 <div class="highlight-icon">
                   <mat-icon>hub</mat-icon>
                 </div>
                 <h3>Integrations</h3>
                 <p>Connect with 500+ enterprise apps including Salesforce, Microsoft 365, Google Workspace, and more.</p>
+                <a href="#" class="learn-more-link" (click)="scrollToSection('integrations'); $event.preventDefault()">
+                  Learn more <mat-icon>arrow_forward</mat-icon>
+                </a>
               </div>
             </div>
           </div>
@@ -457,6 +466,103 @@ import { Router, ActivatedRoute } from '@angular/router';
             </div>
           </div>
         </section>
+
+        <!-- Detailed Enterprise Sections -->
+        <section id="scalability" class="enterprise-detail-section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-title">Scalability</h2>
+              <p class="section-subtitle">Built to grow with your organization from startup to enterprise</p>
+            </div>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>people</mat-icon>
+                </div>
+                <h3>Unlimited Users</h3>
+                <p>Scale from 10 to 10,000+ users without performance degradation. Advanced user management and role-based access controls.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>folder</mat-icon>
+                </div>
+                <h3>Unlimited Projects</h3>
+                <p>Create as many projects as needed. Organize work across departments, teams, and initiatives with advanced project hierarchies.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>storage</mat-icon>
+                </div>
+                <h3>Unlimited Storage</h3>
+                <p>Store unlimited files, documents, and data. Enterprise-grade cloud storage with 99.9% uptime guarantee.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="security" class="enterprise-detail-section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-title">Security & Compliance</h2>
+              <p class="section-subtitle">Enterprise-grade security with industry-leading compliance standards</p>
+            </div>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>vpn_key</mat-icon>
+                </div>
+                <h3>Single Sign-On (SSO)</h3>
+                <p>SAML 2.0, OAuth 2.0, and OpenID Connect support. Integrate with Active Directory, Okta, Azure AD, and more.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>security</mat-icon>
+                </div>
+                <h3>Multi-Factor Authentication</h3>
+                <p>Enforce MFA across your organization. Support for TOTP, SMS, hardware tokens, and biometric authentication.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>verified_user</mat-icon>
+                </div>
+                <h3>Compliance Certifications</h3>
+                <p>SOC 2 Type II, GDPR, HIPAA, ISO 27001, and FedRAMP compliant. Regular security audits and penetration testing.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="integrations" class="enterprise-detail-section">
+          <div class="container">
+            <div class="section-header">
+              <h2 class="section-title">Enterprise Integrations</h2>
+              <p class="section-subtitle">Connect with 500+ enterprise applications and services</p>
+            </div>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <h3>CRM & Sales</h3>
+                <p>Salesforce, HubSpot, Pipedrive, and more. Sync customer data, track deals, and manage sales processes.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>work</mat-icon>
+                </div>
+                <h3>Productivity Suites</h3>
+                <p>Microsoft 365, Google Workspace, Slack, Teams. Seamless integration with your existing productivity tools.</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-icon">
+                  <mat-icon>code</mat-icon>
+                </div>
+                <h3>Development Tools</h3>
+                <p>GitHub, GitLab, Jira, Jenkins, Docker. Connect your development workflow with project management.</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
 
       <!-- Resources Content -->
@@ -470,11 +576,11 @@ import { Router, ActivatedRoute } from '@angular/router';
                 <p class="hero-subtitle">Discover comprehensive learning resources, best practices, and community support to maximize your team's productivity and collaboration success.</p>
                 
                 <div class="hero-actions">
-                  <button mat-raised-button color="primary" class="hero-primary-btn">
+                  <button mat-raised-button color="primary" class="hero-primary-btn" (click)="browseGuides()">
                     <mat-icon>menu_book</mat-icon>
                     Browse Guides
                   </button>
-                  <button mat-stroked-button class="hero-secondary-btn">
+                  <button mat-stroked-button class="hero-secondary-btn" (click)="joinCommunity()">
                     <mat-icon>group</mat-icon>
                     Join Community
                   </button>
@@ -533,7 +639,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <li>Video Walkthroughs</li>
                   <li>Onboarding Resources</li>
                 </ul>
-                <button class="section-btn">Explore Learning</button>
+                <button class="section-btn" (click)="navigateToResources()">Explore Learning</button>
               </div>
               
               <div class="section-card">
@@ -548,7 +654,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <li>Productivity Insights</li>
                   <li>Industry Case Studies</li>
                 </ul>
-                <button class="section-btn">Read Articles</button>
+                <button class="section-btn" (click)="navigateToBlog()">Read Articles</button>
               </div>
               
               <div class="section-card">
@@ -563,7 +669,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <li>Expert Q&A</li>
                   <li>User Groups</li>
                 </ul>
-                <button class="section-btn">Join Community</button>
+                <button class="section-btn" (click)="joinCommunity()">Join Community</button>
               </div>
             </div>
           </div>
@@ -588,7 +694,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">15 min read</span>
                   <span class="resource-level">Beginner</span>
                 </div>
-                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToHelp()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -602,7 +708,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">8 min read</span>
                   <span class="resource-level">Intermediate</span>
                 </div>
-                <a href="#" class="resource-link">Read Article <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Article <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -616,7 +722,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">12 min read</span>
                   <span class="resource-level">Beginner</span>
                 </div>
-                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToHelp()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -630,7 +736,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">6 min read</span>
                   <span class="resource-level">All Levels</span>
                 </div>
-                <a href="#" class="resource-link">Read Case Study <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Case Study <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -644,7 +750,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">10 min read</span>
                   <span class="resource-level">Advanced</span>
                 </div>
-                <a href="#" class="resource-link">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToDevelopers()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -658,7 +764,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">7 min read</span>
                   <span class="resource-level">Intermediate</span>
                 </div>
-                <a href="#" class="resource-link">Read Article <mat-icon>arrow_forward</mat-icon></a>
+                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Article <mat-icon>arrow_forward</mat-icon></a>
               </div>
             </div>
           </div>
@@ -676,7 +782,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                 <mat-icon>rocket_launch</mat-icon>
                 Start Your Free Trial
               </button>
-              <button mat-stroked-button class="cta-btn" (click)="navigateToContact()">
+              <button mat-stroked-button class="cta-btn" (click)="talkToSales()">
                 <mat-icon>phone</mat-icon>
                 Talk to Sales
               </button>
@@ -703,13 +809,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                 <mat-icon class="logo-icon">rocket_launch</mat-icon>
                 <span class="logo-text">CollabX</span>
               </div>
-              <p>&copy; 2024 CollabX. All rights reserved.</p>
-            </div>
-            <div class="footer-right">
-              <a href="#" class="footer-link">Privacy</a>
-              <a href="#" class="footer-link">Terms</a>
-              <a href="#" class="footer-link">Cookies</a>
-              <a href="#" class="footer-link">Contact</a>
+              <p>&copy; 2025 CollabX. All rights reserved.</p>
             </div>
           </div>
         </div>
@@ -848,14 +948,14 @@ import { Router, ActivatedRoute } from '@angular/router';
       transition: all 0.2s ease;
 
       &.cta-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4f46e5, #a855f7);
         color: white;
         border: none;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+          box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
         }
       }
     }
@@ -2652,6 +2752,88 @@ import { Router, ActivatedRoute } from '@angular/router';
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
+    .learn-more-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .learn-more-link:hover {
+      color: #a855f7;
+    }
+
+    .learn-more-link mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .enterprise-detail-section {
+      padding: 6rem 0;
+      background: #f8fafc;
+    }
+
+    .enterprise-detail-section:nth-child(even) {
+      background: white;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .detail-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .detail-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-icon {
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-icon mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: white;
+    }
+
+    .detail-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 1rem 0;
+    }
+
+    .detail-card p {
+      font-size: 1rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0;
+    }
+
     .highlight-icon {
       width: 4rem;
       height: 4rem;
@@ -3669,7 +3851,7 @@ import { Router, ActivatedRoute } from '@angular/router';
       border-top: 1px solid #334155;
       padding-top: 32px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
     }
 
@@ -4587,7 +4769,7 @@ export class PlaceholderComponent implements OnInit {
   getSecondaryButtonText(): string | null {
     const buttons: { [key: string]: string | null } = {
       'features': 'Watch Demo',
-      'solutions': 'Watch Demo',
+      'solutions': '',
       'enterprise': 'Watch Demo',
       'resources': 'Watch Demo',
       'pricing': 'Watch Demo'
@@ -4815,12 +4997,6 @@ export class PlaceholderComponent implements OnInit {
     ];
   }
 
-  scrollToSection(sectionId: string): void {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 
 
   getEnterpriseFeatures(): any[] {
@@ -5021,10 +5197,45 @@ export class PlaceholderComponent implements OnInit {
   }
 
 
-  goHome() { this.router.navigate(['/']); }
+  goHome() { this.router.navigate(['/home']); }
   navigateToLogin() { this.router.navigate(['/auth/login']); }
   navigateToRegister() { this.router.navigate(['/auth/register']); }
   navigateToResources() { this.router.navigate(['/resources']); }
   navigateToContact() { this.router.navigate(['/contact']); }
   navigateToSecurity() { this.router.navigate(['/security']); }
+  navigateToPricing() { this.router.navigate(['/pricing']); }
+  navigateToEnterprise() { this.router.navigate(['/enterprise']); }
+  navigateToSolutions() { this.router.navigate(['/solutions']); }
+  navigateToAbout() { this.router.navigate(['/about']); }
+  navigateToCareers() { this.router.navigate(['/careers']); }
+  navigateToBlog() { this.router.navigate(['/blog']); }
+  navigateToHelp() { this.router.navigate(['/help']); }
+  navigateToDevelopers() { this.router.navigate(['/developers']); }
+  navigateToApi() { this.router.navigate(['/api']); }
+  navigateToCommunity() { this.router.navigate(['/community']); }
+  navigateToPrivacy() { this.router.navigate(['/privacy']); }
+  navigateToTerms() { this.router.navigate(['/terms']); }
+  navigateToCookies() { this.router.navigate(['/cookies']); }
+  talkToSales() { this.router.navigate(['/contact-sales']); }
+  watchDemo() { this.router.navigate(['/demo']); }
+  browseGuides() { this.router.navigate(['/resources/guides']); }
+  joinCommunity() { this.router.navigate(['/community']); }
+
+  navigateToEngineering() {
+    this.router.navigate(['/solutions/engineering']);
+  }
+
+  navigateToMarketing() {
+    this.router.navigate(['/solutions/marketing']);
+  }
+
+  navigateToIt() {
+    this.router.navigate(['/solutions/it']);
+  }
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

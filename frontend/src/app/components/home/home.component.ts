@@ -14,7 +14,7 @@ export class HomeComponent {
       description: 'Leverage artificial intelligence to automate tasks, generate insights, and boost team efficiency by 40%'
     },
     {
-      icon: 'real_time_sync',
+      icon: 'sync',
       title: 'Real-time Collaboration',
       description: 'Work together seamlessly with live editing, instant messaging, and synchronized updates across all devices'
     },
@@ -96,6 +96,11 @@ export class HomeComponent {
     { name: 'Asana', icon: 'task' }
   ];
 
+  // AI Section properties
+  activeAiTab = 'ai-assistant';
+  aiSuggestionApplied = false;
+  aiSuggestionDismissed = false;
+
   footerSections = [
     {
       title: 'Product',
@@ -158,10 +163,33 @@ export class HomeComponent {
   }
 
   talkToSales() {
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/contact-sales']);
   }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // AI Section methods
+  switchAiTab(tab: string) {
+    this.activeAiTab = tab;
+  }
+
+  applyAiSuggestion() {
+    this.aiSuggestionApplied = true;
+    this.aiSuggestionDismissed = false;
+    // You can add additional logic here like showing a success message
+    console.log('AI suggestion applied');
+  }
+
+  dismissAiSuggestion() {
+    this.aiSuggestionDismissed = true;
+    this.aiSuggestionApplied = false;
+    // You can add additional logic here like hiding the suggestion
+    console.log('AI suggestion dismissed');
+  }
+
+  watchDemo() {
+    this.router.navigate(['/demo']);
   }
 }
