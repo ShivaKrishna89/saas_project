@@ -17,6 +17,8 @@ from app.schemas.project import (
 
 router = APIRouter()
 
+DEFAULT_WORKSPACE_ID = 1  # Temporary to satisfy FK while removing workspace usage
+
 @router.post("/", response_model=ProjectResponse)
 def create_project(
     project_data: ProjectCreate,
@@ -24,17 +26,7 @@ def create_project(
     current_user: User = Depends(get_current_user)
 ):
     """Create a new project in a workspace"""
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project_data.workspace_id
-    ).first()
-    
-    if not member:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
-        )
+    # User-centric: Avoid touching workspaces; attach to a default workspace id
     
     # Check if project key already exists
     existing_project = db.query(Project).filter(Project.key == project_data.key).first()
@@ -46,14 +38,40 @@ def create_project(
     
     # Create new project
     new_project = Project(
-        **project_data.dict(),
-        creator_id=current_user.id
+        title=project_data.title,
+        description=project_data.description,
+        key=project_data.key,
+        workspace_id=DEFAULT_WORKSPACE_ID,
+        creator_id=current_user.id,
+        user_id=current_user.id
     )
     db.add(new_project)
     db.commit()
     db.refresh(new_project)
     
     return new_project
+
+@router.get("/mine", response_model=List[ProjectWithIssueCount])
+def get_my_projects(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Get all active projects created by the current user"""
+    projects = db.query(Project).filter(
+        Project.creator_id == current_user.id,
+        Project.is_active == True
+    ).all()
+
+    result: List[ProjectWithIssueCount] = []
+    for project in projects:
+        issue_count = db.query(Issue).filter(Issue.project_id == project.id).count()
+        project_data = ProjectWithIssueCount(
+            **project.__dict__,
+            issue_count=issue_count
+        )
+        result.append(project_data)
+
+    return result
 
 @router.get("/workspace/{workspace_id}", response_model=List[ProjectWithIssueCount])
 def get_workspace_projects(
@@ -169,35 +187,23 @@ def delete_project(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """Delete a project (soft delete)"""
+    """Delete a project (hard delete)"""
     project = db.query(Project).filter(Project.id == project_id).first()
     if not project:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Project not found"
         )
-    
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
-        )
-    
-    # Only creator or admin can delete project
-    if project.creator_id != current_user.id and member.role != WorkspaceRole.ADMIN:
+
+    # Only the creator/owner can delete in user-centric mode
+    if project.creator_id != current_user.id and project.user_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Insufficient permissions to delete project"
         )
-    
-    # Soft delete by setting is_active to False
-    project.is_active = False
+
+    # Hard delete
+    db.delete(project)
     db.commit()
-    
+
     return {"message": "Project deleted successfully"}

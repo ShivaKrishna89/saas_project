@@ -45,8 +45,8 @@ export class LoginComponent {
           }
           
           setTimeout(() => {
-            this.router.navigate(['/workspace-selector']);
-          }, 1500);
+            this.router.navigate(['/app']);
+          }, 800);
         },
         error: (error) => {
           this.isLoading = false;

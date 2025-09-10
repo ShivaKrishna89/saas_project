@@ -28,8 +28,7 @@
         <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange($event)">
           <mat-option value="all">All Projects</mat-option>
           <mat-option value="active">Active</mat-option>
-          <mat-option value="completed">Completed</mat-option>
-          <mat-option value="on-hold">On Hold</mat-option>
+          <mat-option value="inactive">Inactive</mat-option>
           <mat-option value="my-projects">My Projects</mat-option>
         </mat-select>
       </mat-form-field>
@@ -54,18 +53,7 @@
         <div class="project-content">
           <h3 class="project-title">{{ project.name }}</h3>
           <p class="project-description">{{ project.description }}</p>
-          <div class="project-meta">
-            <div class="project-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" [style.width.%]="project.progress"></div>
-              </div>
-              <span class="progress-text">{{ project.progress }}%</span>
-            </div>
-            <div class="project-dates">
-              <span class="start-date">Start: {{ formatDate(project.startDate) }}</span>
-              <span class="end-date">Due: {{ formatDate(project.endDate) }}</span>
-            </div>
-          </div>
+          <!-- meta removed per request -->
           <div class="project-team">
             <div class="team-avatars">
               <div class="team-avatar" *ngFor="let member of project.team.slice(0, 3)">
@@ -116,14 +104,7 @@
         <div class="list-cell status-cell">
           <span class="status-badge" [class]="'status-' + project.status">{{ project.status }}</span>
         </div>
-        <div class="list-cell progress-cell">
-          <div class="progress-container">
-            <div class="progress-bar">
-              <div class="progress-fill" [style.width.%]="project.progress"></div>
-            </div>
-            <span class="progress-text">{{ project.progress }}%</span>
-          </div>
-        </div>
+        <!-- progress removed -->
         <div class="list-cell team-cell">
           <div class="team-avatars-small">
             <div class="team-avatar-small" *ngFor="let member of project.team.slice(0, 2)">
@@ -132,9 +113,7 @@
             <span class="more-members-small" *ngIf="project.team.length > 2">+{{ project.team.length - 2 }}</span>
           </div>
         </div>
-        <div class="list-cell date-cell">
-          <span [class.overdue]="isOverdue(project.endDate)">{{ formatDate(project.endDate) }}</span>
-        </div>
+        <!-- due date removed -->
         <div class="list-cell actions-cell">
           <button mat-icon-button (click)="editProject(project, $event)">
             <mat-icon>edit</mat-icon>
@@ -160,17 +139,7 @@
             <span class="project-status" [class]="'status-' + project.status">{{ project.status }}</span>
           </div>
           <p class="project-description">{{ project.description }}</p>
-          <div class="timeline-meta">
-            <div class="project-dates">
-              <span>{{ formatDate(project.startDate) }} - {{ formatDate(project.endDate) }}</span>
-            </div>
-            <div class="project-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" [style.width.%]="project.progress"></div>
-              </div>
-              <span class="progress-text">{{ project.progress }}%</span>
-            </div>
-          </div>
+          <!-- timeline meta removed -->
         </div>
       </div>
     </div>
@@ -184,10 +153,6 @@
           <div class="project-icon-large">
             <mat-icon>{{ selectedProject.icon }}</mat-icon>
           </div>
-          <div class="project-info">
-            <h2>{{ selectedProject.name }}</h2>
-            <p>{{ selectedProject.description }}</p>
-          </div>
         </div>
         <button mat-icon-button (click)="closeProjectDetail()">
           <mat-icon>close</mat-icon>
@@ -198,30 +163,19 @@
           <h3>Project Details</h3>
           <div class="detail-grid">
             <div class="detail-item">
+              <label>Title:</label>
+              <input matInput type="text" class="styled-input" [(ngModel)]="selectedProject.name" (ngModelChange)="updateProject()" placeholder="Project title">
+            </div>
+            <div class="detail-item">
               <label>Status:</label>
               <mat-select [(value)]="selectedProject.status" (selectionChange)="updateProject()">
                 <mat-option value="active">Active</mat-option>
-                <mat-option value="completed">Completed</mat-option>
-                <mat-option value="on-hold">On Hold</mat-option>
-                <mat-option value="cancelled">Cancelled</mat-option>
+                <mat-option value="inactive">Inactive</mat-option>
               </mat-select>
             </div>
-            <div class="detail-item">
-              <label>Progress:</label>
-              <input matInput type="number" [(ngModel)]="selectedProject.progress" (ngModelChange)="updateProject()" min="0" max="100">
-              <span class="progress-value">%</span>
-            </div>
-            <div class="detail-item">
-              <label>Start Date:</label>
-              <input matInput [matDatepicker]="startPicker" [(ngModel)]="selectedProject.startDate" (dateChange)="updateProject()">
-              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-              <mat-datepicker #startPicker></mat-datepicker>
-            </div>
-            <div class="detail-item">
-              <label>End Date:</label>
-              <input matInput [matDatepicker]="endPicker" [(ngModel)]="selectedProject.endDate" (dateChange)="updateProject()">
-              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-              <mat-datepicker #endPicker></mat-datepicker>
+            <div class="detail-item detail-item--full">
+              <label>Description:</label>
+              <textarea matInput rows="5" class="styled-textarea" [(ngModel)]="selectedProject.description" (ngModelChange)="updateProject()" placeholder="Project description"></textarea>
             </div>
           </div>
         </div>
@@ -252,12 +206,16 @@
             </mat-form-field>
           </div>
         </div>
+        <div class="modal-actions" *ngIf="isCreating">
+          <button mat-stroked-button (click)="closeProjectDetail()">Cancel</button>
+          <button mat-raised-button color="primary" (click)="saveProject()">Save Project</button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Notification -->
-  <div class="notification" *ngIf="showNotification" [@slideInOut]>
+  <div class="notification" *ngIf="showNotification">
     <mat-icon>check_circle</mat-icon>
     <span>{{ notificationMessage }}</span>
   </div>

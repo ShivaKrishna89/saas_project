@@ -25,24 +25,17 @@ def create_issue(
     current_user: User = Depends(get_current_user)
 ):
     """Create a new issue"""
-    # Check if user has access to the project
+    # Check if user owns the project (user-centric model)
     project = db.query(Project).filter(Project.id == issue_data.project_id).first()
     if not project:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Project not found"
         )
-    
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
+    if project.creator_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
+            detail="Not authorized for this project"
         )
     
     # Create new issue
@@ -87,16 +80,10 @@ def get_project_issues(
             detail="Project not found"
         )
     
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
+    if project.creator_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
+            detail="Not authorized for this project"
         )
     
     # Build query with filters
@@ -153,16 +140,10 @@ def get_issue(
             detail="Project not found"
         )
     
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
+    if project.creator_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
+            detail="Not authorized for this project"
         )
     
     # Add project and user details
@@ -205,16 +186,10 @@ def update_issue(
             detail="Project not found"
         )
     
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
+    if project.creator_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
+            detail="Not authorized for this project"
         )
     
     # Track if assignee changed for notification
@@ -319,8 +294,8 @@ def delete_issue(
             detail="Not a member of this workspace"
         )
     
-    # Only reporter or admin can delete issue
-    if issue.reporter_id != current_user.id and member.role != WorkspaceRole.ADMIN:
+    # Only reporter can delete issue in user-centric model
+    if issue.reporter_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Insufficient permissions to delete issue"

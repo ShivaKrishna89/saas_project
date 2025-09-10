@@ -3,6 +3,7 @@ from .workspace import Workspace
 from .workspace_member import WorkspaceMember, WorkspaceRole
 from .project import Project
 from .issue import Issue, IssueStatus, IssuePriority
+from .task import Task, WorkType, TaskStatus, Priority
 from .notification import Notification, NotificationType, NotificationStatus
 from .message import Message
 from .channel import Channel
@@ -22,6 +23,10 @@ __all__ = [
     "Issue",
     "IssueStatus",
     "IssuePriority",
+    "Task",
+    "WorkType",
+    "TaskStatus",
+    "Priority",
     "Notification",
     "NotificationType",
     "NotificationStatus",

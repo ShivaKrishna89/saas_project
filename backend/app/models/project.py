@@ -15,13 +15,16 @@ class Project(Base):
     # Foreign Keys
     workspace_id = Column(Integer, ForeignKey("workspaces.id"), nullable=False)
     creator_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    # Explicit user id for user-centric filtering
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
     workspace = relationship("Workspace", back_populates="projects")
-    creator = relationship("User", back_populates="created_projects")
+    creator = relationship("User", foreign_keys=[creator_id], back_populates="created_projects")
+    owner = relationship("User", foreign_keys=[user_id], back_populates="owned_projects")
     issues = relationship("Issue", back_populates="project")
     
     def __repr__(self):

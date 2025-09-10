@@ -1,0 +1,120 @@
+<div class="task-detail-container">
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading task details...</p>
+  </div>
+
+  <!-- Edit Mode -->
+  <div *ngIf="!isLoading && isEditing && task">
+    <app-task-form
+      [taskId]="task.id"
+      mode="edit"
+      (taskSaved)="onTaskSaved($event)"
+      (cancelled)="onEditCancelled()"
+    ></app-task-form>
+  </div>
+
+  <!-- View Mode -->
+  <div *ngIf="!isLoading && !isEditing && task" class="task-detail">
+    <!-- Header -->
+    <div class="task-header">
+      <div class="task-title-section">
+        <div class="task-badges">
+          <span class="task-badge" [ngClass]="getWorkTypeClass(task.work_type)">
+            {{ task.work_type | titlecase }}
+          </span>
+          <span class="task-badge" [ngClass]="getStatusClass(task.status)">
+            {{ task.status | titlecase }}
+          </span>
+          <span class="task-badge" [ngClass]="getPriorityClass(task.priority)">
+            {{ task.priority | titlecase }} Priority
+          </span>
+        </div>
+        <h1 class="task-title">{{ task.summary }}</h1>
+        <div class="task-meta">
+          <span class="task-id">#{{ task.id }}</span>
+          <span class="task-project">{{ task.project }}</span>
+        </div>
+      </div>
+      
+      <div class="task-actions">
+        <button mat-stroked-button (click)="editTask()" class="edit-btn">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+        <button mat-stroked-button (click)="deleteTask()" class="delete-btn">
+          <mat-icon>delete</mat-icon>
+          Delete
+        </button>
+        <button mat-stroked-button (click)="goBack()" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Tasks
+        </button>
+      </div>
+    </div>
+
+    <!-- Task Details -->
+    <div class="task-content">
+      <div class="task-details-grid">
+        <!-- Left Column -->
+        <div class="details-column">
+          <div class="detail-section">
+            <h3>Description</h3>
+            <div class="detail-content">
+              <p *ngIf="task.description; else noDescription">{{ task.description }}</p>
+              <ng-template #noDescription>
+                <p class="no-content">No description provided</p>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Assignee</h3>
+            <div class="detail-content">
+              <p *ngIf="task.assignee; else noAssignee">{{ task.assignee }}</p>
+              <ng-template #noAssignee>
+                <p class="no-content">Unassigned</p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="details-column">
+          <div class="detail-section">
+            <h3>Reporter</h3>
+            <div class="detail-content">
+              <p>{{ task.reporter }}</p>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Created</h3>
+            <div class="detail-content">
+              <p>{{ formatDate(task.created_at!) }}</p>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3>Last Updated</h3>
+            <div class="detail-content">
+              <p>{{ formatDate(task.updated_at!) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !task" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h2>Task Not Found</h2>
+    <p>The task you're looking for doesn't exist or has been deleted.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Back to Tasks
+    </button>
+  </div>
+</div>
+

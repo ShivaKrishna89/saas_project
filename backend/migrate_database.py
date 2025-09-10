@@ -19,7 +19,7 @@ import enum
 sys.path.append(os.path.join(os.path.dirname(__file__), 'app'))
 
 from app.core.config import settings
-from app.models import Base, User, Workspace, WorkspaceMember, Project, Issue, Notification
+from app.models import Base, User, Workspace, WorkspaceMember, Project, Issue, Task, Notification
 
 def parse_datetime(date_string):
     """Parse datetime string to Python datetime object"""

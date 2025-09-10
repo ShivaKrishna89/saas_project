@@ -1,22 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: 'todo' | 'in-progress' | 'review' | 'done';
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  assignee?: {
-    id: string;
-    name: string;
-  };
-  dueDate?: Date;
-  tags: string[];
-  comments: Comment[];
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { ApiService } from '../../services/api.service';
+import { TaskService, Task } from '../../services/task.service';
 
 interface Comment {
   id: string;
@@ -50,7 +36,6 @@ export class TaskManagementComponent implements OnInit {
   boardColumns = [
     { title: 'To Do', status: 'todo' },
     { title: 'In Progress', status: 'in-progress' },
-    { title: 'In Review', status: 'review' },
     { title: 'Done', status: 'done' }
   ];
 
@@ -66,7 +51,11 @@ export class TaskManagementComponent implements OnInit {
       tags: ['design', 'frontend'],
       comments: [],
       createdAt: new Date('2024-01-10'),
-      updatedAt: new Date('2024-01-10')
+      updatedAt: new Date('2024-01-10'),
+      project: 'Marketing',
+      work_type: 'task',
+      summary: 'Design new landing page',
+      reporter: 'Project Manager'
     },
     {
       id: '2',
@@ -86,20 +75,11 @@ export class TaskManagementComponent implements OnInit {
         }
       ],
       createdAt: new Date('2024-01-08'),
-      updatedAt: new Date('2024-01-11')
-    },
-    {
-      id: '3',
-      title: 'Write API documentation',
-      description: 'Create comprehensive API documentation for all endpoints',
-      status: 'review',
-      priority: 'medium',
-      assignee: { id: '3', name: 'Emily Rodriguez' },
-      dueDate: new Date('2024-01-20'),
-      tags: ['documentation', 'api'],
-      comments: [],
-      createdAt: new Date('2024-01-09'),
-      updatedAt: new Date('2024-01-09')
+      updatedAt: new Date('2024-01-11'),
+      project: 'Backend',
+      work_type: 'feature',
+      summary: 'Implement user authentication',
+      reporter: 'Tech Lead'
     },
     {
       id: '4',
@@ -119,7 +99,11 @@ export class TaskManagementComponent implements OnInit {
         }
       ],
       createdAt: new Date('2024-01-01'),
-      updatedAt: new Date('2024-01-05')
+      updatedAt: new Date('2024-01-05'),
+      project: 'DevOps',
+      work_type: 'task',
+      summary: 'Setup CI/CD pipeline',
+      reporter: 'DevOps Lead'
     },
     {
       id: '5',
@@ -131,7 +115,11 @@ export class TaskManagementComponent implements OnInit {
       tags: ['database', 'performance'],
       comments: [],
       createdAt: new Date('2024-01-11'),
-      updatedAt: new Date('2024-01-11')
+      updatedAt: new Date('2024-01-11'),
+      project: 'Backend',
+      work_type: 'task',
+      summary: 'Optimize database queries',
+      reporter: 'Database Admin'
     }
   ];
 
@@ -145,7 +133,16 @@ export class TaskManagementComponent implements OnInit {
   currentDate = new Date();
   currentMonthYear = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService, 
+    private apiService: ApiService, 
+    private router: Router,
+    private taskService: TaskService
+  ) {}
+
+  goToWorkspace() {
+    this.router.navigate(['/app']);
+  }
 
   showNotificationMessage(message: string) {
     this.notificationMessage = message;
@@ -158,6 +155,20 @@ export class TaskManagementComponent implements OnInit {
   ngOnInit() {
     this.updateCurrentMonthYear();
     this.generateCalendarDays();
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    this.taskService.getTasks().subscribe({
+      next: (tasks) => {
+        // Already normalized in service
+        this.tasks = tasks;
+      },
+      error: (error) => {
+        console.error('Error loading tasks:', error);
+        // Keep the existing placeholder tasks if API fails
+      }
+    });
   }
 
   get filteredTasks(): Task[] {
@@ -166,7 +177,7 @@ export class TaskManagementComponent implements OnInit {
     switch (this.selectedFilter) {
       case 'assigned':
         const currentUser = this.authService.currentUserValue;
-        filtered = filtered.filter(task => task.assignee?.id === currentUser?.id);
+        filtered = filtered.filter(task => task.assignee?.name === currentUser?.full_name);
         break;
       case 'created':
         // For demo purposes, assume current user created all tasks
@@ -190,7 +201,6 @@ export class TaskManagementComponent implements OnInit {
     const labels: { [key: string]: string } = {
       'todo': 'To Do',
       'in-progress': 'In Progress',
-      'review': 'In Review',
       'done': 'Done'
     };
     return labels[status] || status;
@@ -211,22 +221,8 @@ export class TaskManagementComponent implements OnInit {
   }
 
   createNewTask() {
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title: 'New Task',
-      description: 'Click to edit this task description',
-      status: 'todo',
-      priority: 'medium',
-      tags: ['new'],
-      comments: [],
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    
-    this.tasks.unshift(newTask);
-    this.openTaskDetail(newTask);
-    this.showNotificationMessage('New task created successfully!');
-    console.log('Created new task:', newTask);
+    // Redirect to the new task creation page
+    this.router.navigate(['/tasks/new']);
   }
 
   openTaskDetail(task: Task) {
@@ -244,9 +240,32 @@ export class TaskManagementComponent implements OnInit {
     
     const index = this.tasks.findIndex(task => task.id === this.selectedTask!.id);
     if (index !== -1) {
-      this.tasks[index] = { ...this.selectedTask, updatedAt: new Date() };
-      this.showNotificationMessage('Task updated successfully!');
-      console.log('Updated task:', this.selectedTask);
+      // Update local state immediately for responsiveness
+      this.tasks[index] = { ...this.selectedTask, updatedAt: new Date(), updated_at: new Date().toISOString() };
+    }
+
+    // Persist to backend
+    const backendUpdate: any = {
+      project: this.selectedTask.project,
+      work_type: this.selectedTask.work_type,
+      status: this.selectedTask.status === 'in-progress' ? 'inprogress' : this.selectedTask.status,
+      summary: this.selectedTask.summary || this.selectedTask.title,
+      description: this.selectedTask.description,
+      priority: this.selectedTask.priority === 'urgent' ? 'high' : this.selectedTask.priority,
+      assignee: this.selectedTask.assignee?.name,
+      reporter: this.selectedTask.reporter
+    };
+
+    if (this.selectedTask.id) {
+      this.taskService.updateTask(this.selectedTask.id, backendUpdate).subscribe({
+        next: () => {
+          this.showNotificationMessage('Task updated successfully!');
+        },
+        error: (error) => {
+          console.error('Failed to persist task update', error);
+          this.showNotificationMessage('Failed to save. Changes may not persist.');
+        }
+      });
     }
   }
 
@@ -256,7 +275,9 @@ export class TaskManagementComponent implements OnInit {
     const assigneeId = event.value;
     if (assigneeId) {
       const assignee = this.teamMembers.find(member => member.id === assigneeId);
-      this.selectedTask.assignee = assignee;
+      if (assignee) {
+        this.selectedTask.assignee = { id: assignee.id, name: assignee.name };
+      }
       console.log('Assigned task to:', assignee);
     } else {
       this.selectedTask.assignee = undefined;
@@ -280,7 +301,11 @@ export class TaskManagementComponent implements OnInit {
       createdAt: new Date()
     };
     
-    this.selectedTask.comments.push(comment);
+    if (this.selectedTask.comments) {
+      this.selectedTask.comments.push(comment);
+    } else {
+      this.selectedTask.comments = [comment];
+    }
     this.showNotificationMessage('Comment added successfully!');
     console.log('Added comment:', comment);
     this.newComment = '';
@@ -321,6 +346,7 @@ export class TaskManagementComponent implements OnInit {
     // Simulate refresh by updating timestamps
     this.tasks.forEach(task => {
       task.updatedAt = new Date();
+      task.updated_at = new Date().toISOString();
     });
   }
 

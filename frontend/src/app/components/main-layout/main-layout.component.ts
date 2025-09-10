@@ -51,17 +51,9 @@ export class MainLayoutComponent implements OnInit {
     console.log('Search focused');
   }
 
-  toggleNotifications() {
-    console.log('Toggle notifications');
-  }
+  // Notifications feature not implemented; bell removed from UI
 
-  openProfile() {
-    console.log('Open profile');
-  }
-
-  openSettings() {
-    console.log('Open settings');
-  }
+  // Profile and Settings removed from menu per UI request
 
   openHelp() {
     this.router.navigate(['/help']);
@@ -86,9 +78,9 @@ export class MainLayoutComponent implements OnInit {
     this.currentView = 'projects';
     console.log('Navigate to projects');
     // Log the click event
-    this.apiService.getProjects(1).subscribe({
+    this.apiService.getProjectsForCurrentUser().subscribe({
       next: () => console.log('Projects clicked - event logged'),
-      error: (error) => console.error('Failed to log projects click:', error)
+      error: (error: any) => console.error('Failed to log projects click:', error)
     });
   }
 

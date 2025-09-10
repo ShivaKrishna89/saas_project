@@ -31,7 +31,8 @@ class User(Base):
 	organizations = relationship("Member", back_populates="user")
 	created_issues = relationship("Issue", back_populates="reporter", foreign_keys="Issue.reporter_id")
 	assigned_issues = relationship("Issue", back_populates="assignee", foreign_keys="Issue.assignee_id")
-	created_projects = relationship("Project", back_populates="creator")
+	created_projects = relationship("Project", back_populates="creator", foreign_keys="Project.creator_id")
+	owned_projects = relationship("Project", back_populates="owner", foreign_keys="Project.user_id")
 	created_channels = relationship("Channel", back_populates="creator")
 	messages = relationship("Message", back_populates="user")
 	

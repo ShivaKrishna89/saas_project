@@ -1,0 +1,169 @@
+<div class="task-list-container">
+  <!-- Header -->
+  <div class="task-list-header">
+    <div class="header-content">
+      <h1>Tasks</h1>
+      <p>Manage and track your project tasks</p>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="goToWorkspace()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Workspace
+      </button>
+      <button mat-raised-button color="primary" (click)="createNewTask()" class="create-btn">
+        <mat-icon>add</mat-icon>
+        Create Task
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="filters-grid">
+      <!-- Search -->
+      <div class="filter-group">
+        <label for="search">Search</label>
+        <div class="search-input-container">
+          <mat-icon class="search-icon">search</mat-icon>
+          <input
+            type="text"
+            id="search"
+            [(ngModel)]="searchTerm"
+            (keyup.enter)="onSearch()"
+            placeholder="Search tasks..."
+            class="search-input"
+          />
+        </div>
+      </div>
+
+      <!-- Project Filter -->
+      <div class="filter-group">
+        <label for="project">Project</label>
+        <select
+          id="project"
+          [(ngModel)]="selectedProject"
+          (change)="onFilterChange()"
+          class="filter-select"
+        >
+          <option value="">All Projects</option>
+          <option *ngFor="let project of projects" [value]="project">
+            {{ project }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="filter-group">
+        <label for="status">Status</label>
+        <select
+          id="status"
+          [(ngModel)]="selectedStatus"
+          (change)="onFilterChange()"
+          class="filter-select"
+        >
+          <option *ngFor="let status of statuses" [value]="status.value">
+            {{ status.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Work Type Filter -->
+      <div class="filter-group">
+        <label for="workType">Type</label>
+        <select
+          id="workType"
+          [(ngModel)]="selectedWorkType"
+          (change)="onFilterChange()"
+          class="filter-select"
+        >
+          <option *ngFor="let type of workTypes" [value]="type.value">
+            {{ type.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Clear Filters -->
+      <div class="filter-group">
+        <button mat-stroked-button (click)="clearFilters()" class="clear-btn">
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading tasks...</p>
+  </div>
+
+  <!-- Tasks List -->
+  <div class="tasks-container" *ngIf="!isLoading">
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <mat-icon class="empty-icon">task_alt</mat-icon>
+      <h3>No tasks found</h3>
+      <p *ngIf="searchTerm || selectedProject || selectedStatus || selectedWorkType">
+        Try adjusting your filters or search terms.
+      </p>
+      <p *ngIf="!searchTerm && !selectedProject && !selectedStatus && !selectedWorkType">
+        Get started by creating your first task.
+      </p>
+      <button mat-raised-button color="primary" (click)="createNewTask()" *ngIf="!searchTerm && !selectedProject && !selectedStatus && !selectedWorkType">
+        Create Task
+      </button>
+    </div>
+
+    <!-- Tasks Grid -->
+    <div class="tasks-grid" *ngIf="filteredTasks.length > 0">
+      <div
+        *ngFor="let task of filteredTasks"
+        class="task-card"
+        (click)="viewTask(task)"
+      >
+        <div class="task-card-header">
+          <div class="task-badges">
+            <span class="task-badge" [ngClass]="getWorkTypeClass(task.work_type)">
+              {{ task.work_type | titlecase }}
+            </span>
+            <span class="task-badge" [ngClass]="getStatusClass(task.status)">
+              {{ task.status | titlecase }}
+            </span>
+          </div>
+          <span class="task-id">#{{ task.id }}</span>
+        </div>
+
+        <div class="task-card-content">
+          <h3 class="task-title">{{ task.summary }}</h3>
+          <p class="task-description" *ngIf="task.description">
+            {{ task.description | slice:0:100 }}{{ task.description.length > 100 ? '...' : '' }}
+          </p>
+        </div>
+
+        <div class="task-card-footer">
+          <div class="task-meta">
+            <div class="meta-item">
+              <mat-icon>folder</mat-icon>
+              <span>{{ task.project }}</span>
+            </div>
+            <div class="meta-item" *ngIf="task.assignee">
+              <mat-icon>person</mat-icon>
+              <span>{{ task.assignee.name }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>flag</mat-icon>
+              <span [ngClass]="getPriorityClass(task.priority)">
+                {{ task.priority | titlecase }}
+              </span>
+            </div>
+          </div>
+          <div class="task-date">
+            {{ formatDate(task.created_at!) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

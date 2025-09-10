@@ -90,6 +90,11 @@ import { ResourcesGuidesComponent } from './components/resources-guides/resource
 import { DemoComponent } from './components/demo/demo.component';
 import { ContactSalesComponent } from './components/contact-sales/contact-sales.component';
 
+// Task Components
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { TaskDetailComponent } from './components/task-detail/task-detail.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
+
 // Services
 import { AuthInterceptor } from './services/auth.interceptor';
 import { WebSocketService } from './services/websocket.service';
@@ -131,7 +136,10 @@ import { WebSocketService } from './services/websocket.service';
     SolutionsItComponent,
     ResourcesGuidesComponent,
     DemoComponent,
-    ContactSalesComponent
+    ContactSalesComponent,
+    TaskFormComponent,
+    TaskDetailComponent,
+    TaskListComponent
   ],
       imports: [
       BrowserModule,

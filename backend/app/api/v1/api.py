@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import auth, users, workspaces, workspace_members, projects, issues, notifications, websocket, search, test, messages, activity_logs
+from app.api.v1.endpoints import auth, users, workspaces, workspace_members, projects, issues, notifications, websocket, search, test, messages, activity_logs, tasks
 
 api_router = APIRouter()
 
@@ -16,4 +16,5 @@ api_router.include_router(websocket.router, prefix="/ws", tags=["websocket"])
 api_router.include_router(search.router, prefix="/search", tags=["search"])
 api_router.include_router(messages.router, prefix="/messages", tags=["messages"])
 api_router.include_router(activity_logs.router, prefix="/activity", tags=["activity-logs"])
+api_router.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 api_router.include_router(test.router, prefix="/test", tags=["test"])

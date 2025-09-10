@@ -19,6 +19,7 @@ class ProjectResponse(ProjectBase):
     id: int
     workspace_id: int
     creator_id: int
+    user_id: int
     is_active: bool
     created_at: datetime
     updated_at: Optional[datetime] = None

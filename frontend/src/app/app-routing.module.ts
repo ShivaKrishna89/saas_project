@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { HomeRedirectGuard } from './guards/home-redirect.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
@@ -16,6 +17,11 @@ import { SolutionsItComponent } from './components/solutions-it/solutions-it.com
 import { ResourcesGuidesComponent } from './components/resources-guides/resources-guides.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { ContactSalesComponent } from './components/contact-sales/contact-sales.component';
+
+// Task Components
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { TaskDetailComponent } from './components/task-detail/task-detail.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
 
 // Company Pages
 import { AboutComponent } from './components/about/about.component';
@@ -38,7 +44,7 @@ import { CookiesComponent } from './components/cookies/cookies.component';
 import { Component } from '@angular/core';
 
 @Component({ selector: 'app-auth-callback', template: `<div style="padding:24px;text-align:center">Signing you in...</div>` })
-export class AuthCallbackComponent { constructor() { const p=new URLSearchParams(window.location.search); const t=p.get('token'); if(t){localStorage.setItem('slack_token',t); window.location.href='/workspace-selector';} else { window.location.href='/auth/login'; } } }
+export class AuthCallbackComponent { constructor() { const p=new URLSearchParams(window.location.search); const t=p.get('token'); if(t){localStorage.setItem('slack_token',t); window.location.href='/app';} else { window.location.href='/home'; } } }
 
 @Component({ selector: 'app-projects', template: `<div class="app-page"><h1>Projects</h1><p>Plan and deliver with boards, lists, and timelines.</p><div *ngIf="currentView" class="view-banner">Selected view: {{ currentView }}</div></div>`, styles:[`.app-page{max-width:960px;margin:24px auto;padding:0 16px;}.view-banner{margin-top:12px;padding:8px 12px;border:1px solid #e0e0e0;border-radius:8px;background:#fafafa;}`]})
 export class ProjectsPageComponent {
@@ -57,7 +63,7 @@ export class ServiceDeskPageComponent {}
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [HomeRedirectGuard] },
   { path: 'auth/callback', component: AuthCallbackComponent },
 
   // App pages
@@ -96,6 +102,11 @@ const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'security', component: SecurityComponent },
   { path: 'cookies', component: CookiesComponent },
+
+  // Task pages (protected)
+  { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuard] },
+  { path: 'tasks/new', component: TaskFormComponent, canActivate: [AuthGuard] },
+  { path: 'tasks/:id', component: TaskDetailComponent, canActivate: [AuthGuard] },
 
   // Auth pages
   { path: 'auth/login', component: LoginComponent },

@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    // Redirect unauthenticated users to public features page
-    this.router.navigate(['/features']);
+    // Redirect unauthenticated users to home
+    this.router.navigate(['/home']);
     return false;
   }
 }

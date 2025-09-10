@@ -1,0 +1,183 @@
+<div class="task-form-container">
+  <div class="task-form-header">
+    <h2>{{ mode === 'create' ? 'Create New Task' : 'Edit Task' }}</h2>
+    <p class="form-subtitle">
+      {{ mode === 'create' ? 'Fill out the form below to create a new task' : 'Update the task details below' }}
+    </p>
+  </div>
+
+  <div class="form-loading" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading task details...</p>
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form" *ngIf="!isLoading">
+    <div class="form-grid">
+      <!-- Left Column -->
+      <div class="form-column">
+        <!-- Project (Stylish dropdown) -->
+        <div class="form-group">
+          <label for="project" class="form-label required">Project</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select id="project" formControlName="project_id" placeholder="Select a project" [disabled]="!userProjects?.length" required>
+              <mat-option *ngIf="!userProjects?.length" [value]="null" disabled>
+                No projects found
+              </mat-option>
+              <mat-option *ngFor="let p of userProjects" [value]="p.id">{{ p.title || p.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="hint" *ngIf="!userProjects?.length">Create a project first to attach tasks.</div>
+        </div>
+
+        <!-- Work Type -->
+        <div class="form-group">
+          <label for="work_type" class="form-label required">Work Type</label>
+          <select
+            id="work_type"
+            formControlName="work_type"
+            class="form-select"
+            [class.error]="isFieldInvalid('work_type')"
+          >
+            <option *ngFor="let type of workTypes" [value]="type.value">
+              {{ type.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="getFieldError('work_type')">
+            {{ getFieldError('work_type') }}
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="status" class="form-label required">Status</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-select"
+            [class.error]="isFieldInvalid('status')"
+          >
+            <option *ngFor="let status of statuses" [value]="status.value">
+              {{ status.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="getFieldError('status')">
+            {{ getFieldError('status') }}
+          </div>
+        </div>
+
+        <!-- Priority -->
+        <div class="form-group">
+          <label for="priority" class="form-label required">Priority</label>
+          <select
+            id="priority"
+            formControlName="priority"
+            class="form-select"
+            [class.error]="isFieldInvalid('priority')"
+          >
+            <option *ngFor="let priority of priorities" [value]="priority.value">
+              {{ priority.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="getFieldError('priority')">
+            {{ getFieldError('priority') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="form-column">
+        <!-- Summary -->
+        <div class="form-group">
+          <label for="summary" class="form-label required">Summary</label>
+          <input
+            type="text"
+            id="summary"
+            formControlName="summary"
+            class="form-input"
+            [class.error]="isFieldInvalid('summary')"
+            placeholder="Brief description of the task"
+            maxlength="500"
+          />
+          <div class="error-message" *ngIf="getFieldError('summary')">
+            {{ getFieldError('summary') }}
+          </div>
+        </div>
+
+        <!-- Assignee -->
+        <div class="form-group">
+          <label for="assignee" class="form-label">Assignee</label>
+          <input
+            type="text"
+            id="assignee"
+            formControlName="assignee"
+            class="form-input"
+            [class.error]="isFieldInvalid('assignee')"
+            placeholder="Who should work on this task?"
+            maxlength="255"
+          />
+          <div class="error-message" *ngIf="getFieldError('assignee')">
+            {{ getFieldError('assignee') }}
+          </div>
+        </div>
+
+        <!-- Reporter -->
+        <div class="form-group">
+          <label for="reporter" class="form-label required">Reporter</label>
+          <input
+            type="text"
+            id="reporter"
+            formControlName="reporter"
+            class="form-input"
+            [class.error]="isFieldInvalid('reporter')"
+            placeholder="Who reported this task?"
+            maxlength="255"
+          />
+          <div class="error-message" *ngIf="getFieldError('reporter')">
+            {{ getFieldError('reporter') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description (Full Width) -->
+    <div class="form-group full-width">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-textarea"
+        [class.error]="isFieldInvalid('description')"
+        placeholder="Detailed description of the task (optional)"
+        rows="4"
+      ></textarea>
+      <div class="error-message" *ngIf="getFieldError('description')">
+        {{ getFieldError('description') }}
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button
+        type="button"
+        mat-stroked-button
+        (click)="onCancel()"
+        [disabled]="isSubmitting"
+        class="cancel-btn"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="taskForm.invalid || isSubmitting"
+        class="save-btn"
+      >
+        <mat-spinner *ngIf="isSubmitting" diameter="20" class="btn-spinner"></mat-spinner>
+        <span *ngIf="!isSubmitting">{{ mode === 'create' ? 'Create Task' : 'Update Task' }}</span>
+        <span *ngIf="isSubmitting">{{ mode === 'create' ? 'Creating...' : 'Updating...' }}</span>
+      </button>
+    </div>
+  </form>
+</div>
+

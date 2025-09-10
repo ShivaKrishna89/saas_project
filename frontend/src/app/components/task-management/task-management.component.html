@@ -180,18 +180,15 @@
             </div>
             <div class="detail-item">
               <label>Assignee:</label>
-              <mat-select [value]="selectedTask.assignee?.id" (selectionChange)="assignTask($event)">
-                <mat-option [value]="null">Unassigned</mat-option>
-                <mat-option *ngFor="let user of teamMembers" [value]="user.id">
-                  {{ user.name }}
-                </mat-option>
-              </mat-select>
+              <input matInput placeholder="Type assignee name" [ngModel]="selectedTask.assignee?.name" (ngModelChange)="selectedTask.assignee = $event ? { id: 'manual', name: $event } : undefined; updateTask()" />
             </div>
             <div class="detail-item">
               <label>Due Date:</label>
-              <input matInput [matDatepicker]="picker" [ngModel]="selectedTask.dueDate" (ngModelChange)="selectedTask.dueDate = $event; updateTask()">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-form-field appearance="outline" class="due-date-field">
+                <input matInput [matDatepicker]="picker" [ngModel]="selectedTask.dueDate" (ngModelChange)="selectedTask.dueDate = $event; updateTask()" placeholder="Select due date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
             </div>
           </div>
         </div>
