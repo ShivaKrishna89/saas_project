@@ -69,9 +69,18 @@ export class RegisterComponent {
           console.error('Registration error:', error);
           
           if (error.status === 400) {
-            this.errorMessage = 'Invalid registration data. Please check your information.';
+            // Handle validation errors from Pydantic
+            if (error.error?.detail && Array.isArray(error.error.detail)) {
+              const validationErrors = error.error.detail.map((err: any) => err.msg).join(', ');
+              this.errorMessage = `Validation error: ${validationErrors}`;
+            } else if (error.error?.detail) {
+              this.errorMessage = error.error.detail;
+            } else {
+              this.errorMessage = 'Invalid registration data. Please check your information.';
+            }
           } else if (error.status === 409) {
-            this.errorMessage = 'An account with this email already exists. Please try logging in instead.';
+            // Use the specific error message from the backend
+            this.errorMessage = error.error?.detail || 'An account with this email or username already exists.';
           } else if (error.status === 0) {
             this.errorMessage = 'Unable to connect to server. Please check your internet connection.';
           } else {
