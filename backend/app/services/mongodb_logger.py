@@ -21,8 +21,10 @@ class MongoDBLogger:
         self.ist_timezone = pytz.timezone("Asia/Kolkata")
     
     def _get_ist_now(self):
-        """Get current time in IST"""
-        utc_time = datetime.utcnow()
+        """Get current time in IST as a timezone-aware datetime.
+        Use proper UTC localization before converting, so Mongo stores the correct instant.
+        """
+        utc_time = pytz.utc.localize(datetime.utcnow())
         ist_time = utc_time.astimezone(self.ist_timezone)
         return ist_time
     
@@ -42,6 +44,9 @@ class MongoDBLogger:
             return None
             
         try:
+            ist_now = self._get_ist_now()
+            # Store as naive datetime (MongoDB treats naive as UTC) with IST wall-clock time
+            ist_naive = ist_now.replace(tzinfo=None)
             log_entry = {
                 "event_type": "user_activity",
                 "user_id": user_id,
@@ -51,8 +56,8 @@ class MongoDBLogger:
                 "details": details or {},
                 "ip_address": ip_address,
                 "user_agent": user_agent,
-                "timestamp": self._get_ist_now(),
-                "created_at": self._get_ist_now()
+                "timestamp": ist_naive,
+                "created_at": ist_naive
             }
             
             result = self.events_collection.insert_one(log_entry)
@@ -77,14 +82,16 @@ class MongoDBLogger:
             return None
             
         try:
+            ist_now = self._get_ist_now()
+            ist_naive = ist_now.replace(tzinfo=None)
             log_entry = {
                 "event_type": event_type,
                 "message": message,
                 "user_id": user_id,
                 "details": details or {},
                 "severity": severity,
-                "timestamp": self._get_ist_now(),
-                "created_at": self._get_ist_now()
+                "timestamp": ist_naive,
+                "created_at": ist_naive
             }
             
             result = self.events_collection.insert_one(log_entry)
@@ -113,6 +120,8 @@ class MongoDBLogger:
             return None
             
         try:
+            ist_now = self._get_ist_now()
+            ist_naive = ist_now.replace(tzinfo=None)
             chat_entry = {
                 "event_type": "chat_message",
                 "message_id": message_id,
@@ -124,8 +133,8 @@ class MongoDBLogger:
                 "message_type": message_type,
                 "attachments": attachments or [],
                 "reactions": reactions or {},
-                "timestamp": self._get_ist_now(),
-                "created_at": self._get_ist_now()
+                "timestamp": ist_naive,
+                "created_at": ist_naive
             }
             
             result = self.events_collection.insert_one(chat_entry)

@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: '/api/v1',
-  wsUrl: '/api/v1/ws',
+  apiUrl: 'https://d2bauiyeh3wgd2.cloudfront.net/api/v1',
+  wsUrl: 'wss://d2bauiyeh3wgd2.cloudfront.net/api/v1/ws',
   appName: 'Slack-like SaaS',
   version: '1.0.0'
 };

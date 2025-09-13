@@ -63,7 +63,7 @@ export interface TaskListResponse {
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = `${environment.apiUrl}/tasks`;
+  private baseUrl = `${environment.apiUrl}/tasks/`;
 
   constructor(private http: HttpClient) {}
 
@@ -94,19 +94,19 @@ export class TaskService {
   }
 
   getTaskById(id: string): Observable<Task> {
-    return this.http.get<Task>(`${this.baseUrl}/${id}`, {
+    return this.http.get<Task>(`${this.baseUrl}${id}`, {
       headers: this.getHeaders()
     });
   }
 
   updateTask(id: string, task: TaskUpdate): Observable<Task> {
-    return this.http.put<Task>(`${this.baseUrl}/${id}`, task, {
+    return this.http.put<Task>(`${this.baseUrl}${id}`, task, {
       headers: this.getHeaders()
     });
   }
 
   deleteTask(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
+    return this.http.delete<void>(`${this.baseUrl}${id}`, {
       headers: this.getHeaders()
     });
   }

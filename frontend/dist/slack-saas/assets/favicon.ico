@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="rocketGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rocket pointing up and slightly right -->
+  <!-- Nose cone -->
+  <path d="M16 4 L20 10 L16 10 Z" fill="url(#rocketGradient)"/>
+  
+  <!-- Rocket body -->
+  <rect x="14" y="10" width="4" height="10" rx="0.5" fill="url(#rocketGradient)"/>
+  
+  <!-- Rocket window -->
+  <circle cx="16" cy="13" r="1.5" fill="white" opacity="0.9"/>
+  
+  <!-- Rocket fins -->
+  <path d="M14 20 L11 26 L14 24 Z" fill="url(#rocketGradient)"/>
+  <path d="M18 20 L21 26 L18 24 Z" fill="url(#rocketGradient)"/>
+  
+  <!-- Exhaust flames -->
+  <path d="M15 20 Q16 25 17 20" stroke="url(#rocketGradient)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M15.5 20 Q16 23 16.5 20" stroke="url(#rocketGradient)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

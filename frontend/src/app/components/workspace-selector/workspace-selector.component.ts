@@ -27,59 +27,43 @@ export class WorkspaceSelectorComponent implements OnInit {
   }
 
   launchWorkspace(workspaceId: string) {
-    console.log('Launching workspace:', workspaceId);
-    // For now, just navigate to the main app
     this.router.navigate(['/app']);
   }
 
   createNewWorkspace() {
-    console.log('Creating new workspace...');
-    // For now, just navigate to the main app
     this.router.navigate(['/app']);
   }
 
   openSettings() {
-    console.log('Opening settings...');
-    // TODO: Implement settings modal or page
-    alert('Settings feature coming soon!');
+    // Feature not implemented yet
   }
 
   openSupport() {
-    console.log('Opening support...');
     this.router.navigate(['/contact']);
   }
 
   openCommunity() {
-    console.log('Opening community...');
     this.router.navigate(['/community']);
   }
 
   openDocs() {
-    console.log('Opening documentation...');
     this.router.navigate(['/help']);
   }
 
   openApps() {
-    console.log('Opening apps page...');
-    // TODO: Implement apps download page
-    alert('Mobile and desktop apps coming soon!');
+    // Not implemented
   }
 
   openLicensing() {
-    console.log('Opening licensing...');
     this.router.navigate(['/pricing']);
   }
 
   takeTour() {
-    console.log('Starting tour...');
-    // TODO: Implement interactive tour
-    alert('Interactive tour coming soon!');
+    // Not implemented
   }
 
   watchTutorial() {
-    console.log('Opening tutorial...');
-    // TODO: Implement tutorial video
-    alert('Video tutorials coming soon!');
+    // Not implemented
   }
 
   logout() {
