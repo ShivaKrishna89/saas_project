@@ -694,7 +694,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">15 min read</span>
                   <span class="resource-level">Beginner</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToHelp()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToHelp(); $event.preventDefault()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -708,7 +708,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">8 min read</span>
                   <span class="resource-level">Intermediate</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Article <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToBlog(); $event.preventDefault()">Read Article <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -722,7 +722,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">12 min read</span>
                   <span class="resource-level">Beginner</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToHelp()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToHelp(); $event.preventDefault()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -736,7 +736,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">6 min read</span>
                   <span class="resource-level">All Levels</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Case Study <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToBlog(); $event.preventDefault()">Read Case Study <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -750,7 +750,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">10 min read</span>
                   <span class="resource-level">Advanced</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToDevelopers()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToDevelopers(); $event.preventDefault()">Read Guide <mat-icon>arrow_forward</mat-icon></a>
               </div>
 
               <div class="resource-card">
@@ -764,7 +764,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                   <span class="resource-time">7 min read</span>
                   <span class="resource-level">Intermediate</span>
                 </div>
-                <a href="#" class="resource-link" (click)="navigateToBlog()">Read Article <mat-icon>arrow_forward</mat-icon></a>
+                <a class="resource-link" (click)="navigateToBlog(); $event.preventDefault()">Read Article <mat-icon>arrow_forward</mat-icon></a>
               </div>
             </div>
           </div>
@@ -814,6 +814,18 @@ import { Router, ActivatedRoute } from '@angular/router';
           </div>
         </div>
       </footer>
+
+      <!-- Coming Soon Popup -->
+      <div class="coming-soon-popup-overlay" *ngIf="showComingSoonPopup" (click)="closeComingSoonPopup()">
+        <div class="coming-soon-popup" (click)="$event.stopPropagation()">
+          <div class="popup-icon">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <h3>Coming Soon!</h3>
+          <p>This feature is currently under development and will be available soon.</p>
+          <button mat-raised-button color="primary" (click)="closeComingSoonPopup()">OK</button>
+        </div>
+      </div>
     </div>
   `,
   styles: [`
@@ -4714,10 +4726,85 @@ import { Router, ActivatedRoute } from '@angular/router';
         min-width: auto;
       }
     }
+
+    /* Coming Soon Popup Styles */
+    .coming-soon-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .coming-soon-popup {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.3s ease;
+    }
+
+    .popup-icon {
+      margin-bottom: 24px;
+      
+      mat-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        color: #ff9800;
+      }
+    }
+
+    .coming-soon-popup h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 16px 0;
+    }
+
+    .coming-soon-popup p {
+      font-size: 16px;
+      color: #666;
+      margin: 0 0 32px 0;
+      line-height: 1.5;
+    }
+
+    .coming-soon-popup button {
+      padding: 12px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { 
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
   `]
 })
 export class PlaceholderComponent implements OnInit {
   @Input() pageType: string = 'features';
+  showComingSoonPopup = false;
 
 
   constructor(
@@ -5200,7 +5287,7 @@ export class PlaceholderComponent implements OnInit {
   goHome() { this.router.navigate(['/home']); }
   navigateToLogin() { this.router.navigate(['/auth/login']); }
   navigateToRegister() { this.router.navigate(['/auth/register']); }
-  navigateToResources() { this.router.navigate(['/resources']); }
+  navigateToResources() { this.showComingSoon(); }
   navigateToContact() { this.router.navigate(['/contact']); }
   navigateToSecurity() { this.router.navigate(['/security']); }
   navigateToPricing() { this.router.navigate(['/pricing']); }
@@ -5208,9 +5295,9 @@ export class PlaceholderComponent implements OnInit {
   navigateToSolutions() { this.router.navigate(['/solutions']); }
   navigateToAbout() { this.router.navigate(['/about']); }
   navigateToCareers() { this.router.navigate(['/careers']); }
-  navigateToBlog() { this.router.navigate(['/blog']); }
-  navigateToHelp() { this.router.navigate(['/help']); }
-  navigateToDevelopers() { this.router.navigate(['/developers']); }
+  navigateToBlog() { this.showComingSoon(); }
+  navigateToHelp() { this.showComingSoon(); }
+  navigateToDevelopers() { this.showComingSoon(); }
   navigateToApi() { this.router.navigate(['/api']); }
   navigateToCommunity() { this.router.navigate(['/community']); }
   navigateToPrivacy() { this.router.navigate(['/privacy']); }
@@ -5218,8 +5305,16 @@ export class PlaceholderComponent implements OnInit {
   navigateToCookies() { this.router.navigate(['/cookies']); }
   talkToSales() { this.router.navigate(['/contact-sales']); }
   watchDemo() { this.router.navigate(['/demo']); }
-  browseGuides() { this.router.navigate(['/resources/guides']); }
-  joinCommunity() { this.router.navigate(['/community']); }
+  browseGuides() { this.showComingSoon(); }
+  joinCommunity() { this.showComingSoon(); }
+  
+  showComingSoon() {
+    this.showComingSoonPopup = true;
+  }
+  
+  closeComingSoonPopup() {
+    this.showComingSoonPopup = false;
+  }
 
   navigateToEngineering() {
     this.router.navigate(['/solutions/engineering']);

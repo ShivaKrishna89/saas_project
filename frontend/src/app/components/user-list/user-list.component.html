@@ -1,0 +1,102 @@
+<div class="user-list-container">
+  <div class="user-list-header">
+    <h2>Team Members</h2>
+    <div class="header-actions">
+      <button mat-icon-button class="refresh-button" (click)="refreshUsers()" matTooltip="Refresh">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" (click)="inviteUser()">
+        <mat-icon>person_add</mat-icon>
+        <span>Invite User</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="user-list-content">
+    <div class="search-section">
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input 
+          type="text" 
+          placeholder="Search users..." 
+          [(ngModel)]="searchQuery"
+          (input)="filterUsers()"
+          class="search-input">
+      </div>
+      
+      <div class="filter-options">
+        <mat-select [(value)]="selectedRole" (selectionChange)="filterUsers()" placeholder="All Roles">
+          <mat-option value="">All Roles</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="member">Member</mat-option>
+          <mat-option value="guest">Guest</mat-option>
+        </mat-select>
+        
+        <mat-select [(value)]="selectedStatus" (selectionChange)="filterUsers()" placeholder="All Status">
+          <mat-option value="">All Status</mat-option>
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="inactive">Inactive</mat-option>
+          <mat-option value="pending">Pending</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div class="users-grid">
+      <div 
+        *ngFor="let user of filteredUsers; trackBy: trackByUserId" 
+        class="user-card"
+        [class.inactive]="user.status === 'inactive'">
+        
+        <div class="user-avatar">
+          <img [src]="user.avatar" [alt]="user.name" class="avatar-image" *ngIf="user.avatar">
+          <div class="avatar-placeholder" *ngIf="!user.avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="status-indicator" [class.online]="user.isOnline" [class.offline]="!user.isOnline"></div>
+        </div>
+        
+        <div class="user-info">
+          <div class="user-name">
+            <h3>{{ user.name }}</h3>
+            <span class="user-role" [class]="'role-' + user.role">{{ user.role }}</span>
+          </div>
+          <p class="user-email">{{ user.email }}</p>
+          <p class="user-title">{{ user.title }}</p>
+          <div class="user-meta">
+            <span class="last-seen" *ngIf="!user.isOnline">
+              Last seen {{ formatLastSeen(user.lastSeen) }}
+            </span>
+            <span class="online-status" *ngIf="user.isOnline">Online</span>
+          </div>
+        </div>
+        
+        <div class="user-actions">
+          <button mat-icon-button class="action-button" (click)="viewProfile(user)" matTooltip="View Profile">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button class="action-button" (click)="editUser(user)" matTooltip="Edit User">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="action-button" (click)="sendMessage(user)" matTooltip="Send Message">
+            <mat-icon>message</mat-icon>
+          </button>
+          <button mat-icon-button class="action-button danger" (click)="removeUser(user)" matTooltip="Remove User">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredUsers.length === 0">
+      <div class="empty-icon">
+        <mat-icon>people</mat-icon>
+      </div>
+      <h3>No users found</h3>
+      <p>Try adjusting your search criteria or invite new team members.</p>
+      <button mat-raised-button color="primary" (click)="inviteUser()">
+        <mat-icon>person_add</mat-icon>
+        <span>Invite User</span>
+      </button>
+    </div>
+  </div>
+</div>

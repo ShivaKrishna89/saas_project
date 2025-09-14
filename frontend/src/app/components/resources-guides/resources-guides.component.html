@@ -1,0 +1,135 @@
+<div class="resources-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1>Resources & Guides</h1>
+      <p class="hero-subtitle">Everything you need to get the most out of CollabX</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="container">
+      <div class="resources-nav">
+        <div class="nav-tabs">
+          <button 
+            *ngFor="let category of categories" 
+            class="nav-tab"
+            [class.active]="activeCategory === category.id"
+            (click)="setActiveCategory(category.id)">
+            <mat-icon>{{ category.icon }}</mat-icon>
+            <span>{{ category.name }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="resources-content">
+        <!-- Getting Started -->
+        <div *ngIf="activeCategory === 'getting-started'" class="category-content">
+          <div class="category-header">
+            <h2>Getting Started</h2>
+            <p>Learn the basics and set up your workspace for success</p>
+          </div>
+          
+          <div class="resources-grid">
+            <div class="resource-card" *ngFor="let resource of gettingStartedResources">
+              <div class="resource-icon">
+                <mat-icon>{{ resource.icon }}</mat-icon>
+              </div>
+              <div class="resource-content">
+                <h3>{{ resource.title }}</h3>
+                <p>{{ resource.description }}</p>
+                <div class="resource-meta">
+                  <span class="resource-type">{{ resource.type }}</span>
+                  <span class="resource-duration">{{ resource.duration }}</span>
+                </div>
+              </div>
+              <div class="resource-actions">
+                <button mat-stroked-button (click)="openResource(resource)">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div *ngIf="activeCategory === 'best-practices'" class="category-content">
+          <div class="category-header">
+            <h2>Best Practices</h2>
+            <p>Proven strategies to maximize team productivity</p>
+          </div>
+          
+          <div class="resources-grid">
+            <div class="resource-card" *ngFor="let resource of bestPracticesResources">
+              <div class="resource-icon">
+                <mat-icon>{{ resource.icon }}</mat-icon>
+              </div>
+              <div class="resource-content">
+                <h3>{{ resource.title }}</h3>
+                <p>{{ resource.description }}</p>
+                <div class="resource-meta">
+                  <span class="resource-type">{{ resource.type }}</span>
+                  <span class="resource-duration">{{ resource.duration }}</span>
+                </div>
+              </div>
+              <div class="resource-actions">
+                <button mat-stroked-button (click)="openResource(resource)">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrations -->
+        <div *ngIf="activeCategory === 'integrations'" class="category-content">
+          <div class="category-header">
+            <h2>Integrations</h2>
+            <p>Connect CollabX with your favorite tools</p>
+          </div>
+          
+          <div class="resources-grid">
+            <div class="resource-card" *ngFor="let resource of integrationResources">
+              <div class="resource-icon">
+                <mat-icon>{{ resource.icon }}</mat-icon>
+              </div>
+              <div class="resource-content">
+                <h3>{{ resource.title }}</h3>
+                <p>{{ resource.description }}</p>
+                <div class="resource-meta">
+                  <span class="resource-type">{{ resource.type }}</span>
+                  <span class="resource-duration">{{ resource.duration }}</span>
+                </div>
+              </div>
+              <div class="resource-actions">
+                <button mat-stroked-button (click)="openResource(resource)">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Documentation -->
+        <div *ngIf="activeCategory === 'api'" class="category-content">
+          <div class="category-header">
+            <h2>API Documentation</h2>
+            <p>Build custom integrations with our powerful API</p>
+          </div>
+          
+          <div class="resources-grid">
+            <div class="resource-card" *ngFor="let resource of apiResources">
+              <div class="resource-icon">
+                <mat-icon>{{ resource.icon }}</mat-icon>
+              </div>
+              <div class="resource-content">
+                <h3>{{ resource.title }}</h3>
+                <p>{{ resource.description }}</p>
+                <div class="resource-meta">
+                  <span class="resource-type">{{ resource.type }}</span>
+                  <span class="resource-duration">{{ resource.duration }}</span>
+                </div>
+              </div>
+              <div class="resource-actions">
+                <button mat-stroked-button (click)="openResource(resource)">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

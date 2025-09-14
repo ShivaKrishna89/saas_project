@@ -39,89 +39,7 @@ export class TaskManagementComponent implements OnInit {
     { title: 'Done', status: 'done' }
   ];
 
-  tasks: Task[] = [
-    {
-      id: '1',
-      title: 'Design new landing page',
-      description: 'Create a modern, responsive landing page for the marketing campaign',
-      status: 'todo',
-      priority: 'high',
-      assignee: { id: '1', name: 'Sarah Johnson' },
-      dueDate: new Date('2024-01-15'),
-      tags: ['design', 'frontend'],
-      comments: [],
-      createdAt: new Date('2024-01-10'),
-      updatedAt: new Date('2024-01-10'),
-      project: 'Marketing',
-      work_type: 'task',
-      summary: 'Design new landing page',
-      reporter: 'Project Manager'
-    },
-    {
-      id: '2',
-      title: 'Implement user authentication',
-      description: 'Add JWT-based authentication system with login and registration',
-      status: 'in-progress',
-      priority: 'urgent',
-      assignee: { id: '2', name: 'Mike Chen' },
-      dueDate: new Date('2024-01-12'),
-      tags: ['backend', 'security'],
-      comments: [
-        {
-          id: '1',
-          text: 'Started working on the JWT implementation',
-          author: { id: '2', name: 'Mike Chen' },
-          createdAt: new Date('2024-01-11')
-        }
-      ],
-      createdAt: new Date('2024-01-08'),
-      updatedAt: new Date('2024-01-11'),
-      project: 'Backend',
-      work_type: 'feature',
-      summary: 'Implement user authentication',
-      reporter: 'Tech Lead'
-    },
-    {
-      id: '4',
-      title: 'Setup CI/CD pipeline',
-      description: 'Configure automated testing and deployment pipeline',
-      status: 'done',
-      priority: 'high',
-      assignee: { id: '4', name: 'Alex Thompson' },
-      dueDate: new Date('2024-01-05'),
-      tags: ['devops', 'automation'],
-      comments: [
-        {
-          id: '2',
-          text: 'Pipeline is working perfectly! All tests are passing.',
-          author: { id: '4', name: 'Alex Thompson' },
-          createdAt: new Date('2024-01-05')
-        }
-      ],
-      createdAt: new Date('2024-01-01'),
-      updatedAt: new Date('2024-01-05'),
-      project: 'DevOps',
-      work_type: 'task',
-      summary: 'Setup CI/CD pipeline',
-      reporter: 'DevOps Lead'
-    },
-    {
-      id: '5',
-      title: 'Optimize database queries',
-      description: 'Review and optimize slow database queries for better performance',
-      status: 'todo',
-      priority: 'medium',
-      dueDate: new Date('2024-01-25'),
-      tags: ['database', 'performance'],
-      comments: [],
-      createdAt: new Date('2024-01-11'),
-      updatedAt: new Date('2024-01-11'),
-      project: 'Backend',
-      work_type: 'task',
-      summary: 'Optimize database queries',
-      reporter: 'Database Admin'
-    }
-  ];
+  tasks: Task[] = [];
 
   teamMembers: TeamMember[] = [
     { id: '1', name: 'Sarah Johnson', email: 'sarah@company.com' },
@@ -162,11 +80,12 @@ export class TaskManagementComponent implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (tasks) => {
         // Already normalized in service
-        this.tasks = tasks;
+        this.tasks = tasks || [];
       },
       error: (error) => {
         console.error('Error loading tasks:', error);
-        // Keep the existing placeholder tasks if API fails
+        // Clear tasks if API fails
+        this.tasks = [];
       }
     });
   }
@@ -177,7 +96,7 @@ export class TaskManagementComponent implements OnInit {
     switch (this.selectedFilter) {
       case 'assigned':
         const currentUser = this.authService.currentUserValue;
-        filtered = filtered.filter(task => task.assignee?.name === currentUser?.full_name);
+        filtered = filtered.filter(task => task.assignee === currentUser?.full_name);
         break;
       case 'created':
         // For demo purposes, assume current user created all tasks
@@ -252,7 +171,7 @@ export class TaskManagementComponent implements OnInit {
       summary: this.selectedTask.summary || this.selectedTask.title,
       description: this.selectedTask.description,
       priority: this.selectedTask.priority === 'urgent' ? 'high' : this.selectedTask.priority,
-      assignee: this.selectedTask.assignee?.name,
+      assignee: this.selectedTask.assignee,
       reporter: this.selectedTask.reporter
     };
 
@@ -276,7 +195,7 @@ export class TaskManagementComponent implements OnInit {
     if (assigneeId) {
       const assignee = this.teamMembers.find(member => member.id === assigneeId);
       if (assignee) {
-        this.selectedTask.assignee = { id: assignee.id, name: assignee.name };
+        this.selectedTask.assignee = assignee.name;
       }
       console.log('Assigned task to:', assignee);
     } else {

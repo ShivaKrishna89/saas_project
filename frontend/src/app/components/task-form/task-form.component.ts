@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TaskService, Task, TaskCreate, TaskUpdate } from '../../services/task.service';
+import { TaskService, Task, TaskCreate, TaskUpdate, User } from '../../services/task.service';
 import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -40,6 +40,7 @@ export class TaskFormComponent implements OnInit {
   ];
 
   userProjects: any[] = [];
+  availableUsers: User[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +62,12 @@ export class TaskFormComponent implements OnInit {
       next: (projects) => { this.userProjects = projects || []; },
       error: () => { this.userProjects = []; }
     });
+    
+    // Load all users for assignee/reporter dropdowns
+    this.apiService.getAllUsers().subscribe({
+      next: (users) => { this.availableUsers = users || []; },
+      error: () => { this.availableUsers = []; }
+    });
   }
 
   private createForm(): FormGroup {
@@ -72,8 +79,8 @@ export class TaskFormComponent implements OnInit {
       summary: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]],
       description: [''],
       priority: ['medium', Validators.required],
-      assignee: [''],
-      reporter: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]]
+      assignee: [''], // Optional assignee as string
+      reporter: ['', Validators.required] // Required reporter as string
     });
   }
 
@@ -86,13 +93,14 @@ export class TaskFormComponent implements OnInit {
         this.currentTask = task;
         this.taskForm.patchValue({
           project: task.project,
+          project_id: task.project_id,
           work_type: task.work_type,
           status: task.status === 'in-progress' ? 'inprogress' : task.status,
           summary: task.summary,
           description: task.description || '',
           priority: task.priority === 'urgent' ? 'high' : task.priority,
-          assignee: typeof task.assignee === 'string' ? task.assignee : (task.assignee?.name || ''),
-          reporter: task.reporter
+          assignee: task.assignee || '',
+          reporter: task.reporter || ''
         });
         this.isLoading = false;
       },
@@ -117,9 +125,7 @@ export class TaskFormComponent implements OnInit {
       ...formValue,
       project: formValue.project?.trim(),
       summary: formValue.summary?.trim(),
-      description: formValue.description?.trim() || null,
-      assignee: formValue.assignee?.trim() || null,
-      reporter: formValue.reporter?.trim()
+      description: formValue.description?.trim() || null
     };
 
     if (this.mode === 'create') {
@@ -129,24 +135,24 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  private createTask(taskData: TaskCreate): void {
+  private createTask(taskData: any): void {
     const taskToCreate: Task = {
       id: undefined,
       title: taskData.summary,
       description: taskData.description || '',
       status: taskData.status === 'inprogress' ? 'in-progress' : taskData.status,
       priority: taskData.priority,
-      assignee: taskData.assignee ? { id: '1', name: taskData.assignee } : undefined,
+      assignee: taskData.assignee || undefined,
+      reporter: taskData.reporter || 'Current User',
       dueDate: undefined,
       tags: [],
       comments: [],
       createdAt: new Date(),
       updatedAt: new Date(),
       project: taskData.project,
-      project_id: (this.taskForm.get('project_id')?.value as number) || undefined,
+      project_id: taskData.project_id,
       work_type: taskData.work_type,
-      summary: taskData.summary,
-      reporter: taskData.reporter
+      summary: taskData.summary
     };
     
     this.taskService.createTask(taskToCreate).subscribe({

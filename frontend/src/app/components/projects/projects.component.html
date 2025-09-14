@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <!-- Filters and Views -->
+  <!-- View Controls -->
   <div class="projects-controls">
     <div class="controls-left">
       <mat-button-toggle-group [(value)]="currentView" (change)="onViewChange($event)">
@@ -76,6 +76,19 @@
         </div>
       </div>
     </div>
+    
+    <!-- Empty State for Grid View -->
+    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">folder_open</mat-icon>
+        <h3>No projects yet</h3>
+        <p>Create your first project to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewProject()">
+          <mat-icon>add</mat-icon>
+          Create Project
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- List View -->
@@ -124,6 +137,19 @@
         </div>
       </div>
     </div>
+    
+    <!-- Empty State for List View -->
+    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">folder_open</mat-icon>
+        <h3>No projects yet</h3>
+        <p>Create your first project to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewProject()">
+          <mat-icon>add</mat-icon>
+          Create Project
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Timeline View -->
@@ -141,6 +167,19 @@
           <p class="project-description">{{ project.description }}</p>
           <!-- timeline meta removed -->
         </div>
+      </div>
+    </div>
+    
+    <!-- Empty State for Timeline View -->
+    <div class="empty-state" *ngIf="filteredProjects.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">folder_open</mat-icon>
+        <h3>No projects yet</h3>
+        <p>Create your first project to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewProject()">
+          <mat-icon>add</mat-icon>
+          Create Project
+        </button>
       </div>
     </div>
   </div>
@@ -164,43 +203,29 @@
           <div class="detail-grid">
             <div class="detail-item">
               <label>Title:</label>
-              <input matInput type="text" class="styled-input" [(ngModel)]="selectedProject.name" (ngModelChange)="updateProject()" placeholder="Project title">
+              <input matInput type="text" class="styled-input" [(ngModel)]="selectedProject.name" (ngModelChange)="!isCreating && updateProject()" placeholder="Project title">
             </div>
             <div class="detail-item">
               <label>Status:</label>
-              <mat-select [(value)]="selectedProject.status" (selectionChange)="updateProject()">
+              <mat-select [(value)]="selectedProject.status" (selectionChange)="!isCreating && updateProject()">
                 <mat-option value="active">Active</mat-option>
                 <mat-option value="inactive">Inactive</mat-option>
               </mat-select>
             </div>
             <div class="detail-item detail-item--full">
               <label>Description:</label>
-              <textarea matInput rows="5" class="styled-textarea" [(ngModel)]="selectedProject.description" (ngModelChange)="updateProject()" placeholder="Project description"></textarea>
+              <textarea matInput rows="5" class="styled-textarea" [(ngModel)]="selectedProject.description" (ngModelChange)="!isCreating && updateProject()" placeholder="Project description"></textarea>
             </div>
           </div>
         </div>
         <div class="project-detail-section">
-          <h3>Team Members</h3>
-          <div class="team-members">
-            <div class="team-member" *ngFor="let member of selectedProject.team">
-              <div class="member-avatar">
-                <span>{{ member.name.charAt(0) }}</span>
-              </div>
-              <div class="member-info">
-                <span class="member-name">{{ member.name }}</span>
-                <span class="member-role">{{ member.role }}</span>
-              </div>
-              <button mat-icon-button (click)="removeTeamMember(member)">
-                <mat-icon>remove_circle</mat-icon>
-              </button>
-            </div>
-          </div>
-          <div class="add-member">
-            <mat-form-field appearance="outline">
-              <mat-label>Add team member</mat-label>
-              <mat-select [(value)]="newMemberId" (selectionChange)="addTeamMember($event)">
+          <h3>Project Admin</h3>
+          <div class="detail-item">
+            <label>Admin:</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select [(value)]="selectedAdminId" (selectionChange)="!isCreating && updateProject()" placeholder="Select project admin">
                 <mat-option *ngFor="let user of availableUsers" [value]="user.id">
-                  {{ user.name }} ({{ user.role }})
+                  {{ user.name }} ({{ user.email }})
                 </mat-option>
               </mat-select>
             </mat-form-field>

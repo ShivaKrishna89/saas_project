@@ -62,7 +62,7 @@
 
       <div class="checkbox-container">
         <mat-checkbox formControlName="agreeToTerms" required>
-          I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+          I agree to the <a [routerLink]="['/terms']" class="link" target="_blank">Terms of Service</a> and <a [routerLink]="['/privacy']" class="link" target="_blank">Privacy Policy</a>
         </mat-checkbox>
         <mat-error *ngIf="registerForm.get('agreeToTerms')?.hasError('required')" class="checkbox-error">You must agree to the terms</mat-error>
       </div>

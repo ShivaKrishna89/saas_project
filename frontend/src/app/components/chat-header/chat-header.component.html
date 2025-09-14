@@ -1,0 +1,35 @@
+<mat-toolbar class="chat-header">
+  <div class="chat-info">
+    <mat-icon class="chat-icon">#</mat-icon>
+    <span class="chat-name">{{ chatName }}</span>
+    <span class="chat-topic" *ngIf="chatTopic">{{ chatTopic }}</span>
+  </div>
+  
+  <div class="chat-actions">
+    <button mat-icon-button matTooltip="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="More options" [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>info</mat-icon>
+        <span>Channel info</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>
+        <mat-icon>archive</mat-icon>
+        <span>Archive channel</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

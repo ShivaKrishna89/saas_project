@@ -1,0 +1,17 @@
+<div class="placeholder-container">
+  <div class="placeholder-content">
+    <div class="placeholder-icon">
+      <mat-icon>{{ icon }}</mat-icon>
+    </div>
+    <h2 class="placeholder-title">{{ title }}</h2>
+    <p class="placeholder-description">{{ description }}</p>
+    <div class="placeholder-actions" *ngIf="showActions">
+      <button mat-raised-button color="primary" (click)="onPrimaryAction()" *ngIf="primaryActionText">
+        {{ primaryActionText }}
+      </button>
+      <button mat-stroked-button (click)="onSecondaryAction()" *ngIf="secondaryActionText">
+        {{ secondaryActionText }}
+      </button>
+    </div>
+  </div>
+</div>

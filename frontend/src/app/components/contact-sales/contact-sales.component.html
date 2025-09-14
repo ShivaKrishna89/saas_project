@@ -1,0 +1,205 @@
+<div class="contact-sales-page">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <div class="logo" (click)="goHome()">
+          <mat-icon class="logo-icon">rocket_launch</mat-icon>
+          <span class="logo-text brand">CollabX</span>
+        </div>
+      </div>
+      
+      <div class="nav-center">
+        <a [routerLink]="['/home']" class="nav-link">Home</a>
+        <a [routerLink]="['/solutions']" class="nav-link">Solutions</a>
+        <a [routerLink]="['/enterprise']" class="nav-link">Enterprise</a>
+        <a [routerLink]="['/resources']" class="nav-link">Resources</a>
+        <a [routerLink]="['/pricing']" class="nav-link">Pricing</a>
+      </div>
+      
+      <div class="nav-right">
+        <button mat-stroked-button class="nav-button" (click)="navigateToLogin()">
+          Sign In
+        </button>
+        <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
+          Get Started Free
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Talk to Our Sales Team</h1>
+        <p class="hero-subtitle">Get personalized guidance on how CollabX can transform your team's collaboration and productivity</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-form-section">
+    <div class="container">
+      <div class="form-container">
+        <div class="form-header">
+          <h2 class="form-title">Schedule a Demo</h2>
+          <p class="form-subtitle">Fill out the form below and our sales team will get back to you within 24 hours</p>
+        </div>
+        
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                formControlName="firstName" 
+                placeholder="Enter your first name"
+                [class.error]="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched">
+                First name is required
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                formControlName="lastName" 
+                placeholder="Enter your last name"
+                [class.error]="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched">
+                Last name is required
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Work Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email" 
+                placeholder="Enter your work email"
+                [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                <span *ngIf="contactForm.get('email')?.errors?.['required']">Email is required</span>
+                <span *ngIf="contactForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                formControlName="phone" 
+                placeholder="Enter your phone number"
+              >
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">Company *</label>
+              <input 
+                type="text" 
+                id="company" 
+                formControlName="company" 
+                placeholder="Enter your company name"
+                [class.error]="contactForm.get('company')?.invalid && contactForm.get('company')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('company')?.invalid && contactForm.get('company')?.touched">
+                Company name is required
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="jobTitle">Job Title</label>
+              <input 
+                type="text" 
+                id="jobTitle" 
+                formControlName="jobTitle" 
+                placeholder="Enter your job title"
+              >
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="teamSize">Team Size</label>
+            <select id="teamSize" formControlName="teamSize">
+              <option value="">Select team size</option>
+              <option value="1-10">1-10 employees</option>
+              <option value="11-50">11-50 employees</option>
+              <option value="51-200">51-200 employees</option>
+              <option value="201-500">201-500 employees</option>
+              <option value="500+">500+ employees</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea 
+              id="message" 
+              formControlName="message" 
+              placeholder="Tell us about your team's collaboration needs and any specific questions you have"
+              rows="4"
+            ></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button 
+              type="submit" 
+              mat-raised-button 
+              color="primary" 
+              class="submit-btn"
+              [disabled]="contactForm.invalid || isSubmitting"
+            >
+              <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+              <mat-icon *ngIf="isSubmitting" class="spinning">refresh</mat-icon>
+              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Info Section -->
+  <section class="contact-info">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon">
+            <mat-icon>phone</mat-icon>
+          </div>
+          <h3>Phone</h3>
+          <p>+1 (555) 123-4567</p>
+          <p>Mon-Fri 9AM-6PM EST</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <mat-icon>email</mat-icon>
+          </div>
+          <h3>Email</h3>
+          <p>sales&#64;collabx.com</p>
+          <p>We'll respond within 24 hours</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <h3>Schedule</h3>
+          <p>Book a demo call</p>
+          <p>30-minute personalized demo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

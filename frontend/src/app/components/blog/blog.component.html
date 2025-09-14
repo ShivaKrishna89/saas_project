@@ -1,0 +1,168 @@
+<div class="blog-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1>CollabX Blog</h1>
+      <p class="hero-subtitle">Insights, tips, and stories about team collaboration and productivity</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="container">
+      <div class="featured-post">
+        <div class="featured-content">
+          <div class="featured-text">
+            <span class="featured-badge">Featured</span>
+            <h2>The Future of Remote Work: How Teams Are Adapting in 2024</h2>
+            <p>Explore the latest trends in remote work and how modern teams are building stronger connections despite physical distance.</p>
+            <div class="post-meta">
+              <span class="author">By Sarah Johnson</span>
+              <span class="date">March 15, 2024</span>
+              <span class="read-time">5 min read</span>
+            </div>
+            <button mat-raised-button color="primary" class="read-more-btn" (click)="readMore()">Read More</button>
+          </div>
+          <div class="featured-image">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Remote work collaboration" class="featured-img">
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-grid">
+        <div class="blog-post" (click)="readBlogPost('10 Tips for Better Team Communication')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team communication" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>10 Tips for Better Team Communication</h3>
+            <p>Learn practical strategies to improve communication within your team and boost productivity.</p>
+            <div class="post-meta">
+              <span class="author">By Mike Chen</span>
+              <span class="date">March 12, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-post" (click)="readBlogPost('Scaling Your Team: Lessons from Growing Startups')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Startup team scaling" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>Scaling Your Team: Lessons from Growing Startups</h3>
+            <p>Discover how successful startups manage team growth while maintaining culture and productivity.</p>
+            <div class="post-meta">
+              <span class="author">By Emily Rodriguez</span>
+              <span class="date">March 10, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-post" (click)="readBlogPost('Data Security Best Practices for Remote Teams')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Data security" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>Data Security Best Practices for Remote Teams</h3>
+            <p>Essential security measures every remote team should implement to protect sensitive information.</p>
+            <div class="post-meta">
+              <span class="author">By David Kim</span>
+              <span class="date">March 8, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-post" (click)="readBlogPost('The Psychology of Effective Collaboration')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team collaboration psychology" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>The Psychology of Effective Collaboration</h3>
+            <p>Understanding the human factors that make teams work better together.</p>
+            <div class="post-meta">
+              <span class="author">By Dr. Lisa Wang</span>
+              <span class="date">March 5, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-post" (click)="readBlogPost('Measuring Team Productivity: Key Metrics to Track')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Analytics dashboard" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>Measuring Team Productivity: Key Metrics to Track</h3>
+            <p>Learn which metrics matter most when evaluating team performance and productivity.</p>
+            <div class="post-meta">
+              <span class="author">By Alex Thompson</span>
+              <span class="date">March 3, 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-post" (click)="readBlogPost('Building Inclusive Remote Teams')">
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diverse team" class="post-img">
+          </div>
+          <div class="post-content">
+            <h3>Building Inclusive Remote Teams</h3>
+            <p>Strategies for creating an inclusive environment that supports all team members.</p>
+            <div class="post-meta">
+              <span class="author">By Maria Santos</span>
+              <span class="date">March 1, 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="newsletter-section">
+        <div class="newsletter-content">
+          <h2>Stay Updated</h2>
+          <p>Get the latest insights on team collaboration delivered to your inbox.</p>
+          <div class="newsletter-form">
+            <mat-form-field appearance="outline" class="email-field">
+              <mat-label>Email Address</mat-label>
+              <input matInput type="email" placeholder="Enter your email">
+            </mat-form-field>
+            <button mat-raised-button color="primary" class="subscribe-btn" (click)="subscribeToNewsletter()">Subscribe</button>
+          </div>
+          <p class="newsletter-note">No spam, unsubscribe at any time.</p>
+        </div>
+      </div>
+
+      <div class="categories-section">
+        <h2>Browse by Category</h2>
+        <div class="categories-grid">
+          <div class="category-card">
+            <mat-icon>group</mat-icon>
+            <h3>Team Management</h3>
+            <p>12 articles</p>
+          </div>
+          <div class="category-card">
+            <mat-icon>work</mat-icon>
+            <h3>Remote Work</h3>
+            <p>8 articles</p>
+          </div>
+          <div class="category-card">
+            <mat-icon>trending_up</mat-icon>
+            <h3>Productivity</h3>
+            <p>15 articles</p>
+          </div>
+          <div class="category-card">
+            <mat-icon>security</mat-icon>
+            <h3>Security</h3>
+            <p>6 articles</p>
+          </div>
+          <div class="category-card">
+            <mat-icon>psychology</mat-icon>
+            <h3>Workplace Culture</h3>
+            <p>10 articles</p>
+          </div>
+          <div class="category-card">
+            <mat-icon>analytics</mat-icon>
+            <h3>Analytics</h3>
+            <p>4 articles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

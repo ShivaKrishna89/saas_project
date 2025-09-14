@@ -4,16 +4,21 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+export interface User {
+  id: number;
+  username: string;
+  full_name: string;
+  email: string;
+}
+
 export interface Task {
   id?: string;
   title: string;
   description: string;
   status: 'todo' | 'in-progress' | 'done';
   priority: 'low' | 'medium' | 'high' | 'urgent';
-  assignee?: {
-    id: string;
-    name: string;
-  };
+  assignee?: string;
+  reporter?: string;
   dueDate?: Date;
   tags: string[];
   comments: any[];
@@ -23,7 +28,6 @@ export interface Task {
   project?: string;
   work_type?: 'feature' | 'task' | 'bug';
   summary?: string;
-  reporter?: string;
   created_at?: string;
   updated_at?: string;
   // New optional linkage to Projects table
@@ -39,6 +43,7 @@ export interface TaskCreate {
   priority: 'low' | 'medium' | 'high';
   assignee?: string;
   reporter: string;
+  project_id?: number;
 }
 
 export interface TaskUpdate {
@@ -77,14 +82,14 @@ export class TaskService {
   }
 
   createTask(task: Task): Observable<Task> {
-    const backendTask = {
+    const backendTask: TaskCreate = {
       project: task.project || 'Default Project',
       work_type: task.work_type || 'task',
       status: task.status === 'in-progress' ? 'inprogress' : task.status,
       summary: task.title,
       description: task.description,
       priority: task.priority === 'urgent' ? 'high' : task.priority,
-      assignee: task.assignee?.name,
+      assignee: task.assignee,
       reporter: task.reporter || 'Current User',
       project_id: task.project_id
     };
@@ -115,6 +120,9 @@ export class TaskService {
     project?: string;
     status?: string;
     work_type?: string;
+    assignee?: string;
+    reporter?: string;
+    search?: string;
     limit?: number;
     offset?: number;
   }): Observable<Task[]> {
@@ -139,7 +147,8 @@ export class TaskService {
         description: task.description || '',
         status: task.status === 'inprogress' ? 'in-progress' : task.status,
         priority: (task.priority === 'urgent' ? 'urgent' : task.priority) as Task['priority'],
-        assignee: task.assignee ? { id: '1', name: task.assignee as string } : undefined,
+        assignee: task.assignee || undefined,
+        reporter: task.reporter || 'Unknown',
         dueDate: undefined,
         tags: [],
         comments: [],
@@ -148,9 +157,9 @@ export class TaskService {
         project: task.project,
         work_type: task.work_type,
         summary: task.summary,
-        reporter: task.reporter,
         created_at: task.created_at,
-        updated_at: task.updated_at
+        updated_at: task.updated_at,
+        project_id: task.project_id
       })))
     );
   }

@@ -34,10 +34,6 @@ export class WorkspaceSelectorComponent implements OnInit {
     this.router.navigate(['/app']);
   }
 
-  openSettings() {
-    // Feature not implemented yet
-  }
-
   openSupport() {
     this.router.navigate(['/contact']);
   }
@@ -50,20 +46,8 @@ export class WorkspaceSelectorComponent implements OnInit {
     this.router.navigate(['/help']);
   }
 
-  openApps() {
-    // Not implemented
-  }
-
   openLicensing() {
     this.router.navigate(['/pricing']);
-  }
-
-  takeTour() {
-    // Not implemented
-  }
-
-  watchTutorial() {
-    // Not implemented
   }
 
   logout() {

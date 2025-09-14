@@ -1,0 +1,70 @@
+<div class="message-input-container">
+  <div class="input-wrapper">
+    <div class="input-actions">
+      <button mat-icon-button class="attach-button" (click)="attachFile()" matTooltip="Attach file">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <button mat-icon-button class="emoji-button" (click)="toggleEmojiPicker()" matTooltip="Add emoji">
+        <mat-icon>emoji_emotions</mat-icon>
+      </button>
+    </div>
+    
+    <div class="text-input-container">
+      <textarea 
+        #messageInput
+        [(ngModel)]="messageText"
+        (keydown)="onKeyDown($event)"
+        (input)="onInput()"
+        placeholder="Type a message..."
+        class="message-textarea"
+        rows="1"
+        maxlength="4000">
+      </textarea>
+      
+      <div class="input-footer">
+        <span class="character-count" [class.over-limit]="messageText.length > 4000">
+          {{ messageText.length }}/4000
+        </span>
+      </div>
+    </div>
+    
+    <div class="send-actions">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="send-button"
+        [disabled]="!canSend()"
+        (click)="sendMessage()"
+        matTooltip="Send message (Enter)">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+  
+  <!-- File Preview -->
+  <div class="file-preview" *ngIf="attachedFile">
+    <div class="file-info">
+      <mat-icon class="file-icon">insert_drive_file</mat-icon>
+      <div class="file-details">
+        <span class="file-name">{{ attachedFile.name }}</span>
+        <span class="file-size">{{ formatFileSize(attachedFile.size) }}</span>
+      </div>
+      <button mat-icon-button class="remove-file" (click)="removeFile()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Emoji Picker -->
+  <div class="emoji-picker" *ngIf="showEmojiPicker">
+    <div class="emoji-grid">
+      <button 
+        *ngFor="let emoji of commonEmojis" 
+        class="emoji-button"
+        (click)="insertEmoji(emoji)"
+        [attr.aria-label]="emoji">
+        {{ emoji }}
+      </button>
+    </div>
+  </div>
+</div>

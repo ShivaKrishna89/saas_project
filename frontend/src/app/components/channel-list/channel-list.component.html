@@ -1,0 +1,24 @@
+<mat-expansion-panel [expanded]="expanded" class="channel-panel">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>tag</mat-icon>
+      Channels
+    </mat-panel-title>
+    <mat-panel-description>
+      <button mat-icon-button (click)="addChannel($event)" matTooltip="Add channel">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  
+  <mat-list dense>
+    <mat-list-item *ngFor="let channel of channels" 
+                   (click)="selectChannel(channel)"
+                   [class.selected]="selectedChannel?.id === channel.id"
+                   class="channel-item">
+      <mat-icon mat-list-icon class="channel-icon">#</mat-icon>
+      <div mat-line>{{ channel.name }}</div>
+               <span class="unread-badge" *ngIf="channel.unreadCount">{{ channel.unreadCount }}</span>
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>

@@ -53,6 +53,9 @@ export class TaskListComponent implements OnInit {
     if (this.selectedWorkType) {
       params.work_type = this.selectedWorkType;
     }
+    if (this.searchTerm) {
+      params.search = this.searchTerm;
+    }
 
     this.taskService.getTasks(params).subscribe({
       next: (tasks) => {
@@ -143,17 +146,7 @@ export class TaskListComponent implements OnInit {
   }
 
   get filteredTasks(): Task[] {
-    if (!this.searchTerm) {
-      return this.tasks;
-    }
-    
-    const term = this.searchTerm.toLowerCase();
-    return this.tasks.filter(task => 
-      (task.summary || '').toLowerCase().includes(term) ||
-      (task.description || '').toLowerCase().includes(term) ||
-      (task.project || '').toLowerCase().includes(term) ||
-      (task.assignee?.name || '').toLowerCase().includes(term) ||
-      (task.reporter || '').toLowerCase().includes(term)
-    );
+    // Search is now handled by the backend, so just return all tasks
+    return this.tasks;
   }
 }

@@ -47,9 +47,6 @@ export class MainLayoutComponent implements OnInit {
     this.router.navigate(['/workspace-selector']);
   }
 
-  onSearchFocus() {
-    console.log('Search focused');
-  }
 
   // Notifications feature not implemented; bell removed from UI
 

@@ -9,11 +9,13 @@ class ProjectBase(BaseModel):
 
 class ProjectCreate(ProjectBase):
     workspace_id: int
+    user_id: Optional[int] = None
 
 class ProjectUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=255)
     description: Optional[str] = None
     is_active: Optional[bool] = None
+    user_id: Optional[int] = None
 
 class ProjectResponse(ProjectBase):
     id: int

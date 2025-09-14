@@ -1,0 +1,156 @@
+<div class="developers-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1>Developer Resources</h1>
+      <p class="hero-subtitle">Build powerful integrations and extend CollabX with our comprehensive developer tools</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="container">
+      <div class="api-overview">
+        <h2>CollabX API</h2>
+        <p>Our RESTful API allows you to integrate CollabX with your existing tools and build custom applications. Access all core functionality including messaging, user management, and workspace operations.</p>
+        
+        <div class="api-features">
+          <div class="feature-item">
+            <mat-icon>api</mat-icon>
+            <h3>RESTful API</h3>
+            <p>Clean, intuitive REST endpoints with comprehensive documentation</p>
+          </div>
+          <div class="feature-item">
+            <mat-icon>security</mat-icon>
+            <h3>OAuth 2.0</h3>
+            <p>Secure authentication using industry-standard OAuth 2.0</p>
+          </div>
+          <div class="feature-item">
+            <mat-icon>speed</mat-icon>
+            <h3>Real-time Events</h3>
+            <p>WebSocket support for real-time messaging and notifications</p>
+          </div>
+          <div class="feature-item">
+            <mat-icon>webhook</mat-icon>
+            <h3>Webhooks</h3>
+            <p>Receive instant notifications when events occur in your workspace</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-start">
+        <h2>Quick Start</h2>
+        <div class="quick-start-content">
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3>Get Your API Key</h3>
+                <p>Create an app in your workspace settings to get your API credentials</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3>Make Your First Request</h3>
+                <p>Test the API with a simple GET request to list your workspaces</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3>Build Your Integration</h3>
+                <p>Use our SDKs and examples to build your custom integration</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="code-example">
+            <h3>Example: List Workspaces</h3>
+            <div class="code-block">
+              <pre><code>curl -X GET "https://api.collabx.com/v1/workspaces" \
+  -H "Authorization: Bearer YOUR_API_TOKEN" \
+  -H "Content-Type: application/json"</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="webhooks-section">
+        <h2>Webhooks</h2>
+        <p>Stay informed about events in your workspace with webhooks. Configure endpoints to receive real-time notifications.</p>
+        
+        <div class="webhook-events">
+          <h3>Available Events</h3>
+          <div class="events-grid">
+            <div class="event-item">
+              <mat-icon>chat</mat-icon>
+              <div class="event-info">
+                <h4>message.created</h4>
+                <p>Triggered when a new message is posted</p>
+              </div>
+            </div>
+            <div class="event-item">
+              <mat-icon>group_add</mat-icon>
+              <div class="event-info">
+                <h4>member.joined</h4>
+                <p>Triggered when a new member joins the workspace</p>
+              </div>
+            </div>
+            <div class="event-item">
+              <mat-icon>folder</mat-icon>
+              <div class="event-info">
+                <h4>file.uploaded</h4>
+                <p>Triggered when a file is uploaded</p>
+              </div>
+            </div>
+            <div class="event-item">
+              <mat-icon>settings</mat-icon>
+              <div class="event-info">
+                <h4>workspace.updated</h4>
+                <p>Triggered when workspace settings change</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="community-section">
+        <h2>Developer Community</h2>
+        <div class="community-content">
+          <div class="community-text">
+            <p>Join our developer community to get help, share ideas, and stay updated on the latest API changes.</p>
+            <div class="community-buttons">
+              <button mat-raised-button color="primary" class="community-btn" (click)="joinDeveloperForum()">
+                <mat-icon>forum</mat-icon>
+                <span>Join Developer Forum</span>
+              </button>
+              <button mat-raised-button color="primary" class="community-btn" (click)="viewGitHub()">
+                <mat-icon>code</mat-icon>
+                <span>View on GitHub</span>
+              </button>
+              <button mat-raised-button color="primary" class="community-btn" (click)="joinDiscord()">
+                <mat-icon>chat</mat-icon>
+                <span>Join Discord</span>
+              </button>
+            </div>
+          </div>
+          <div class="community-stats">
+            <div class="stat">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Active Developers</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">50+</div>
+              <div class="stat-label">Open Source Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Community Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

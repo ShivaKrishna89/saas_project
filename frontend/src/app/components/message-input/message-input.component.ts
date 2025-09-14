@@ -1,95 +1,87 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-message-input',
-  template: `
-    <div class="message-input-container">
-      <mat-card class="input-card">
-        <mat-card-content>
-          <div class="input-wrapper">
-            <button mat-icon-button class="input-action" matTooltip="Add files">
-              <mat-icon>attach_file</mat-icon>
-            </button>
-            
-            <mat-form-field class="message-field" appearance="outline">
-              <textarea matInput 
-                        [(ngModel)]="messageText"
-                        (keydown.enter)="sendMessage($event)"
-                        placeholder="Message {{ placeholder }}"
-                        rows="1"
-                        #messageTextarea
-                        cdkTextareaAutosize
-                        cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="4">
-              </textarea>
-            </mat-form-field>
-            
-            <div class="input-actions">
-              <button mat-icon-button class="input-action" matTooltip="Emoji">
-                <mat-icon>emoji_emotions</mat-icon>
-              </button>
-              <button mat-icon-button class="input-action" matTooltip="Send" 
-                      [disabled]="!messageText.trim()"
-                      (click)="sendMessageClick()">
-                <mat-icon>send</mat-icon>
-              </button>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  `,
-  styles: [`
-    .message-input-container {
-      padding: 16px;
-      background-color: #fafafa;
-    }
-    .input-card {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .input-wrapper {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-    }
-    .message-field {
-      flex: 1;
-    }
-    .input-actions {
-      display: flex;
-      align-items: center;
-    }
-    .input-action {
-      color: rgba(0, 0, 0, 0.54);
-    }
-    .input-action:hover {
-      color: rgba(0, 0, 0, 0.87);
-    }
-    .input-action[disabled] {
-      color: rgba(0, 0, 0, 0.26);
-    }
-  `]
+  templateUrl: './message-input.component.html',
+  styleUrls: ['./message-input.component.less']
 })
 export class MessageInputComponent {
-  @Input() placeholder: string = '';
-  @Output() messageSent = new EventEmitter<string>();
+  @Output() messageSent = new EventEmitter<{ text: string; file?: File }>();
+  @ViewChild('messageInput') messageInput!: ElementRef<HTMLTextAreaElement>;
 
-  messageText: string = '';
+  messageText = '';
+  attachedFile: File | null = null;
+  showEmojiPicker = false;
 
-  sendMessage(event: any) {
+  commonEmojis = ['😀', '😂', '😍', '🤔', '👍', '👎', '❤️', '🎉', '🔥', '💯', '😢', '😮', '😡', '🤗', '👏', '🙌'];
+
+  canSend(): boolean {
+    return this.messageText.trim().length > 0 || this.attachedFile !== null;
+  }
+
+  onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      this.sendMessageClick();
+      this.sendMessage();
     }
   }
 
-  sendMessageClick() {
-    if (this.messageText.trim()) {
-      this.messageSent.emit(this.messageText);
-      this.messageText = '';
-    }
+  onInput(): void {
+    this.autoResize();
+  }
+
+  autoResize(): void {
+    const textarea = this.messageInput.nativeElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+  }
+
+  sendMessage(): void {
+    if (!this.canSend()) return;
+
+    this.messageSent.emit({
+      text: this.messageText.trim(),
+      file: this.attachedFile || undefined
+    });
+
+    this.messageText = '';
+    this.attachedFile = null;
+    this.showEmojiPicker = false;
+    this.autoResize();
+  }
+
+  attachFile(): void {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '*/*';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.attachedFile = file;
+      }
+    };
+    input.click();
+  }
+
+  removeFile(): void {
+    this.attachedFile = null;
+  }
+
+  toggleEmojiPicker(): void {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  insertEmoji(emoji: string): void {
+    this.messageText += emoji;
+    this.showEmojiPicker = false;
+    this.autoResize();
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 }
-
-

@@ -43,20 +43,10 @@ export class ProjectsComponent implements OnInit {
   notificationMessage: string = '';
   showNotification: boolean = false;
   isCreating: boolean = false;
+  selectedAdminId: string = '';
 
   projects: Project[] = [];
-
-  availableUsers: User[] = [
-    { id: '1', name: 'Sarah Johnson', role: 'Designer', email: 'sarah@company.com' },
-    { id: '2', name: 'Mike Chen', role: 'Developer', email: 'mike@company.com' },
-    { id: '3', name: 'Emily Rodriguez', role: 'PM', email: 'emily@company.com' },
-    { id: '4', name: 'Alex Thompson', role: 'Mobile Dev', email: 'alex@company.com' },
-    { id: '5', name: 'Lisa Wang', role: 'UI Designer', email: 'lisa@company.com' },
-    { id: '6', name: 'David Kim', role: 'DBA', email: 'david@company.com' },
-    { id: '7', name: 'Rachel Green', role: 'QA Engineer', email: 'rachel@company.com' },
-    { id: '8', name: 'Tom Wilson', role: 'Security Expert', email: 'tom@company.com' },
-    { id: '9', name: 'Anna Lee', role: 'Security Analyst', email: 'anna@company.com' }
-  ];
+  availableUsers: User[] = [];
 
   constructor(private authService: AuthService, private apiService: ApiService) {}
 
@@ -69,26 +59,59 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadProjects();
+    this.loadUsers();
+  }
+
+  private loadUsers() {
+    this.apiService.getAllUsers().subscribe({
+      next: (users: any[]) => {
+        this.availableUsers = users.map(user => ({
+          id: user.id.toString(),
+          name: user.full_name,
+          role: user.role || 'Member',
+          email: user.email
+        }));
+        // Load projects after users are loaded
+        this.loadProjects();
+      },
+      error: (error) => {
+        console.error('Failed to load users:', error);
+        // Still try to load projects even if users fail
+        this.loadProjects();
+      }
+    });
   }
 
   private loadProjects() {
     // For now, use workspace id 1; replace when multi-workspace is implemented
     this.apiService.getProjectsForCurrentUser().subscribe({
       next: (backendProjects: any[]) => {
-        this.projects = (backendProjects || []).map(p => ({
-          id: (p.id ?? '').toString(),
-          name: p.title || p.name || 'Untitled Project',
-          description: p.description || '',
-          status: p.is_active === false ? 'inactive' : 'active',
-          progress: Number(p.progress ?? 0),
-          startDate: p.start_date ? new Date(p.start_date) : new Date(),
-          endDate: p.end_date ? new Date(p.end_date) : new Date(Date.now() + 30*24*60*60*1000),
-          icon: p.icon || 'folder',
-          team: Array.isArray(p.team) ? p.team : [],
-          createdAt: p.created_at ? new Date(p.created_at) : new Date(),
-          updatedAt: p.updated_at ? new Date(p.updated_at) : new Date()
-        }));
+        this.projects = (backendProjects || []).map(p => {
+          // Find the admin user from availableUsers
+          const adminUser = this.availableUsers.find(u => u.id === p.user_id?.toString());
+          const adminTeamMember = adminUser ? [{
+            id: adminUser.id,
+            name: adminUser.name,
+            role: 'Admin',
+            email: adminUser.email
+          }] : [];
+
+          return {
+            id: (p.id ?? '').toString(),
+            name: p.title || p.name || 'Untitled Project',
+            description: p.description || '',
+            status: p.is_active === false ? 'inactive' : 'active',
+            progress: Number(p.progress ?? 0),
+            startDate: p.start_date ? new Date(p.start_date) : new Date(),
+            endDate: p.end_date ? new Date(p.end_date) : new Date(Date.now() + 30*24*60*60*1000),
+            icon: p.icon || 'folder',
+            team: adminTeamMember,
+            createdAt: p.created_at ? new Date(p.created_at) : new Date(),
+            updatedAt: p.updated_at ? new Date(p.updated_at) : new Date()
+          };
+        });
+        
+        console.log('Loaded projects:', this.projects);
       },
       error: (error) => {
         console.error('Failed to load projects', error);
@@ -145,27 +168,65 @@ export class ProjectsComponent implements OnInit {
       updatedAt: new Date()
     };
     this.isCreating = true;
+    this.selectedAdminId = ''; // Reset admin selection
     this.openProjectDetail(draft);
   }
 
   openProjectDetail(project: Project) {
     this.selectedProject = { ...project };
+    // Set the selected admin ID - for now, we'll use the first team member or current user
+    if (project.team && project.team.length > 0) {
+      this.selectedAdminId = project.team[0].id;
+    } else {
+      // Default to current user if no team members
+      const currentUser = this.authService.currentUserValue;
+      this.selectedAdminId = currentUser?.id?.toString() || '';
+    }
   }
     
 
   closeProjectDetail() {
     this.selectedProject = null;
-    this.newMemberId = '';
+    this.selectedAdminId = '';
   }
 
   updateProject() {
     if (!this.selectedProject) return;
     
+    console.log('Updating project:', this.selectedProject);
+    console.log('Selected admin ID:', this.selectedAdminId);
+    
+    // Update local state immediately for responsiveness
     const index = this.projects.findIndex(project => project.id === this.selectedProject!.id);
     if (index !== -1) {
       this.projects[index] = { ...this.selectedProject, updatedAt: new Date() };
+    }
+
+    // Persist to backend if it's not a new project
+    if (this.selectedProject.id !== 'new') {
+      const payload = {
+        title: this.selectedProject.name?.trim() || 'Untitled Project',
+        description: this.selectedProject.description?.trim() || '',
+        is_active: this.selectedProject.status === 'active',
+        user_id: this.selectedAdminId ? Number(this.selectedAdminId) : undefined
+      };
+
+      console.log('Sending payload to backend:', payload);
+
+      this.apiService.updateProject(Number(this.selectedProject.id), payload).subscribe({
+        next: (response) => {
+          console.log('Backend response:', response);
+          this.showNotificationMessage('Project updated successfully!');
+          // Refresh from backend to ensure consistency
+          this.loadProjects();
+        },
+        error: (error: any) => {
+          console.error('Failed to persist project update', error);
+          this.showNotificationMessage('Failed to save. Changes may not persist.');
+        }
+      });
+    } else {
       this.showNotificationMessage('Project updated successfully!');
-      
     }
   }
 
@@ -183,7 +244,8 @@ export class ProjectsComponent implements OnInit {
       title,
       description: this.selectedProject.description?.trim() || '',
       key: this.generateProjectKey(title),
-      workspace_id: 1
+      workspace_id: 1,
+      user_id: this.selectedAdminId ? Number(this.selectedAdminId) : undefined
     };
 
     this.apiService.createProject(payload).subscribe({
@@ -246,33 +308,6 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-  addTeamMember(event: any) {
-    if (!this.selectedProject || !event.value) return;
-    
-    const user = this.availableUsers.find(u => u.id === event.value);
-    if (user && !this.selectedProject.team.some(member => member.id === user.id)) {
-      this.selectedProject.team.push({
-        id: user.id,
-        name: user.name,
-        role: user.role,
-        email: user.email
-      });
-      this.newMemberId = '';
-      this.updateProject();
-      this.showNotificationMessage('Team member added successfully!');
-    }
-  }
-
-  removeTeamMember(member: TeamMember) {
-    if (!this.selectedProject) return;
-    
-    const index = this.selectedProject.team.findIndex(m => m.id === member.id);
-    if (index !== -1) {
-      this.selectedProject.team.splice(index, 1);
-      this.updateProject();
-      this.showNotificationMessage('Team member removed successfully!');
-    }
-  }
 
   onViewChange(event: any) {
     this.currentView = event.value;
@@ -285,9 +320,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   refreshProjects() {
-    this.projects.forEach(project => {
-      project.updatedAt = new Date();
-    });
+    this.loadProjects();
     this.showNotificationMessage('Projects refreshed!');
   }
 }

@@ -1,89 +1,108 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 
+interface Message {
+  id: string;
+  type: 'user' | 'system' | 'file';
+  text: string;
+  sender: string;
+  avatar: string;
+  timestamp: Date;
+  isOwn: boolean;
+  fileName?: string;
+  fileSize?: number;
+  fileType?: string;
+}
+
 @Component({
   selector: 'app-message-list',
-  template: `
-    <div class="message-container" #messageContainer>
-      <div class="message-list">
-        <div *ngFor="let message of messages" class="message-item">
-          <div class="message-avatar">
-            <mat-icon>person</mat-icon>
-          </div>
-          <div class="message-content">
-            <div class="message-header">
-              <span class="message-author">{{ message.user?.fullName || message.user?.username }}</span>
-              <span class="message-time">{{ message.timestamp | date:'shortTime' }}</span>
-            </div>
-            <div class="message-text">{{ message.content }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .message-container {
-      height: 100%;
-      overflow-y: auto;
-      padding: 16px;
-    }
-    .message-list {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .message-item {
-      display: flex;
-      margin-bottom: 16px;
-      padding: 8px 0;
-    }
-    .message-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background-color: #f5f5f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-    .message-content {
-      flex: 1;
-    }
-    .message-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 4px;
-    }
-    .message-author {
-      font-weight: 600;
-      color: #333;
-      margin-right: 8px;
-    }
-    .message-time {
-      color: rgba(0, 0, 0, 0.54);
-      font-size: 12px;
-    }
-    .message-text {
-      color: #333;
-      line-height: 1.4;
-      font-size: 14px;
-    }
-  `]
+  templateUrl: './message-list.component.html',
+  styleUrls: ['./message-list.component.less']
 })
 export class MessageListComponent implements AfterViewChecked {
-  @Input() messages: any[] = [];
-  @ViewChild('messageContainer') messageContainer!: ElementRef;
+  @Input() messages: Message[] = [];
+  @Input() channelName = 'general';
+  @Input() memberCount = 0;
+  @Input() typingUsers: string[] = [];
+  @Output() messageEdit = new EventEmitter<Message>();
+  @Output() messageDelete = new EventEmitter<Message>();
+  @Output() channelSettings = new EventEmitter<void>();
+  @Output() fileDownload = new EventEmitter<Message>();
 
-  ngAfterViewChecked() {
+  @ViewChild('messagesScroll') messagesScroll!: ElementRef<HTMLDivElement>;
+
+  today = new Date();
+  showDateSeparator = true;
+
+  ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
 
+  trackByMessageId(index: number, message: Message): string {
+    return message.id;
+  }
+
+  formatTime(timestamp: Date): string {
+    return new Date(timestamp).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+  }
+
+  formatDate(date: Date): string {
+    return new Date(date).toLocaleDateString([], { 
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  formatMessageText(text: string): string {
+    // Convert URLs to links
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  }
+
+  formatFileSize(bytes?: number): string {
+    if (!bytes || bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  getFileIcon(fileType?: string): string {
+    if (!fileType) return 'insert_drive_file';
+    if (fileType.startsWith('image/')) return 'image';
+    if (fileType.startsWith('video/')) return 'video_file';
+    if (fileType.startsWith('audio/')) return 'audiotrack';
+    if (fileType.includes('pdf')) return 'picture_as_pdf';
+    if (fileType.includes('word')) return 'description';
+    if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'table_chart';
+    if (fileType.includes('zip') || fileType.includes('rar')) return 'archive';
+    return 'insert_drive_file';
+  }
+
+  editMessage(message: Message): void {
+    this.messageEdit.emit(message);
+  }
+
+  deleteMessage(message: Message): void {
+    this.messageDelete.emit(message);
+  }
+
+  openChannelSettings(): void {
+    this.channelSettings.emit();
+  }
+
+  downloadFile(message: Message): void {
+    this.fileDownload.emit(message);
+  }
+
   private scrollToBottom(): void {
-    try {
-      const element = this.messageContainer.nativeElement;
+    if (this.messagesScroll) {
+      const element = this.messagesScroll.nativeElement;
       element.scrollTop = element.scrollHeight;
-    } catch (err) {}
+    }
   }
 }
-
-

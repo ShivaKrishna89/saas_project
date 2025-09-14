@@ -1,0 +1,106 @@
+<div class="message-list-container">
+  <div class="messages-header">
+    <h2 class="channel-name"># {{ channelName }}</h2>
+    <div class="channel-info">
+      <span class="member-count">{{ memberCount }} members</span>
+      <button mat-icon-button class="channel-settings" (click)="openChannelSettings()" matTooltip="Channel settings">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="messages-scroll" #messagesScroll>
+    <div class="messages-content">
+      <!-- Date Separator -->
+      <div class="date-separator" *ngIf="showDateSeparator">
+        <span class="date-text">{{ formatDate(today) }}</span>
+      </div>
+
+      <!-- Messages -->
+      <div 
+        *ngFor="let message of messages; trackBy: trackByMessageId" 
+        class="message-item"
+        [class.own-message]="message.isOwn"
+        [class.system-message]="message.type === 'system'">
+        
+        <!-- System Message -->
+        <div *ngIf="message.type === 'system'" class="system-message-content">
+          <mat-icon class="system-icon">info</mat-icon>
+          <span class="system-text">{{ message.text }}</span>
+        </div>
+
+        <!-- Regular Message -->
+        <div *ngIf="message.type === 'user'" class="user-message-content">
+          <div class="message-avatar" *ngIf="!message.isOwn">
+            <img [src]="message.avatar" [alt]="message.sender" class="avatar-image">
+          </div>
+          
+          <div class="message-body">
+            <div class="message-header" *ngIf="!message.isOwn">
+              <span class="sender-name">{{ message.sender }}</span>
+              <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+            </div>
+            
+            <div class="message-text" [innerHTML]="formatMessageText(message.text)"></div>
+            
+            <!-- Message Actions -->
+            <div class="message-actions" *ngIf="message.isOwn">
+              <button mat-icon-button class="action-button" (click)="editMessage(message)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-button" (click)="deleteMessage(message)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Message -->
+        <div *ngIf="message.type === 'file'" class="file-message-content">
+          <div class="message-avatar" *ngIf="!message.isOwn">
+            <img [src]="message.avatar" [alt]="message.sender" class="avatar-image">
+          </div>
+          
+          <div class="message-body">
+            <div class="message-header" *ngIf="!message.isOwn">
+              <span class="sender-name">{{ message.sender }}</span>
+              <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+            </div>
+            
+            <div class="file-attachment">
+              <div class="file-icon">
+                <mat-icon>{{ getFileIcon(message.fileType) }}</mat-icon>
+              </div>
+              <div class="file-info">
+                <div class="file-name">{{ message.fileName }}</div>
+                <div class="file-size">{{ formatFileSize(message.fileSize) }}</div>
+              </div>
+              <button mat-icon-button class="download-button" (click)="downloadFile(message)" matTooltip="Download">
+                <mat-icon>download</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="typing-indicator" *ngIf="typingUsers.length > 0">
+        <div class="typing-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="typing-content">
+          <div class="typing-text">
+            <span *ngIf="typingUsers.length === 1">{{ typingUsers[0] }} is typing...</span>
+            <span *ngIf="typingUsers.length === 2">{{ typingUsers[0] }} and {{ typingUsers[1] }} are typing...</span>
+            <span *ngIf="typingUsers.length > 2">{{ typingUsers[0] }} and {{ typingUsers.length - 1 }} others are typing...</span>
+          </div>
+          <div class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

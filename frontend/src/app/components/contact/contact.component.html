@@ -1,0 +1,189 @@
+<div class="contact-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p class="hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-form-section">
+          <h2>Send us a Message</h2>
+          <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" formControlName="firstName" required>
+                <mat-error *ngIf="contactForm.get('firstName')?.hasError('required')">
+                  First name is required
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" formControlName="lastName" required>
+                <mat-error *ngIf="contactForm.get('lastName')?.hasError('required')">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            
+            <mat-form-field appearance="outline" class="form-field full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" required>
+              <mat-error *ngIf="contactForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="contactForm.get('email')?.hasError('email')">
+                Please enter a valid email
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="form-field full-width">
+              <mat-label>Company</mat-label>
+              <input matInput type="text" formControlName="company">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="form-field full-width">
+              <mat-label>Subject</mat-label>
+              <mat-select formControlName="subject" required>
+                <mat-option value="general">General Inquiry</mat-option>
+                <mat-option value="sales">Sales</mat-option>
+                <mat-option value="support">Technical Support</mat-option>
+                <mat-option value="partnership">Partnership</mat-option>
+                <mat-option value="media">Media & Press</mat-option>
+              </mat-select>
+              <mat-error *ngIf="contactForm.get('subject')?.hasError('required')">
+                Subject is required
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="form-field full-width">
+              <mat-label>Message</mat-label>
+              <textarea matInput rows="6" formControlName="message" required></textarea>
+              <mat-error *ngIf="contactForm.get('message')?.hasError('required')">
+                Message is required
+              </mat-error>
+            </mat-form-field>
+            
+            <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="contactForm.invalid">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <div class="contact-info-section">
+          <h2>Contact Information</h2>
+          
+          <div class="contact-methods">
+            <div class="contact-method">
+              <mat-icon>email</mat-icon>
+              <div class="method-content">
+                <h3>Email</h3>
+                <p>pallewarshiva&#64;gmail.com</p>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <mat-icon>phone</mat-icon>
+              <div class="method-content">
+                <h3>Phone</h3>
+                <p>+91 8919372570</p>
+                <p>Mon-Fri 9AM-6PM IST</p>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <mat-icon>location_on</mat-icon>
+              <div class="method-content">
+                <h3>Address</h3>
+                <p>Hyderabad, Telangana</p>
+                <p>India</p>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <mat-icon>schedule</mat-icon>
+              <div class="method-content">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM PST</p>
+                <p>Saturday - Sunday: Closed</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <div class="social-icon facebook">
+                <mat-icon>facebook</mat-icon>
+              </div>
+              <div class="social-icon twitter">
+                <mat-icon>alternate_email</mat-icon>
+              </div>
+              <div class="social-icon linkedin">
+                <mat-icon>linkedin</mat-icon>
+              </div>
+              <div class="social-icon youtube">
+                <mat-icon>play_circle</mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>How do I get started with CollabX?</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Getting started is easy! Simply sign up for a free account, create your workspace, and invite your team members. You can start collaborating immediately.</p>
+          </mat-expansion-panel>
+          
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Is there a free trial available?</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Yes! We offer a free plan that includes basic features for small teams. You can upgrade to our paid plans anytime for additional features and storage.</p>
+          </mat-expansion-panel>
+          
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>How secure is my data?</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Security is our top priority. We use enterprise-grade encryption, regular security audits, and comply with industry standards like SOC 2 and GDPR.</p>
+          </mat-expansion-panel>
+          
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Can I integrate with other tools?</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Absolutely! We offer integrations with popular tools like Google Workspace, Microsoft 365, Slack, and many others through our API and webhooks.</p>
+          </mat-expansion-panel>
+          
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>What kind of support do you offer?</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>We provide 24/7 email support for all users, plus priority support and dedicated account managers for enterprise customers.</p>
+          </mat-expansion-panel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Popup -->
+  <div class="success-popup-overlay" *ngIf="showSuccessPopup" (click)="closePopup()">
+    <div class="success-popup" (click)="$event.stopPropagation()">
+      <div class="popup-icon">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <h3>Message Sent Successfully!</h3>
+      <p>We will contact you within 24 hours.</p>
+      <button mat-raised-button color="primary" (click)="closePopup()">OK</button>
+    </div>
+  </div>
+</div>

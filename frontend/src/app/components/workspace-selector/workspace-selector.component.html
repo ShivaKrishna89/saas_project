@@ -55,40 +55,6 @@
             </div>
           </div>
 
-          <!-- Sample Workspaces -->
-          <div class="workspace-card" (click)="launchWorkspace('sample1')">
-            <div class="workspace-icon">
-              <mat-icon>group</mat-icon>
-            </div>
-            <div class="workspace-info">
-              <h3 class="workspace-name">Team Alpha</h3>
-              <p class="workspace-description">Marketing and sales team</p>
-              <div class="workspace-meta">
-                <span class="member-count">5 members</span>
-                <span class="workspace-type">Team</span>
-              </div>
-            </div>
-            <div class="workspace-actions">
-              <mat-icon>launch</mat-icon>
-            </div>
-          </div>
-
-          <div class="workspace-card" (click)="launchWorkspace('sample2')">
-            <div class="workspace-icon">
-              <mat-icon>code</mat-icon>
-            </div>
-            <div class="workspace-info">
-              <h3 class="workspace-name">Dev Squad</h3>
-              <p class="workspace-description">Development and engineering</p>
-              <div class="workspace-meta">
-                <span class="member-count">8 members</span>
-                <span class="workspace-type">Team</span>
-              </div>
-            </div>
-            <div class="workspace-actions">
-              <mat-icon>launch</mat-icon>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -96,16 +62,6 @@
       <section class="quick-actions-section">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
-          <div class="action-card" (click)="openSettings()">
-            <div class="action-icon">
-              <mat-icon>settings</mat-icon>
-            </div>
-            <div class="action-content">
-              <h3>Account Settings</h3>
-              <p>Manage your profile and preferences</p>
-            </div>
-          </div>
-
           <div class="action-card" (click)="openSupport()">
             <div class="action-icon">
               <mat-icon>support_agent</mat-icon>
@@ -136,16 +92,6 @@
             </div>
           </div>
 
-          <div class="action-card" (click)="openApps()">
-            <div class="action-icon">
-              <mat-icon>apps</mat-icon>
-            </div>
-            <div class="action-content">
-              <h3>Try CollabX Apps</h3>
-              <p>Download mobile and desktop apps</p>
-            </div>
-          </div>
-
           <div class="action-card" (click)="openLicensing()">
             <div class="action-icon">
               <mat-icon>verified</mat-icon>
@@ -158,28 +104,6 @@
         </div>
       </section>
 
-      <!-- Getting Started Section -->
-      <section class="getting-started-section">
-        <div class="getting-started-card">
-          <div class="getting-started-content">
-            <h2>Getting Started</h2>
-            <p>New to CollabX? Here are some things you can do to get the most out of your workspace.</p>
-            <div class="getting-started-actions">
-              <button mat-stroked-button (click)="takeTour()">
-                <mat-icon>play_circle</mat-icon>
-                Take a Tour
-              </button>
-              <button mat-stroked-button (click)="watchTutorial()">
-                <mat-icon>video_library</mat-icon>
-                Watch Tutorial
-              </button>
-            </div>
-          </div>
-          <div class="getting-started-visual">
-            <mat-icon class="visual-icon">rocket_launch</mat-icon>
-          </div>
-        </div>
-      </section>
     </div>
   </main>
 

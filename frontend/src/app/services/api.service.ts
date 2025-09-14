@@ -27,8 +27,9 @@ export class ApiService {
   }
 
   // Projects API calls
-  getProjectsForCurrentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/projects/mine`, {
+  getProjectsForCurrentUser(search?: string): Observable<any> {
+    const params = search ? `?search=${encodeURIComponent(search)}` : '';
+    return this.http.get(`${this.baseUrl}/projects/mine${params}`, {
       headers: this.getHeaders('PROJECTS_CLICKED')
     });
   }
@@ -42,6 +43,12 @@ export class ApiService {
   createProject(projectData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/projects/`, projectData, {
       headers: this.getHeaders('PROJECT_CREATED')
+    });
+  }
+
+  updateProject(projectId: number, projectData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/projects/${projectId}`, projectData, {
+      headers: this.getHeaders('PROJECT_UPDATED')
     });
   }
 
@@ -94,8 +101,20 @@ export class ApiService {
 
   // User API calls
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users/me`, {
+    return this.http.get(`${this.baseUrl}/auth/me`, {
       headers: this.getHeaders('TEAM_CLICKED')
+    });
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/`, {
+      headers: this.getHeaders('USERS_FETCHED')
+    });
+  }
+
+  getUser(userId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/${userId}`, {
+      headers: this.getHeaders('USER_VIEWED')
     });
   }
 

@@ -19,7 +19,7 @@
         <div class="form-group">
           <label for="project" class="form-label required">Project</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select id="project" formControlName="project_id" placeholder="Select a project" [disabled]="!userProjects?.length" required>
+            <mat-select id="project" formControlName="project_id" placeholder="Select a project" [disabled]="!userProjects.length" required>
               <mat-option *ngIf="!userProjects?.length" [value]="null" disabled>
                 No projects found
               </mat-option>
@@ -106,15 +106,14 @@
         <!-- Assignee -->
         <div class="form-group">
           <label for="assignee" class="form-label">Assignee</label>
-          <input
-            type="text"
-            id="assignee"
-            formControlName="assignee"
-            class="form-input"
-            [class.error]="isFieldInvalid('assignee')"
-            placeholder="Who should work on this task?"
-            maxlength="255"
-          />
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select id="assignee" formControlName="assignee" placeholder="Select assignee (optional)">
+              <mat-option value="">No assignee</mat-option>
+              <mat-option *ngFor="let user of availableUsers" [value]="user.username">
+                {{ user.full_name }} ({{ user.username }})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <div class="error-message" *ngIf="getFieldError('assignee')">
             {{ getFieldError('assignee') }}
           </div>
@@ -123,15 +122,13 @@
         <!-- Reporter -->
         <div class="form-group">
           <label for="reporter" class="form-label required">Reporter</label>
-          <input
-            type="text"
-            id="reporter"
-            formControlName="reporter"
-            class="form-input"
-            [class.error]="isFieldInvalid('reporter')"
-            placeholder="Who reported this task?"
-            maxlength="255"
-          />
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select id="reporter" formControlName="reporter" placeholder="Select reporter" required>
+              <mat-option *ngFor="let user of availableUsers" [value]="user.username">
+                {{ user.full_name }} ({{ user.username }})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <div class="error-message" *ngIf="getFieldError('reporter')">
             {{ getFieldError('reporter') }}
           </div>

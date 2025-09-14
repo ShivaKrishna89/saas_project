@@ -149,7 +149,7 @@
             </div>
             <div class="meta-item" *ngIf="task.assignee">
               <mat-icon>person</mat-icon>
-              <span>{{ task.assignee.name }}</span>
+              <span>{{ task.assignee }}</span>
             </div>
             <div class="meta-item">
               <mat-icon>flag</mat-icon>
@@ -162,6 +162,19 @@
             {{ formatDate(task.created_at!) }}
           </div>
         </div>
+      </div>
+    </div>
+    
+    <!-- Empty State for Tasks -->
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">assignment</mat-icon>
+        <h3>No tasks yet</h3>
+        <p>Create your first task to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewTask()">
+          <mat-icon>add</mat-icon>
+          Create Task
+        </button>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from app.core.database import get_db
 from app.core.security import get_current_user
 from app.models.user import User
@@ -43,7 +43,7 @@ def create_project(
         key=project_data.key,
         workspace_id=DEFAULT_WORKSPACE_ID,
         creator_id=current_user.id,
-        user_id=current_user.id
+        user_id=project_data.user_id or current_user.id
     )
     db.add(new_project)
     db.commit()
@@ -53,14 +53,19 @@ def create_project(
 
 @router.get("/mine", response_model=List[ProjectWithIssueCount])
 def get_my_projects(
+    search: Optional[str] = Query(None, description="Search projects by name"),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """Get all active projects created by the current user"""
-    projects = db.query(Project).filter(
-        Project.creator_id == current_user.id,
-        Project.is_active == True
-    ).all()
+    """Get all projects created by the current user (active and inactive)"""
+    query = db.query(Project).filter(
+        Project.creator_id == current_user.id
+    )
+    
+    if search:
+        query = query.filter(Project.title.ilike(f"%{search}%"))
+    
+    projects = query.all()
 
     result: List[ProjectWithIssueCount] = []
     for project in projects:
@@ -153,20 +158,8 @@ def update_project(
             detail="Project not found"
         )
     
-    # Check if user is a member of the workspace
-    member = db.query(WorkspaceMember).filter(
-        WorkspaceMember.user_id == current_user.id,
-        WorkspaceMember.workspace_id == project.workspace_id
-    ).first()
-    
-    if not member:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not a member of this workspace"
-        )
-    
-    # Only creator or admin can update project
-    if project.creator_id != current_user.id and member.role != WorkspaceRole.ADMIN:
+    # User-centric: Only creator or current owner can update project
+    if project.creator_id != current_user.id and project.user_id != current_user.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Insufficient permissions to update project"

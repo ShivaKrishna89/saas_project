@@ -1,0 +1,92 @@
+<div class="api-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1>API Documentation</h1>
+      <p class="hero-subtitle">Complete reference for the CollabX API</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="container">
+      <div class="api-intro">
+        <h2>Getting Started</h2>
+        <p>The CollabX API is a RESTful API that allows you to integrate CollabX functionality into your applications. All API requests are made to <code>https://api.collabx.com/v1</code> and require authentication.</p>
+      </div>
+
+      <div class="authentication">
+        <h2>Authentication</h2>
+        <p>All API requests require an API token in the Authorization header:</p>
+        <div class="code-block">
+          <pre><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
+        </div>
+      </div>
+
+      <div class="endpoints">
+        <h2>API Endpoints</h2>
+        <div class="endpoint-list">
+          <div class="endpoint-group">
+            <h3>Workspaces</h3>
+            <div class="endpoint-item">
+              <span class="method get">GET</span>
+              <span class="path">/workspaces</span>
+              <span class="description">List all workspaces</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method get">GET</span>
+              <span class="path">/workspaces/{{ '{' }}id{{ '}' }}</span>
+              <span class="description">Get workspace details</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method post">POST</span>
+              <span class="path">/workspaces</span>
+              <span class="description">Create a new workspace</span>
+            </div>
+          </div>
+
+          <div class="endpoint-group">
+            <h3>Messages</h3>
+            <div class="endpoint-item">
+              <span class="method get">GET</span>
+              <span class="path">/messages</span>
+              <span class="description">List messages</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method post">POST</span>
+              <span class="path">/messages</span>
+              <span class="description">Send a message</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method put">PUT</span>
+              <span class="path">/messages/{{ '{' }}id{{ '}' }}</span>
+              <span class="description">Update a message</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method delete">DELETE</span>
+              <span class="path">/messages/{{ '{' }}id{{ '}' }}</span>
+              <span class="description">Delete a message</span>
+            </div>
+          </div>
+
+          <div class="endpoint-group">
+            <h3>Users</h3>
+            <div class="endpoint-item">
+              <span class="method get">GET</span>
+              <span class="path">/users</span>
+              <span class="description">List users</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method get">GET</span>
+              <span class="path">/users/{{ '{' }}id{{ '}' }}</span>
+              <span class="description">Get user details</span>
+            </div>
+            <div class="endpoint-item">
+              <span class="method post">POST</span>
+              <span class="path">/users</span>
+              <span class="description">Create a new user</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

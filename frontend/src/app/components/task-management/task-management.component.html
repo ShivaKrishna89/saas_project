@@ -56,7 +56,7 @@
               <div class="task-meta">
                 <div class="task-assignee" *ngIf="task.assignee">
                   <mat-icon>person</mat-icon>
-                  <span>{{ task.assignee.name }}</span>
+                  <span>{{ task.assignee }}</span>
                 </div>
                 <div class="task-due-date" *ngIf="task.dueDate">
                   <mat-icon>schedule</mat-icon>
@@ -66,6 +66,14 @@
               <div class="task-tags">
                 <span class="task-tag" *ngFor="let tag of task.tags">{{ tag }}</span>
               </div>
+            </div>
+          </div>
+          
+          <!-- Empty state for column when no tasks -->
+          <div class="column-empty-state" *ngIf="getTasksByStatus(column.status).length === 0">
+            <div class="empty-column-content">
+              <mat-icon class="empty-column-icon">assignment</mat-icon>
+              <p>No {{ column.title.toLowerCase() }} tasks</p>
             </div>
           </div>
         </div>
@@ -94,9 +102,9 @@
         <div class="list-cell assignee-cell">
           <div class="assignee-info" *ngIf="task.assignee">
             <div class="assignee-avatar">
-              <span>{{ task.assignee.name.charAt(0) }}</span>
+              <span>{{ task.assignee.charAt(0) }}</span>
             </div>
-            <span>{{ task.assignee.name }}</span>
+            <span>{{ task.assignee }}</span>
           </div>
         </div>
         <div class="list-cell status-cell">
@@ -116,6 +124,19 @@
             <mat-icon>delete</mat-icon>
           </button>
         </div>
+      </div>
+    </div>
+    
+    <!-- Empty State for List View -->
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">assignment</mat-icon>
+        <h3>No tasks yet</h3>
+        <p>Create your first task to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewTask()">
+          <mat-icon>add</mat-icon>
+          Create Task
+        </button>
       </div>
     </div>
   </div>
@@ -139,6 +160,19 @@
             <span class="task-title">{{ task.title }}</span>
           </div>
         </div>
+      </div>
+    </div>
+    
+    <!-- Empty State for Calendar View -->
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <div class="empty-state-content">
+        <mat-icon class="empty-state-icon">assignment</mat-icon>
+        <h3>No tasks yet</h3>
+        <p>Create your first task to get started</p>
+        <button mat-raised-button color="primary" (click)="createNewTask()">
+          <mat-icon>add</mat-icon>
+          Create Task
+        </button>
       </div>
     </div>
   </div>
@@ -180,7 +214,7 @@
             </div>
             <div class="detail-item">
               <label>Assignee:</label>
-              <input matInput placeholder="Type assignee name" [ngModel]="selectedTask.assignee?.name" (ngModelChange)="selectedTask.assignee = $event ? { id: 'manual', name: $event } : undefined; updateTask()" />
+              <input matInput placeholder="Type assignee name" [ngModel]="selectedTask.assignee" (ngModelChange)="selectedTask.assignee = $event; updateTask()" />
             </div>
             <div class="detail-item">
               <label>Due Date:</label>

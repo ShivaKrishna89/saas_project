@@ -16,12 +16,14 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db), current_user: U
     """Create a new task"""
     payload = task.dict()
     payload["user_id"] = current_user.id
+    
     # If project_id provided, validate it belongs to user
     if payload.get("project_id"):
         project = db.query(Project).filter(Project.id == payload["project_id"]).first()
         if not project or project.creator_id != current_user.id:
             raise HTTPException(status_code=403, detail="Not authorized for this project")
         payload["project"] = project.title
+    
     db_task = Task(**payload)
     db.add(db_task)
     db.commit()
@@ -60,12 +62,15 @@ def list_tasks(
     project: Optional[str] = Query(None, description="Filter by project"),
     status: Optional[str] = Query(None, description="Filter by status"),
     work_type: Optional[str] = Query(None, description="Filter by work type"),
+    assignee: Optional[str] = Query(None, description="Filter by assignee name"),
+    reporter: Optional[str] = Query(None, description="Filter by reporter name"),
+    search: Optional[str] = Query(None, description="Search by task title"),
     limit: int = Query(100, ge=1, le=1000, description="Number of tasks to return"),
     offset: int = Query(0, ge=0, description="Number of tasks to skip"),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """List tasks with optional filtering"""
+    """List tasks with optional filtering and search"""
     query = db.query(Task).filter(Task.user_id == current_user.id)
     
     if project:
@@ -74,6 +79,12 @@ def list_tasks(
         query = query.filter(Task.status == status)
     if work_type:
         query = query.filter(Task.work_type == work_type)
+    if search:
+        query = query.filter(Task.summary.ilike(f"%{search}%"))
+    if assignee:
+        query = query.filter(Task.assignee.ilike(f"%{assignee}%"))
+    if reporter:
+        query = query.filter(Task.reporter.ilike(f"%{reporter}%"))
     
     tasks = query.offset(offset).limit(limit).all()
     return tasks

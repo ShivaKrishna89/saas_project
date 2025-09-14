@@ -29,10 +29,10 @@ class User(Base):
 	# Relationships
 	workspace_memberships = relationship("WorkspaceMember", back_populates="user")
 	organizations = relationship("Member", back_populates="user")
-	created_issues = relationship("Issue", back_populates="reporter", foreign_keys="Issue.reporter_id")
-	assigned_issues = relationship("Issue", back_populates="assignee", foreign_keys="Issue.assignee_id")
-	created_projects = relationship("Project", back_populates="creator", foreign_keys="Project.creator_id")
-	owned_projects = relationship("Project", back_populates="owner", foreign_keys="Project.user_id")
+	created_issues = relationship("Issue", foreign_keys="Issue.reporter_id", back_populates="reporter")
+	assigned_issues = relationship("Issue", foreign_keys="Issue.assignee_id", back_populates="assignee")
+	created_projects = relationship("Project", foreign_keys="Project.creator_id", back_populates="creator")
+	owned_projects = relationship("Project", foreign_keys="Project.user_id", back_populates="owner")
 	created_channels = relationship("Channel", back_populates="creator")
 	messages = relationship("Message", back_populates="user")
 	

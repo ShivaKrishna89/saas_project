@@ -1,0 +1,125 @@
+<div class="demo-page">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <div class="logo" (click)="goHome()">
+          <mat-icon class="logo-icon">rocket_launch</mat-icon>
+          <span class="logo-text brand">CollabX</span>
+        </div>
+      </div>
+      
+      <div class="nav-center">
+        <a [routerLink]="['/home']" class="nav-link">Home</a>
+        <a [routerLink]="['/solutions']" class="nav-link">Solutions</a>
+        <a [routerLink]="['/enterprise']" class="nav-link">Enterprise</a>
+        <a [routerLink]="['/resources']" class="nav-link">Resources</a>
+        <a [routerLink]="['/pricing']" class="nav-link">Pricing</a>
+      </div>
+      
+      <div class="nav-right">
+        <button mat-stroked-button class="nav-button" (click)="navigateToLogin()">
+          Sign In
+        </button>
+        <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
+          Get Started Free
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">See CollabX in Action</h1>
+        <p class="hero-subtitle">Watch how CollabX transforms team collaboration and boosts productivity</p>
+        <div class="hero-actions">
+          <button mat-raised-button color="primary" class="hero-primary-btn" (click)="navigateToRegister()">
+            <mat-icon>rocket_launch</mat-icon>
+            Start Free Trial
+          </button>
+          <button mat-stroked-button class="hero-secondary-btn" (click)="talkToSales()">
+            <mat-icon>phone</mat-icon>
+            Talk to Sales
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Video Section -->
+  <section class="demo-video">
+    <div class="container">
+      <div class="video-container">
+        <div class="video-placeholder">
+          <div class="play-button" (click)="playVideo()">
+            <mat-icon>play_circle_filled</mat-icon>
+          </div>
+          <h3>Product Demo Video</h3>
+          <p>See how CollabX works in this 5-minute overview</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Features -->
+  <section class="demo-features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">What You'll See in the Demo</h2>
+        <p class="section-subtitle">Get a comprehensive overview of CollabX's key features and capabilities</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <mat-icon>smart_toy</mat-icon>
+          </div>
+          <h3>AI-Powered Features</h3>
+          <p>See how our AI assistant helps automate tasks and provides intelligent insights</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <mat-icon>group_work</mat-icon>
+          </div>
+          <h3>Real-time Collaboration</h3>
+          <p>Watch teams collaborate in real-time with live editing and instant messaging</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <mat-icon>analytics</mat-icon>
+          </div>
+          <h3>Advanced Analytics</h3>
+          <p>Explore powerful dashboards and reporting capabilities</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <mat-icon>hub</mat-icon>
+          </div>
+          <h3>Integrations</h3>
+          <p>See how CollabX connects with your favorite tools and workflows</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to try CollabX?</h2>
+        <p class="cta-subtitle">Start your free trial today and experience the future of team collaboration</p>
+        <div class="cta-actions">
+          <button mat-raised-button color="primary" class="cta-btn" (click)="navigateToRegister()">
+            <mat-icon>rocket_launch</mat-icon>
+            Start Free Trial
+          </button>
+          <button mat-stroked-button class="cta-btn" (click)="talkToSales()">
+            <mat-icon>phone</mat-icon>
+            Talk to Sales
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
