@@ -1753,6 +1753,7 @@ import { Router, ActivatedRoute } from '@angular/router';
     .workflow-name {
       font-weight: 600;
       color: #1e293b;
+      margin: 15px 48px 36px 0px;
       font-size: 0.875rem;
     }
 
@@ -2448,6 +2449,7 @@ import { Router, ActivatedRoute } from '@angular/router';
     .industry-solutions {
       padding: 6rem 0;
       background: white;
+              margin: 15px 48px 36px 0px;
     }
 
     .industry-grid {
@@ -3700,10 +3702,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 
       .enterprise-hero .hero-title {
         font-size: 2.5rem;
+                margin: 15px 48px 36px 0px;
+    
       }
 
       .compliance-badges {
         justify-content: center;
+            margin: 15px 48px 36px 0px;
       }
 
       .enterprise-hero .hero-actions {
