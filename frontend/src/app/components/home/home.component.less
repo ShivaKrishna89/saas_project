@@ -1249,77 +1249,160 @@
   gap: 8px;
 }
 
+// Mobile menu styles
+.mobile-menu-btn { display: none; }
+
+@media (max-width: 1279px) {
+  .mobile-menu-btn { 
+    display: inline-flex !important; 
+    align-items: center; 
+    margin-right: 8px; 
+    background: white; 
+    border-radius: 40px; 
+    border: none; 
+    box-shadow: 0 1px 6px #1111; 
+    cursor: pointer; 
+    z-index: 2100; 
+  }
+  .nav-center, .nav-right { display: none !important; }
+  
+  .mobile-menu-overlay {
+    position: fixed; z-index: 2050; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.23); backdrop-filter: blur(2px);
+  }
+  
+  .mobile-menu-drawer {
+    position: fixed; z-index: 2101; left: 0; top: 0;
+    width: 85vw; max-width: 320px; height: 100vh;
+    background: #fff; box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    transform: translateX(0); transition: transform 0.3s ease;
+  }
+  
+  .drawer-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .drawer-logo { display: flex; align-items: center; gap: 8px; }
+  .close-btn { background: none; border: none; cursor: pointer; }
+  
+  .drawer-content {
+    padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  }
+  
+  .drawer-link {
+    display: block; padding: 12px 16px; text-decoration: none;
+    color: #374151; font-weight: 500; border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .drawer-link:hover, .drawer-link.active {
+    background-color: #f3f4f6; color: #1f2937;
+  }
+  
+  .drawer-divider { height: 1px; background: #e2e8f0; margin: 16px 0; }
+  
+  .drawer-button {
+    width: 100%; margin: 4px 0; padding: 12px 16px;
+    border-radius: 8px; font-weight: 500;
+  }
+}
 
 @media (max-width: 768px) {
-  .nav-center {
-    display: none;
+  .ai-section {
+    padding: 60px 0;
   }
-
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 60px;
-    text-align: center;
-  }
-
-  .hero-title {
-    font-size: 40px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-stats {
-    justify-content: center;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cta-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 24px;
-    text-align: center;
-  }
-
-  .dashboard-mockup {
-    transform: none;
-  }
-
+  
   .ai-content {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 40px;
     text-align: center;
   }
+  
+  .ai-subtitle {
+    font-size: 24px;
+  }
+  
+  .ai-description {
+    font-size: 16px;
+  }
+  
+  .ai-features {
+    gap: 24px;
+  }
+  
+  .ai-feature {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .ai-dashboard {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .ai-content-area {
+    padding: 16px;
+  }
+  
+  .ai-suggestion {
+    padding: 16px;
+  }
+  
+  .suggestion-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .suggestion-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
 
-  .integrations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+@media (max-width: 600px) {
+  .container,.nav-container,.hero-content { padding: 0 8px !important; }
+  .navbar { padding: 0; }
+  .hero { padding: 80px 0 40px !important; }
+  .hero-content { gap: 32px !important; }
+  .hero-title { font-size: 28px !important; }
+  .testimonial-card, .feature-card, .integration-item { padding: 20px 8px !important; }
+  .nav-left { gap: 8px; }
+  .footer { padding: 40px 0 16px !important; }
+  .follow-us-title { font-size: 15px; }
+  
+  .ai-section {
+    padding: 40px 0;
+  }
+  
+  .ai-subtitle {
+    font-size: 20px;
+  }
+  
+  .ai-description {
+    font-size: 14px;
+  }
+  
+  .ai-feature-content h4 {
+    font-size: 16px;
+  }
+  
+  .ai-feature-content p {
+    font-size: 14px;
+  }
+  
+  .ai-dashboard {
+    border-radius: 12px;
+  }
+  
+  .ai-content-area {
+    padding: 12px;
     gap: 16px;
   }
-
-  .integration-item {
-    padding: 16px 12px;
-  }
-
-  .integration-icon {
-    width: 40px;
-    height: 40px;
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
+  
+  .ai-suggestion {
+    padding: 12px;
   }
 }

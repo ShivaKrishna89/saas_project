@@ -169,38 +169,133 @@
   }
 }
 
-// Responsive design
+// Mobile responsiveness for task form
 @media (max-width: 768px) {
   .task-form-container {
-    margin: 16px;
-    padding: 20px;
+    margin: 8px;
+    padding: 16px;
     border-radius: 8px;
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    overflow-y: auto;
+    position: relative;
   }
 
   .task-form-header {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
 
     h2 {
-      font-size: 24px;
+      font-size: 20px;
+      margin-bottom: 4px;
     }
 
     .form-subtitle {
+      font-size: 13px;
+    }
+  }
+
+  .task-form {
+    .form-grid {
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .form-column {
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 10px 12px;
       font-size: 14px;
+    }
+
+    .form-textarea {
+      min-height: 80px;
+    }
+
+    .form-actions {
+      position: sticky;
+      bottom: 0;
+      background: white;
+      padding: 16px 0 8px 0;
+      margin-top: 16px;
+      border-top: 1px solid #e5e7eb;
+      z-index: 10;
     }
   }
 }
 
 @media (max-width: 480px) {
   .task-form-container {
-    margin: 8px;
-    padding: 16px;
+    margin: 4px;
+    padding: 12px;
+    max-width: calc(100vw - 8px);
+    max-height: calc(100vh - 8px);
   }
 
-  .form-actions {
-    .cancel-btn,
-    .save-btn {
-      width: 100%;
-      justify-content: center;
+  .task-form-header {
+    h2 {
+      font-size: 18px;
+    }
+
+    .form-subtitle {
+      font-size: 12px;
+    }
+  }
+
+  .task-form {
+    .form-grid {
+      gap: 10px;
+    }
+
+    .form-column {
+      gap: 12px;
+    }
+
+    .form-label {
+      font-size: 12px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .form-textarea {
+      min-height: 70px;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 0 4px 0;
+
+      .cancel-btn,
+      .save-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
     }
   }
 }

@@ -626,6 +626,15 @@
   }
 }
 
+@media (max-width: 600px) {
+  .task-management { padding: 4px !important; }
+  .task-header, .task-controls, .board-view, .calendar-view, .list-view, .modal-content { padding: 8px !important; }
+  .board-columns, .list-header, .list-row, .calendar-grid { grid-template-columns: 1fr !important; }
+  .task-card { padding: 7px !important; }
+  .column-content { gap: 7px !important; }
+  .notification { left: 5px !important; right: 5px !important; top: 5px !important; }
+}
+
 /* Empty State Styles */
 .empty-state {
   display: flex;

@@ -326,3 +326,15 @@
     max-width: 80%;
   }
 }
+
+@media (max-width: 480px) {
+  .message-list-container { padding: 0 2px !important; }
+  .messages-header, .messages-scroll { padding: 6px !important; }
+  .message-item, .user-message-content, .file-message-content {
+    max-width: 98vw !important;
+    gap: 4px !important;
+  }
+  .avatar-image { width: 28px; height: 28px; }
+  .message-text { font-size: 13px; }
+  .own-message .message-text { font-size: 13px; }
+}

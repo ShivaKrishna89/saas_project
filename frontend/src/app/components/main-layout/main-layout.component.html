@@ -2,6 +2,10 @@
   <!-- Top Navigation Bar -->
   <mat-toolbar class="top-bar">
     <div class="top-bar-content">
+      <!-- Hamburger menu icon for mobile/tablet only -->
+      <button mat-icon-button class="mobile-menu-btn" (click)="handleMenuToggle()" aria-label="Open Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
       <div class="top-bar-left">
         <div class="brand" (click)="goHome()">
           <mat-icon class="brand-icon">rocket_launch</mat-icon>
@@ -11,15 +15,12 @@
           <span class="workspace-name">{{ currentWorkspace?.name || 'My Workspace' }}</span>
         </div>
       </div>
-      
-      
       <div class="top-bar-right">
         <button mat-icon-button [matMenuTriggerFor]="userMenu">
           <div class="user-avatar">
             <span>{{ currentUser?.full_name?.charAt(0) || 'U' }}</span>
           </div>
         </button>
-        
         <mat-menu #userMenu="matMenu">
           <div class="user-menu-header">
             <div class="user-info">
@@ -45,6 +46,40 @@
         </mat-menu>
       </div>
     </div>
+    <!-- Mobile menu overlay and drawer -->
+    <div class="mobile-menu-overlay" *ngIf="menuOpen" (click)="closeMenu()"></div>
+    <nav class="mobile-menu-drawer" *ngIf="menuOpen" tabindex="0">
+      <div class="mobile-menu-header">
+        <span>Menu</span>
+        <button mat-icon-button (click)="closeMenu()" aria-label="Close Menu"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="mobile-menu-nav">
+        <button class="nav-item" [class.active]="currentView === 'tasks'" (click)="navigateToTasks(); closeMenu()">
+          <mat-icon>task_alt</mat-icon>
+          <span>Tasks</span>
+        </button>
+        <button class="nav-item" [class.active]="currentView === 'projects'" (click)="navigateToProjects(); closeMenu()">
+          <mat-icon>folder</mat-icon>
+          <span>Projects</span>
+        </button>
+        <button class="nav-item" [class.active]="currentView === 'team'" (click)="navigateToTeam(); closeMenu()">
+          <mat-icon>group</mat-icon>
+          <span>Team</span>
+        </button>
+        <button class="nav-item" [class.active]="currentView === 'calendar'" (click)="navigateToCalendar(); closeMenu()">
+          <mat-icon>calendar_today</mat-icon>
+          <span>Calendar</span>
+        </button>
+        <button class="nav-item" [class.active]="currentView === 'reports'" (click)="navigateToReports(); closeMenu()">
+          <mat-icon>analytics</mat-icon>
+          <span>Reports</span>
+        </button>
+        <button class="nav-item" [class.active]="currentView === 'files'" (click)="navigateToFiles(); closeMenu()">
+          <mat-icon>folder_open</mat-icon>
+          <span>Files</span>
+        </button>
+      </div>
+    </nav>
   </mat-toolbar>
 
   <!-- Main Content Area -->
@@ -67,7 +102,6 @@
             <span>Team</span>
           </button>
         </div>
-        
         <div class="nav-section">
           <h3 class="nav-section-title">Quick Access</h3>
           <button class="nav-item" [class.active]="currentView === 'calendar'" (click)="navigateToCalendar()">

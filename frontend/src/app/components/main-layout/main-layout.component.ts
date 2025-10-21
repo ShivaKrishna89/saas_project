@@ -16,6 +16,7 @@ export class MainLayoutComponent implements OnInit {
     name: 'My Workspace'
   };
   currentView: string = 'tasks';
+  menuOpen = false;
 
   constructor(
     private authService: AuthService,
@@ -109,5 +110,15 @@ export class MainLayoutComponent implements OnInit {
   navigateToFiles() {
     this.currentView = 'files';
     console.log('Navigate to files');
+  }
+
+  // Toggle the mobile menu drawer
+  handleMenuToggle() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  // Close the menu (for overlay click/ESC)
+  closeMenu() {
+    this.menuOpen = false;
   }
 }

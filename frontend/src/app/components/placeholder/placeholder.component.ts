@@ -8,6 +8,11 @@ import { Router, ActivatedRoute } from '@angular/router';
       <!-- Navigation Bar -->
       <nav class="navbar">
         <div class="nav-container">
+          <!-- Hamburger menu for mobile -->
+          <button class="mobile-menu-btn" (click)="handleMenuToggle()" aria-label="Open Menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          
           <div class="nav-left">
             <div class="logo" (click)="goHome()">
               <mat-icon class="logo-icon">rocket_launch</mat-icon>
@@ -34,7 +39,38 @@ import { Router, ActivatedRoute } from '@angular/router';
         </div>
       </nav>
 
+      <!-- Mobile Menu Overlay -->
+      <div *ngIf="menuOpen" class="mobile-menu-overlay" (click)="closeMenu()"></div>
       
+      <!-- Mobile Menu Drawer -->
+      <div *ngIf="menuOpen" class="mobile-menu-drawer">
+        <div class="drawer-header">
+          <div class="drawer-logo">
+            <mat-icon class="logo-icon">rocket_launch</mat-icon>
+            <span class="logo-text">CollabX</span>
+          </div>
+          <button class="close-btn" (click)="closeMenu()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        
+        <div class="drawer-content">
+          <a [routerLink]="['/home']" class="drawer-link" (click)="closeMenu()">Home</a>
+          <a [routerLink]="['/solutions']" class="drawer-link" (click)="closeMenu()">Solutions</a>
+          <a [routerLink]="['/enterprise']" class="drawer-link" (click)="closeMenu()">Enterprise</a>
+          <a [routerLink]="['/resources']" class="drawer-link" (click)="closeMenu()">Resources</a>
+          <a [routerLink]="['/pricing']" class="drawer-link" (click)="closeMenu()">Pricing</a>
+          
+          <div class="drawer-divider"></div>
+          
+          <button mat-stroked-button class="drawer-button" (click)="navigateToLogin(); closeMenu()">
+            Sign In
+          </button>
+          <button mat-raised-button color="primary" class="drawer-button cta-btn" (click)="navigateToRegister(); closeMenu()">
+            Get Started Free
+          </button>
+        </div>
+      </div>
 
       <!-- Solutions Content -->
       <section *ngIf="pageType === 'solutions'" class="solutions-page">
@@ -4800,11 +4836,119 @@ import { Router, ActivatedRoute } from '@angular/router';
         transform: translateY(0) scale(1);
       }
     }
+
+    /* Mobile menu styles */
+    .mobile-menu-btn { display: none; }
+
+    @media (max-width: 1279px) {
+      .mobile-menu-btn { 
+        display: inline-flex !important; 
+        align-items: center; 
+        margin-right: 8px; 
+        background: white; 
+        border-radius: 40px; 
+        border: none; 
+        box-shadow: 0 1px 6px #1111; 
+        cursor: pointer; 
+        z-index: 2100; 
+      }
+      .nav-center, .nav-right { display: none !important; }
+      
+      .mobile-menu-overlay {
+        position: fixed; z-index: 2050; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.23); backdrop-filter: blur(2px);
+      }
+      
+      .mobile-menu-drawer {
+        position: fixed; z-index: 2101; left: 0; top: 0;
+        width: 85vw; max-width: 320px; height: 100vh;
+        background: #fff; box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+        transform: translateX(0); transition: transform 0.3s ease;
+      }
+      
+      .drawer-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 20px; border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .drawer-logo { display: flex; align-items: center; gap: 8px; }
+      .close-btn { background: none; border: none; cursor: pointer; }
+      
+      .drawer-content {
+        padding: 20px; display: flex; flex-direction: column; gap: 12px;
+      }
+      
+      .drawer-link {
+        display: block; padding: 12px 16px; text-decoration: none;
+        color: #374151; font-weight: 500; border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+      
+      .drawer-link:hover, .drawer-link.active {
+        background-color: #f3f4f6; color: #1f2937;
+      }
+      
+      .drawer-divider { height: 1px; background: #e2e8f0; margin: 16px 0; }
+      
+      .drawer-button {
+        width: 100%; margin: 4px 0; padding: 12px 16px;
+        border-radius: 8px; font-weight: 500;
+      }
+    }
+
+    /* Mobile fixes for header and hero sections */
+    @media (max-width: 768px) {
+      /* Ensure header is fully visible */
+      .navbar {
+        position: relative !important;
+        z-index: 100;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      /* Fix hero section positioning */
+      .solutions-hero, .enterprise-hero, .resources-hero, .features-hero {
+        padding: 1rem 0 2rem 0;
+        margin-top: 0;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .solutions-hero-content, .enterprise-hero-content, .resources-hero-content, .features-hero-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+      }
+      
+      .hero-title {
+        font-size: 22px;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+      }
+      
+      .solution-tabs, .enterprise-tabs, .resources-tabs, .features-tabs {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .hero-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
   `]
 })
 export class PlaceholderComponent implements OnInit {
   @Input() pageType: string = 'features';
   showComingSoonPopup = false;
+  menuOpen = false;
 
 
   constructor(
@@ -5332,5 +5476,14 @@ export class PlaceholderComponent implements OnInit {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+  // Mobile menu methods
+  handleMenuToggle() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 }

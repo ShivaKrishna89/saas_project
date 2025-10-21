@@ -2,6 +2,9 @@
   <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="nav-container">
+      <button class="mobile-menu-btn" (click)="handleMenuToggle()" aria-label="Open Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
       <div class="nav-left">
         <div class="logo">
           <mat-icon class="logo-icon">rocket_launch</mat-icon>
@@ -22,6 +25,38 @@
           Sign In
         </button>
         <button mat-raised-button color="primary" class="nav-button cta-btn" (click)="navigateToRegister()">
+          Get Started Free
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu Overlay -->
+    <div *ngIf="menuOpen" class="mobile-menu-overlay" (click)="closeMenu()"></div>
+    
+    <!-- Mobile Menu Drawer -->
+    <div *ngIf="menuOpen" class="mobile-menu-drawer">
+      <div class="drawer-header">
+        <div class="drawer-logo">
+          <mat-icon class="logo-icon">rocket_launch</mat-icon>
+          <span class="logo-text">CollabX</span>
+        </div>
+        <button class="close-btn" (click)="closeMenu()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="drawer-content">
+        <a [routerLink]="['/home']" class="drawer-link active" (click)="closeMenu()">Home</a>
+        <a [routerLink]="['/solutions']" class="drawer-link" (click)="closeMenu()">Solutions</a>
+        <a [routerLink]="['/enterprise']" class="drawer-link" (click)="closeMenu()">Enterprise</a>
+        <a [routerLink]="['/resources']" class="drawer-link" (click)="closeMenu()">Resources</a>
+        <a [routerLink]="['/pricing']" class="drawer-link" (click)="closeMenu()">Pricing</a>
+        
+        <div class="drawer-divider"></div>
+        
+        <button mat-stroked-button class="drawer-button" (click)="navigateToLogin(); closeMenu()">
+          Sign In
+        </button>
+        <button mat-raised-button color="primary" class="drawer-button cta-btn" (click)="navigateToRegister(); closeMenu()">
           Get Started Free
         </button>
       </div>

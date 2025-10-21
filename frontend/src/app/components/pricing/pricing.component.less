@@ -860,3 +860,71 @@
     text-align: center;
   }
 }
+
+// Mobile menu styles
+.mobile-menu-btn { display: none; }
+
+@media (max-width: 1279px) {
+  .mobile-menu-btn { 
+    display: inline-flex !important; 
+    align-items: center; 
+    margin-right: 8px; 
+    background: white; 
+    border-radius: 40px; 
+    border: none; 
+    box-shadow: 0 1px 6px #1111; 
+    cursor: pointer; 
+    z-index: 2100; 
+  }
+  .nav-center, .nav-right { display: none !important; }
+  
+  .mobile-menu-overlay {
+    position: fixed; z-index: 2050; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.23); backdrop-filter: blur(2px);
+  }
+  
+  .mobile-menu-drawer {
+    position: fixed; z-index: 2101; left: 0; top: 0;
+    width: 85vw; max-width: 320px; height: 100vh;
+    background: #fff; box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    transform: translateX(0); transition: transform 0.3s ease;
+  }
+  
+  .drawer-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .drawer-logo { display: flex; align-items: center; gap: 8px; }
+  .close-btn { background: none; border: none; cursor: pointer; }
+  
+  .drawer-content {
+    padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  }
+  
+  .drawer-link {
+    display: block; padding: 12px 16px; text-decoration: none;
+    color: #374151; font-weight: 500; border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .drawer-link:hover, .drawer-link.active {
+    background-color: #f3f4f6; color: #1f2937;
+  }
+  
+  .drawer-divider { height: 1px; background: #e2e8f0; margin: 16px 0; }
+  
+  .drawer-button {
+    width: 100%; margin: 4px 0; padding: 12px 16px;
+    border-radius: 8px; font-weight: 500;
+  }
+}
+
+@media (max-width: 600px) {
+  .container, .hero-content, .pricing-grid, .footer-content { padding: 0 6px !important; grid-template-columns: 1fr !important; gap: 14px !important; }
+  .hero-title, .section-title, .cta-title { font-size: 22px !important; }
+  .footer, .cta, .pricing-section { padding: 30px 0 !important; }
+  .plan-header { margin-bottom: 16px !important; }
+  .pricing-card { padding: 12px !important; }
+  .footer-bottom { flex-direction: column !important; gap: 6px !important; }
+}

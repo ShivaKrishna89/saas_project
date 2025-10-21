@@ -101,6 +101,11 @@ export class HomeComponent {
   aiSuggestionApplied = false;
   aiSuggestionDismissed = false;
 
+  menuOpen = false;
+
+  handleMenuToggle() { this.menuOpen = !this.menuOpen; }
+  closeMenu() { this.menuOpen = false; }
+
   footerSections = [
     {
       title: 'Product',

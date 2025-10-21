@@ -11,6 +11,7 @@ export class PricingComponent implements OnInit {
   isAnnual = false;
   isLoggedIn = false;
   currentUser: any = null;
+  menuOpen = false;
 
   freeFeatures = [
     'Up to 5 team members',
@@ -151,5 +152,14 @@ export class PricingComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  // Mobile menu methods
+  handleMenuToggle() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 }

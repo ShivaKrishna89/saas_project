@@ -14,6 +14,7 @@ export class LoginComponent {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
+  menuOpen = false;
 
   constructor(
     private fb: FormBuilder,
@@ -73,5 +74,14 @@ export class LoginComponent {
 
   goHome() {
     this.router.navigate(['/']);
+  }
+
+  // Mobile menu methods
+  handleMenuToggle() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 }
